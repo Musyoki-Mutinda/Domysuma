@@ -1,0 +1,135 @@
+@import "src/styles";
+.section-header {
+  padding: 100px $layout-horizontal-padding 60px $layout-horizontal-padding;
+  background: #ffffff;
+
+  h2 {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 45px;
+    color: #1c75bc;
+  }
+  p {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #231f20;
+  }
+}
+
+.socials-md {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+      0deg,
+      rgba(28, 117, 188, 0.3),
+      rgba(28, 117, 188, 0.3)
+    ),
+    #ffffff;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  color: rgba(36, 36, 36, 0.5);
+
+  &:hover {
+    background: #ffffff;
+    color: #1c75bc;
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.why-us-sec {
+  background: white;
+  padding: 60px $layout-horizontal-padding;
+
+  h3 {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    text-transform: capitalize;
+    color: #1c75bc;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+}
+
+.services-cont {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 5px;
+  gap: 20px;
+  height: 100%;
+
+  .services-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+    background: rgba(28, 117, 188, 0.05);
+    border-radius: 10px;
+
+    //i {
+    //  background: rgba(28, 117, 188, 0.3);
+    //  padding: 20px;
+    //  border-radius: 10px;
+    //  color: rgba(36, 36, 36, 0.5);
+    //}
+
+    > div {
+      > h4 {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+      }
+      p {
+        color: #828282;
+      }
+    }
+
+    width: calc((100% / 4) - 20px);
+
+    @include tablet {
+      width: calc((100% / 2) - 20px);
+    }
+    @include mobile {
+      width: 100%;
+    }
+  }
+}
+
+.icon-custom-with-bg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  background: rgba(28, 117, 188, 0.3);
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.form-control {
+  width: 100%;
+  input,
+  textarea {
+    padding: 15px 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+  }
+}

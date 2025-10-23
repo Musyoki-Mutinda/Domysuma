@@ -1,0 +1,46 @@
+<section class="plan-item-card-cont">
+  <div class="plan-item-card-top">
+    <img [src]="planData.img" [alt]="planData.title">
+    <p>Plan ID: {{planData.id}}</p>
+  </div>
+
+  <h4>{{planData.title}}</h4>
+
+  <div class="plan-item-card-specs-cont">
+    <p class="plan-item-card-specs">
+      Bedroom
+      <span>{{planData.bedrooms}}</span>
+    </p>
+    <p class="plan-item-card-specs">
+      Baths
+      <span>{{planData.bathrooms}}</span>
+    </p>
+    <p class="plan-item-card-specs">
+      Storeys
+      <span>{{planData.storeys}}</span>
+    </p>
+    <p class="plan-item-card-specs">
+      Width
+      <span>{{planData.width | number}} m</span>
+    </p>
+    <p class="plan-item-card-specs">
+      Length
+      <span>{{planData.length | number}} m</span>
+    </p>
+    <p class="plan-item-card-specs">
+      Area
+      <span>{{planData.area | number}} sq m</span>
+    </p>
+  </div>
+
+  <div class="plan-item-card-footer">
+    <p>Save plan <i class="fa-regular fa-heart"></i>  </p>
+
+    <p routerLink="/plans/1">View More <i class="fa-solid fa-arrow-right-long"></i></p>
+  </div>
+
+
+
+
+
+</section>

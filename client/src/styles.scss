@@ -1,0 +1,165 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Poppins:wght@100;300;400;500;600;700;900&display=swap");
+
+/*------------------------------------------
+---------------VARIABLES*/
+$layout-horizontal-padding: 10vw;
+$layout-horizontal-margin: 20px;
+$layout-horizontal-padding-sm: 20px;
+$layout-vertical-padding: 60px;
+$section-padding: 60px 10vw;
+$section-padding-sm: 60px 20px;
+$section-horizontal-padding-20: 20px;
+$section-horizontal-margin-60: 60px;
+$section-horizontal-margin-20: 20px;
+
+$section-text-margin: 40px;
+$section-text-margin-20: 20px;
+
+$scale-1-1: scale(1.1);
+$scale-0-9: scale(0.9);
+
+//COLORS
+$color-text-dark: #231f20;
+
+/* You can add global styles to this file, and also import other style files */
+////TODO: UNCOMMENT THEME FILES
+//@import "~@angular/material/theming";
+
+//@include mat-core();
+//$theming-material-components-primary: mat-palette($mat-green);
+//$theming-material-components-accent: mat-palette($mat-green, A200, A100, A400);
+//$theming-material-components-warn: mat-palette($mat-red);
+//$theming-material-components-theme: mat-light-theme(
+//    $theming-material-components-primary,
+//    $theming-material-components-accent,
+//    $theming-material-components-warn
+//);
+//@include angular-material-theme($theming-material-components-theme);
+
+/*---------------------------
+GLOBAL STYLES MEDIA QUERIES
+---------------------------*/
+
+//PADDING
+$padding-default: 20px;
+$padding-default-percentage: 10%;
+
+//variables breakpoints
+$breakpoint-mobile: 600px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 768px;
+
+//@import url(./src/assets/variables.scss);
+$zero-width: 0;
+//$mobile-width: 668px;
+$tablet-width: 668px;
+$desktop-width: 1024px;
+
+@mixin mobile {
+  @media (min-width: #{$zero-width}) and (max-width: #{$tablet-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$zero-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin sectionPadding {
+  @include mobile {
+    $layout-horizontal-padding-sm: 0px;
+    $section-padding-sm: 60px 0;
+  }
+}
+
+*,
+ul {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  transition: all 0.2s ease-in-out;
+}
+body {
+  font-family: "Hind", sans-serif;
+
+  @include mobile {
+    $layout-horizontal-padding: 10px;
+    $layout-vertical-padding: 60px;
+    $section-padding: 60px 0;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  h7 {
+    font-family: "Poppins", sans-serif;
+    text-transform: capitalize;
+  }
+
+  p {
+    color: $color-text-dark;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+}
+
+/*------------------------------------------
+---------------CUSTOM BUTTONS*/
+.btn-custom {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  padding: 10px 30px;
+  height: 45px;
+  background: #1c75bc;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  text-transform: capitalize;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+  &:active {
+    transform: scale(1);
+  }
+
+  i {
+    margin: 0 5px;
+  }
+}
+.btn-custom-primary {
+  background: #1c75bc;
+  color: white;
+}
+
+.btn-custom-primary-outline {
+  background: #ffffff;
+  border: 1px solid #1c75bc;
+  color: #1c75bc;
+}
+
+.btn-custom-white {
+  color: #1c75bc;
+  background: #ffffff;
+}

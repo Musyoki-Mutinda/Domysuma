@@ -1,0 +1,44 @@
+@import "src/styles";
+.featured-design{
+  padding: $section-padding;
+  background: linear-gradient(0deg, rgba(28, 117, 188, 0.1), rgba(28, 117, 188, 0.1)), #FFFFFF;
+
+  h2{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  @include mobile{
+    padding: $section-padding-sm;
+  }
+}
+.featured-design-items{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  margin: $section-text-margin 0;
+
+  app-plan-item-card,
+  .custom-card-item{
+    flex: 0 0 calc(33.333333% - 20px);
+  }
+  @include tablet{
+    app-plan-item-card,
+    .custom-card-item{
+      flex: 0 0 calc(50% - 20px);
+    }
+  }
+  @include mobile{
+    app-plan-item-card,
+    .custom-card-item{
+      flex: 0 0 calc(100%);
+    }
+  }
+
+
+}
+
+

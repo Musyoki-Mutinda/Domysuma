@@ -1,0 +1,18 @@
+@import "src/styles";
+
+
+.layout-router-cont{
+  //padding: 0 10vw;
+  background: linear-gradient(0deg, rgba(34, 35, 40, 0.05), rgba(34, 35, 40, 0.05)), #FFFFFF;
+
+
+  padding-top: 120px;
+
+  @include tablet{
+    padding-top: 300px;
+  }
+
+  @include mobile{
+    padding-top: 0;
+  }
+}

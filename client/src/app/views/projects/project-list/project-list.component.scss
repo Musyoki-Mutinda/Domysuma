@@ -1,0 +1,18 @@
+@import "src/app/shared/styles/featured-design";
+@import "../../../shared/styles/general";
+
+
+.projects-cont{
+  padding: 10px $layout-horizontal-padding;
+
+  @include mobile{
+    padding: 10px $layout-horizontal-padding-sm;
+  }
+}
+
+.paginator-cont{
+  padding: 10px $layout-horizontal-padding;
+  @include mobile{
+    padding: 10px $layout-horizontal-padding-sm;
+  }
+}

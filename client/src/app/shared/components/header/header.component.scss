@@ -1,0 +1,101 @@
+@import "src/styles";
+.header-section{
+  background: #FFFFFF;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  @include mobile{
+    position: relative;
+  }
+}
+.header-top-sec{
+display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 5px $layout-horizontal-padding;
+  >div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    &.header-socials{
+      gap: 20px;
+    }
+    &>p>i{
+      margin-right: 5px;
+    }
+    i{
+      color: #1C75BC;
+    }
+  }
+}
+
+.header-bottom-sec{
+  border-top: 0.5px solid #DADADA;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px $layout-horizontal-padding;
+
+  .header-menu-items{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    >li:not(:last-child){
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      &:hover{
+background: rgba(28, 117,168, 0.3);
+      }
+    }
+
+    .header-call-to-action{
+
+    }
+  }
+}
+
+.header-chats{
+  background: #1C75BC;
+  border-radius: 50px;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  bottom: 30px;
+  left: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover{
+    transform: scale(1.2);
+  }
+
+  &.header-wa{
+    background: #27AE60;
+  }
+&.header-msg{
+  right: 10px;
+  left: auto;
+}
+  i{
+    font-size: 30px;
+
+  }
+}

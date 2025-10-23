@@ -1,0 +1,128 @@
+@import "src/styles";
+p{
+  color: #FFFFFF;
+}
+.footer-sec{
+  padding: $layout-vertical-padding, 0;
+
+  .footer-call-to-action{
+    background: #1C75BC;
+    text-align: center;
+    padding: $section-padding;
+    color: white;
+    h4{
+      font-family: 'Poppins', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 32px;
+    }
+    p{
+      margin: 30px 0;
+      color: #E6E6E6;
+    }
+  }
+
+  .bottom-footer{
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #1C75BC;
+    padding: $section-padding;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .footer-about{
+      color: #FFFFFF;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      >div{
+        flex-grow: 2;
+        width: calc((100% / 4) - 20px);
+        h6{
+          font-family: 'Poppins', sans-serif;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 21px;
+          margin-bottom: $section-text-margin-20;
+        }
+
+        img{
+          margin: $section-text-margin 0;
+        }
+
+        ul{
+          padding: 0;
+          list-style-type: none;
+          font-weight: 400;
+          line-height: 30px;
+          li{
+            &:hover{
+              color: rgba(255, 255, 255, 0.85);
+              transform: scale(1.1);
+              cursor: pointer;
+            }
+            &:active{
+              transform: scale(1);
+            }
+          }
+        }
+
+      }
+
+      @include tablet{
+        >div{
+          width: calc((100% / 2) - 20px);
+        }
+      }
+      @include mobile{
+        >div{
+          width: 100%;
+          li{
+            line-height: 30px;
+          }
+        }
+      }
+
+    }
+
+
+    .footer-socials{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+
+
+      i{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(0deg, rgba(28, 117, 188, 0.3), rgba(28, 117, 188, 0.3)), #FFFFFF;
+        border-radius: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 25px;
+        color: rgba(36, 36, 36, 0.5);
+
+        &:hover{
+          background: #FFFFFF;
+          color: #1C75BC;
+          cursor: pointer;
+          transform: scale(1.1);
+        }
+        &:active{
+          transform: scale(0.95);
+        }
+      }
+    }
+  }
+
+  @include mobile{
+    .footer-call-to-action, .bottom-footer{
+      padding: $section-padding-sm;
+    }
+  }
+}
+
+

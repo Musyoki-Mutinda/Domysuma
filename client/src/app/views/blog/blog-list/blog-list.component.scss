@@ -1,0 +1,23 @@
+@import "src/app/shared/styles/featured-design";
+@import "../../../shared/styles/general";
+
+.blog-list-sec{
+  padding: 0 0 60px 0 ;
+
+
+}
+.designs-cont{
+  padding: 10px $layout-horizontal-padding;
+
+  @include mobile{
+    padding: 10px $layout-horizontal-padding-sm;
+  }
+}
+
+
+.paginator-cont{
+  padding: 10px $layout-horizontal-padding;
+  @include mobile{
+    padding: 10px $layout-horizontal-padding-sm;
+  }
+}

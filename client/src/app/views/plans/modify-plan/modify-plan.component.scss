@@ -1,0 +1,43 @@
+@import "../plan-details/plan-details.component";
+.section-header {
+  h3 {
+    font-weight: 500;
+    font-size: 36px;
+    color: #231f20;
+  }
+}
+
+.top-sec {
+  .plan-desc {
+    border-radius: 10px;
+    padding: $padding-default;
+    background: white;
+    h4 {
+      margin-bottom: 20px;
+    }
+    button {
+      margin-top: 20px;
+    }
+  }
+  .floor-plans {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    h4 {
+      margin-bottom: 20px;
+    }
+    > div {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+  }
+}
+
+.modification-form {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}

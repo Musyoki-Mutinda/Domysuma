@@ -1,0 +1,178 @@
+<section class="plan-details-sec">
+  <section class="section-header">
+    <h2>4 Bedroom Bungalow</h2>
+    <p>Plan No# 2390</p>
+  </section>
+
+  <section class="top-sec">
+    <div>
+      <div class="slideshow">
+        <button class="btn-custom btn-custom-primary-outline">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+        <app-gallery [galleryId]="galleryId"></app-gallery>
+      </div>
+      <div class="blog-detail-socials">
+        <div class="blog-detail-socials-buttons">
+          <button class="btn-custom btn-custom-primary">Request Design</button>
+          <button
+            class="btn-custom btn-custom-primary-outline"
+            routerLink="../modify/1"
+          >
+            Modify Design
+          </button>
+          <button class="btn-custom btn-custom-primary-outline">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+        <div class="blog-detail-socials-share">
+          <p>Share</p>
+          <i class="fa-brands fa-facebook-f socials-md"></i>
+          <i class="fa-brands fa-pinterest-p socials-md"></i>
+          <i class="fa-brands fa-linkedin-in socials-md"></i>
+        </div>
+      </div>
+      <div class="key-specs">
+        <h4>Key Specs</h4>
+
+        <div class="key-spec-item">
+          <i class="fa-solid fa-tape"></i>
+          <p>3000 <br />Sq M</p>
+        </div>
+        <div class="key-spec-item">
+          <i class="fa-solid fa-tape"></i>
+          <p>300 m <br />Width</p>
+        </div>
+        <div class="key-spec-item">
+          <i class="fa-solid fa-tape"></i>
+          <p>10 m <br />Length</p>
+        </div>
+        <div class="key-spec-item">
+          <i class="fa-solid fa-bed"></i>
+          <p>3 <br />Bedroom</p>
+        </div>
+        <div class="key-spec-item">
+          <i class="fa-solid fa-bath"></i>
+          <p>2 <br />Bathrooms</p>
+        </div>
+        <div class="key-spec-item">
+          <i class="fa-solid fa-stairs"></i>
+          <p>2 <br />Floors</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="dsn-detail">
+        <h4>Design Details</h4>
+        <div>
+          <h5>Land Requirements</h5>
+          <ul>
+            <li>50x100</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Plan Approval Requirements</h5>
+          <ul>
+            <li>Title Deed</li>
+            <li>Survey Plan</li>
+            <li>Change of Use</li>
+            <li>Land Rates Clearance Certificate</li>
+            <li>Architectural Design</li>
+            <li>Structural Design</li>
+            <li>Architect's Practising Licence</li>
+            <li>Engineer's Practising Licence</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Approvals Needed</h5>
+          <ul>
+            <li>County government</li>
+            <li>NCA</li>
+            <li>NEMA</li>
+          </ul>
+        </div>
+
+        <button class="btn-custom btn-custom-primary">
+          Talk to an architect for free
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="mid-sec">
+    <div>
+      <div class="plan-desc">
+        <h4>Plan Description</h4>
+        <p>
+          Indoor-outdoor living at its best. This 3000 square metres design
+          makes it easy to move from inside to outside. The family room opens to
+          the back lanal with french doors, and so does the master suite. The
+          study opens to porch.
+        </p>
+        <button class="btn-custom btn-custom-primary-outline">
+          Talk to an architect for free
+        </button>
+      </div>
+
+      <div class="floor-plans">
+        <h4>Floor Plans</h4>
+        <div>
+          <app-gallery [galleryId]="plansGalleryId"></app-gallery>
+        </div>
+      </div>
+
+      <div class="additional-details">
+        <h4>Additional details</h4>
+        <div>
+          <h5>Kitchen features</h5>
+          <ul>
+            <li>Kitchen island</li>
+            <li>L-shaped</li>
+            <li>Penisula / eating bar</li>
+            <li>Walk in pantry</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Bedroom features</h5>
+          <ul>
+            <li>Double vanity sink</li>
+            <li>Separate tub and shower</li>
+            <li>Sitting area</li>
+            <li>Split bedrooms</li>
+            <li>Walk-in closet</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Lot features</h5>
+          <ul>
+            <li>Suited for view lot</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Additional features</h5>
+          <ul>
+            <li>Dining room</li>
+          </ul>
+        </div>
+
+        <button class="btn-custom btn-custom-primary-outline">
+          Talk to an architect for free
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="estimates">
+        <h5>Construction cost estimates</h5>
+        <button class="btn-custom btn-custom-primary-outline">Calculate</button>
+      </div>
+    </div>
+  </section>
+  <section class="bottom-sec">
+    <h4>Browse similar plans <span routerLink="/plans">View More</span></h4>
+    <div class="similar-plans">
+      <app-plan-item-card></app-plan-item-card>
+      <app-plan-item-card></app-plan-item-card>
+      <app-plan-item-card></app-plan-item-card>
+    </div>
+  </section>
+</section>
