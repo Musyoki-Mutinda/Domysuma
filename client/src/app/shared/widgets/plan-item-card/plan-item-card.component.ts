@@ -25,4 +25,13 @@ export class PlanItemCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isSaved = false;
+
+  toggleSave(btn: HTMLElement) {
+    this.isSaved = !this.isSaved;
+    btn.classList.add('clicked');
+    setTimeout(() => btn.classList.remove('clicked'), 300);
+  }
+
+
 }

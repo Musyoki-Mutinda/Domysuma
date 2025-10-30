@@ -1,44 +1,61 @@
 @import "src/styles";
-.featured-design{
-  padding: $section-padding;
-  background: linear-gradient(0deg, rgba(28, 117, 188, 0.1), rgba(28, 117, 188, 0.1)), #FFFFFF;
 
-  h2{
+.featured-design {
+  padding: $section-padding;
+  background: linear-gradient(0deg, rgba(28, 117, 188, 0.05), rgba(28, 117, 188, 0.05)), #FFFFFF;
+  text-align: flex-start;
+
+  h2 {
     font-family: 'Poppins', sans-serif;
     font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: rgba(28, 117, 188, 1);
   }
 
-  @include mobile{
+  @include mobile {
     padding: $section-padding-sm;
   }
 }
-.featured-design-items{
+
+.featured-design-items {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
+  flex-direction: column; // 👈 stack vertically
+  align-items: flex-start; // push items to the left
+  gap: 40px; // space between each card
   margin: $section-text-margin 0;
+  padding-left: 0%;
+  padding-right: 0;
 
   app-plan-item-card,
-  .custom-card-item{
-    flex: 0 0 calc(33.333333% - 20px);
-  }
-  @include tablet{
-    app-plan-item-card,
-    .custom-card-item{
-      flex: 0 0 calc(50% - 20px);
-    }
-  }
-  @include mobile{
-    app-plan-item-card,
-    .custom-card-item{
-      flex: 0 0 calc(100%);
+  .custom-card-item {
+    width: 50%;
+    max-width: 450px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
   }
 
+  @include tablet {
+    gap: 30px;
+    app-plan-item-card,
+    .custom-card-item {
+      width: 90%;
+    }
+  }
 
+  @include mobile {
+    gap: 24px;
+    app-plan-item-card,
+    .custom-card-item {
+      width: 100%;
+    }
+  }
 }
-
-

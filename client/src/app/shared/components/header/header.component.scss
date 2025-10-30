@@ -38,14 +38,21 @@ display: flex;
 .header-bottom-sec{
   border-top: 0.5px solid #DADADA;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding: 10px $layout-horizontal-padding;
+  position: relative;
+
+   /* Keep logo on the left */
+  img {
+    height: 60px;
+    flex-shrink: 0; /* creates space between logo and menu */
+  }
 
   .header-menu-items{
     padding: 0;
-    margin: 0;
+    margin-left: 180px;
+    margin-right: 40px;
     list-style-type: none;
     display: flex;
     align-items: center;
@@ -58,12 +65,22 @@ display: flex;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       &:hover{
-background: rgba(28, 117,168, 0.3);
+        background: rgba(28, 117,168, 0.3);
       }
     }
 
     .header-call-to-action{
+      background: #1C75BC;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
 
+      &:hover {
+        background: #155a8a;
+      }
     }
   }
 }

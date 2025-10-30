@@ -1,6 +1,13 @@
 <section class="plan-item-card-cont">
   <div class="plan-item-card-top">
     <img [src]="planData.img" [alt]="planData.title">
+
+
+    <!-- Love heart Button-->
+     <button class="save-btn" title="Save this plan">
+      <i [ngClass]="isSaved? 'fa-solid fa-heart':'fa-regular fa-heart' "></i>
+     </button>
+      
     <p>Plan ID: {{planData.id}}</p>
   </div>
 
@@ -34,8 +41,6 @@
   </div>
 
   <div class="plan-item-card-footer">
-    <p>Save plan <i class="fa-regular fa-heart"></i>  </p>
-
     <p routerLink="/plans/1">View More <i class="fa-solid fa-arrow-right-long"></i></p>
   </div>
 

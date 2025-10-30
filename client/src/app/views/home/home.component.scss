@@ -3,6 +3,7 @@
 @import "src/app/shared/styles/general";
 
 .home-video-sec{
+  position: relative;
   min-height: 80vh;
   background: rgba(0, 0, 0, 0.45);
   text-align: center;
@@ -16,7 +17,8 @@
   #myVideo{
     position: absolute;
     left: 0;
-    z-index: -1;
+    z-index: 0;
+    object-fit: cover;
     min-width: 100%;
 
     @include tablet{
@@ -26,9 +28,13 @@
   }
 
   .home-call-to-action-cont{
+    position: relative;
     display: inline-block;
     text-align: center;
     margin-top: 20vh;
+    z-index: 2;
+    color: #fff;
+    animation: fadeIn 1.5s ease-in-out;
     >h1{
       display: block;
       font-family: 'Poppins', sans-serif;
