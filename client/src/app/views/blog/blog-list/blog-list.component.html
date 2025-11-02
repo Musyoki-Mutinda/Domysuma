@@ -1,39 +1,63 @@
-<section class="blog-list-sec">
-  <section class="section-header">
-    <h2>Thoughts & Insights</h2>
-    <p>Check out some of the articles from our blog.</p>
-  </section>
+<section class="blog-page">
+  <!-- Blog header -->
+  <div class="blog-header">
+    <h1>Architecture & Design in Kenya</h1>
+    <p>
+      Curated stories, ideas, and projects redefining Kenya’s built environment
+    </p>
+  </div>
 
-  <section class="designs-cont">
-    <div class="featured-design-items">
-      <app-project-item-card
-        class="custom-card-item"
-        routerLink="/blog/1"
-      ></app-project-item-card>
-      <app-project-item-card
-        class="custom-card-item"
-        routerLink="/blog/1"
-      ></app-project-item-card>
-      <app-project-item-card
-        class="custom-card-item"
-        routerLink="/blog/1"
-      ></app-project-item-card>
-      <app-project-item-card
-        class="custom-card-item"
-        routerLink="/blog/1"
-      ></app-project-item-card>
-      <app-project-item-card
-        class="custom-card-item"
-        routerLink="/blog/1"
-      ></app-project-item-card>
-      <app-project-item-card
-        class="custom-card-item"
-        routerLink="/blog/1"
-      ></app-project-item-card>
+  <!-- Category Filter -->
+  <div class="blog-filters">
+    <button
+      *ngFor="let category of categories"
+      [class.active]="selectedCategory === category"
+      (click)="filterByCategory(category)"
+    >
+      {{ category }}
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="loading">
+    <p>Loading articles...</p>
+  </div>
+
+  <!-- No Results Message -->
+  <div class="no-results" *ngIf="!loading && blogPosts.length === 0">
+    <p>No articles found for this category.</p>
+  </div>
+
+  <!-- Blog Grid -->
+  <div class="blog-grid" *ngIf="!loading && blogPosts.length > 0">
+    <div class="blog-card" *ngFor="let post of blogPosts">
+      <div class="image-container">
+        <img [src]="post.image" [alt]="post.title" />
+      </div>
+
+      <div class="blog-card-content">
+        <p class="meta">
+          {{ post.date | date: 'longDate' }} · <span>{{ post.author }}</span>
+        </p>
+        <h3>{{ post.title }}</h3>
+        <p class="excerpt">{{ post.excerpt }}</p>
+
+        <!-- ✅ Use routerLink for local posts and href for external ArchDaily posts -->
+        <a
+          *ngIf="post.link?.startsWith('http'); else localLink"
+          [href]="post.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="read-more"
+        >
+          Read more <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+        <ng-template #localLink>
+          <a [routerLink]="['/blog', post.slug]" class="read-more">
+            Read more <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+        </ng-template>
+      </div>
     </div>
-  </section>
-
-  <div class="paginator-cont">
-    <app-paginator></app-paginator>
   </div>
 </section>

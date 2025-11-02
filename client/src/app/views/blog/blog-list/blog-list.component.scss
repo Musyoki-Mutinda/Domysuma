@@ -1,23 +1,165 @@
-@import "src/app/shared/styles/featured-design";
-@import "../../../shared/styles/general";
+@import "src/styles";
 
-.blog-list-sec{
-  padding: 0 0 60px 0 ;
+.blog-page {
+  padding: 60px $layout-horizontal-padding;
+  background: #f8f9fa; /* slightly lighter background to match ArchDaily style */
 
+  .blog-header {
+    text-align: center;
+    margin-bottom: 40px;
 
-}
-.designs-cont{
-  padding: 10px $layout-horizontal-padding;
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1C75BC;
+      margin-bottom: 10px;
+    }
 
-  @include mobile{
-    padding: 10px $layout-horizontal-padding-sm;
+    p {
+      color: #666;
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
   }
-}
 
+  .blog-filters {
+    text-align: center;
+    margin-bottom: 30px;
 
-.paginator-cont{
-  padding: 10px $layout-horizontal-padding;
-  @include mobile{
-    padding: 10px $layout-horizontal-padding-sm;
+    button {
+      border: none;
+      background: transparent;
+      padding: 10px 20px;
+      margin: 0 5px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background: rgba(28, 117, 188, 0.1);
+      }
+
+      &.active {
+        background: #1C75BC;
+        color: #fff;
+      }
+    }
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* responsive grid */
+    gap: 30px;
+  }
+
+  .blog-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-container {
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;
+      height: 200px; /* slightly shorter hero image for cards */
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .blog-card-content {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .meta {
+        color: #999;
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+
+      span {
+        color: #1C75BC;
+        font-weight: 500;
+      }
+
+      h3 {
+        font-size: 20px;
+        margin: 8px 0 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #242424;
+      }
+
+      .excerpt {
+        font-size: 15px;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      .read-more {
+        color: #1C75BC;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+
+        i {
+        font-size: 14px;
+        transition: transform 0.3s ease;
+        }
+
+        &:hover i {
+        transform: translateX(4px);
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    padding: 40px $layout-horizontal-padding-sm;
+
+    .blog-grid {
+      gap: 20px;
+    }
+
+    .blog-card {
+      img {
+        height: 180px;
+      }
+
+      .blog-card-content {
+        padding: 16px;
+        h3 {
+          font-size: 18px;
+        }
+        .excerpt {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }

@@ -1,7 +1,7 @@
 <section>
 
+  <!-- Hero Section -->
   <section class="home-video-sec">
-
     <video autoplay muted loop id="myVideo">
       <source src="assets/videos/Hero_section_construction_vid.mp4" type="video/mp4">
     </video>
@@ -10,68 +10,97 @@
 
     <div class="home-call-to-action-cont">
       <h1>Domysuma Architects</h1>
-      <!--<button class="btn-custom btn-custom-primary">Explore Design Ideas <i class="fa-solid fa-arrow-right-long"></i></button>-->
     </div>
-
   </section>
 
-
+  <!-- Featured Design + Blog Preview -->
   <section class="featured-design">
     <h2>Featured Design Ideas</h2>
 
     <div class="featured-design-items">
-      <app-plan-item-card></app-plan-item-card>
-      <app-plan-item-card></app-plan-item-card>
-      <app-plan-item-card></app-plan-item-card>
+      <!-- Left: Design Cards -->
+      <div class="design-cards">
+        <app-plan-item-card></app-plan-item-card>
+        <app-plan-item-card></app-plan-item-card>
+        <app-plan-item-card></app-plan-item-card>
+      </div>
+
+      <!-- Right: Blog Preview -->
+      <div class="blog-preview" *ngIf="!loading">
+        <h3>From Our Blog</h3>
+
+        <div
+          class="blog-card"
+          *ngFor="let post of featuredBlogs.slice(0, 2)"
+          (click)="openPost(post.link)"
+        >
+          <img [src]="post.image" [alt]="post.title" />
+          <h4>{{ post.title }}</h4>
+          <p class="meta">{{ post.date | date: 'mediumDate' }} · {{ post.author }}</p>
+        </div>
+
+        <a routerLink="/blog" class="view-all">View all →</a>
+      </div>
+
+      <!-- Optional loading message -->
+      <div class="loading-message" *ngIf="loading">
+        <p>Loading latest blog posts...</p>
+      </div>
     </div>
   </section>
 
+  <!-- Why Choose Us -->
+  <section class="services-cards-sec">
+    <h3>Why Choose Domysuma Architects</h3>
+    <div class="services-cont">
+      <div class="services-card">
+        <i class="fa-solid fa-circle-check"></i>
+        <div>
+          <h4>Quality</h4>
+          <p>Quality services at all times</p>
+        </div>
+      </div>
 
-<section class="why-us-sec">
-  <h3>Why Choose Domysuma Architects</h3>
-  <div class="services-cont">
-    <div class="services-card">
-      <i class="fa-solid fa-circle-check"></i>
-      <div>
-        <h4>Quality</h4>
-        <p>Quality services at all times</p>
+      <div class="services-card">
+        <i class="fa-solid fa-lock"></i>
+        <div>
+          <h4>Integrity</h4>
+          <p>Doing the right thing always</p>
+        </div>
+      </div>
+
+      <div class="services-card">
+        <i class="fa-solid fa-user-group"></i>
+        <div>
+          <h4>People</h4>
+          <p>People come first - our clients and employees come first. They are the reason we are here.</p>
+        </div>
+      </div>
+
+      <div class="services-card">
+        <i class="fa-solid fa-heart"></i>
+        <div>
+          <h4>Passion</h4>
+          <p>We do everything with passion. Otherwise, what is the point?</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="services-card">
-      <i class="fa-solid fa-lock"></i>
-      <div>
-        <h4>Integrity</h4>
-        <p>Doing the right thing always</p>
-      </div>
-    </div>
-
-    <div class="services-card">
-      <i class="fa-solid fa-user-group"></i>
-      <div>
-        <h4>People</h4>
-        <p>People come first - our clients and employees come first. They are the reason we are here.</p>
-      </div>
-    </div>
-
-    <div class="services-card">
-      <i class="fa-solid fa-heart"></i>
-      <div>
-        <h4>Passion</h4>
-        <p>We do everything with passion. Otherwise, what is the point?</p>
-      </div>
-    </div>
+  <!-- Quick Links -->
+  <section class="home-quick-links-sec">
+  <div>
+    <h3>Welcome to Domysuma Architects</h3>
+    <p>Find your dream home today</p>
+    <button
+      class="btn-custom btn-custom-primary-outline"
+      routerLink="/plans"
+    >
+      <i class="fa-solid fa-magnifying-glass"></i>
+      Browse from over 10,000 plans
+    </button>
   </div>
 </section>
 
 
-<section class="home-quick-links-sec">
-    <div>
-<h3>Welcome to Domysuma Architects</h3>
-      <p>Find your dream home today</p>
-      <button class="btn-custom btn-custom-primary-outline"><i class="fa-solid fa-magnifying-glass"></i> Browse from over 10,000 plans</button>
-    </div>
-
-  </section>
-
-
+</section>
