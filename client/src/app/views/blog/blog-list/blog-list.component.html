@@ -42,7 +42,7 @@
         <h3>{{ post.title }}</h3>
         <p class="excerpt">{{ post.excerpt }}</p>
 
-        <!-- ✅ Use routerLink for local posts and href for external ArchDaily posts -->
+        <!-- ✅ Use routerLink for local posts and href for external posts -->
         <a
           *ngIf="post.link?.startsWith('http'); else localLink"
           [href]="post.link"

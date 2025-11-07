@@ -1,1 +1,45 @@
-<p>project-details works!</p>
+<section class="project-details">
+
+  <!-- Hero Section -->
+  <div class="hero" [style.backgroundImage]="'url(' + project.heroImage + ')'">
+    <div class="overlay">
+      <h1>{{ project.title }}</h1>
+      <p class="category">{{ categorySlug | titlecase }}</p>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <p><strong>Location:</strong> {{ project.location }}</p>
+    <p><strong>Year:</strong> {{ project.year }}</p>
+    <p><strong>Status:</strong> {{ project.status }}</p>
+  </div>
+
+  <!-- Description -->
+  <div class="description">
+    <h2>About This Project</h2>
+    <p>{{ project.description }}</p>
+  </div>
+
+  <!-- Gallery -->
+  <div class="gallery-section">
+    <h2>Project Gallery</h2>
+    <div class="image-grid">
+      <img *ngFor="let img of project.galleryImages" [src]="img" alt="">
+    </div>
+  </div>
+
+  <!-- Floor Plans -->
+  <div class="plans-section" *ngIf="project.floorPlanImages.length > 0">
+    <h2>Floor Plans</h2>
+    <div class="image-grid">
+      <img *ngFor="let img of project.floorPlanImages" [src]="img" alt="">
+    </div>
+  </div>
+
+  <!-- Back Link -->
+  <a class="back-link" [routerLink]="['/projects', categorySlug]">
+    ← Back to {{ categorySlug | titlecase }}
+  </a>
+
+</section>

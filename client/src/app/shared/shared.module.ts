@@ -11,6 +11,7 @@ import { GalleryComponent } from './widgets/gallery/gallery.component';
 import {GalleryModule} from "ng-gallery";
 
 
+
 const components = [
   HeaderComponent,
   FooterComponent,
