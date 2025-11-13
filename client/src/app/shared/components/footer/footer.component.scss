@@ -62,11 +62,11 @@ p {
      =========================== */
   .bottom-footer {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #1C75BC;
-    padding: 35px 25px 20px 25px; /* reduced slightly */
+    padding: 25px 15px 10px 10px; /* reduced slightly */
     display: flex;
     flex-direction: column;
     gap: 10px;
-    flex: 0.9; /* slightly shorter than call-to-action */
+    flex: 0.6; /* slightly shorter than call-to-action */
 
     /* --- About Links --- */
     .footer-about {

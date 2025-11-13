@@ -6,47 +6,94 @@
 .home-video-sec {
   position: relative;
   min-height: 80vh;
-  background: rgba(0, 0, 0, 0.45);
-  text-align: center;
-  padding: 0 $layout-horizontal-padding;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 $layout-horizontal-padding;
+
+  /* Each slide image */
+  .hero-slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+}
 
-  #myVideo {
+.hero-slideshow img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 0;
+
+  &.active {
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
+
+  /* Overlay tint */
+  .overlay {
     position: absolute;
+    top: 0;
     left: 0;
-    z-index: 0;
-    object-fit: cover;
-    min-width: 100%;
-
-    @include tablet {
-      min-height: 100%;
-    }
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
   }
 
+  /* Text + dots container */
   .home-call-to-action-cont {
     position: relative;
-    display: inline-block;
+    z-index: 3;
     text-align: center;
-    margin-top: 20vh;
-    z-index: 2;
+    margin-top: 15vh;
     color: #fff;
-    animation: fadeIn 1.5s ease-in-out;
 
-    > h1 {
-      display: block;
+    h1 {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
       font-size: 64px;
-      color: white;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+
+      @include mobile {
+        font-size: 40px;
+      }
     }
 
-    @include mobile {
-      h1 {
-        font-size: 40px;
+    /* Dots */
+    .hero-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+
+      span {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+
+        &.active {
+          background: #ffffff;
+          transform: scale(1.2);
+        }
+
+        &:hover {
+          background: #ffffff;
+        }
       }
     }
   }
@@ -55,6 +102,88 @@
     padding: 10px $layout-horizontal-padding-sm;
   }
 }
+
+
+/* ------------------ ABOUT US SECTION ------------------ */
+.about-us-sec {
+  padding: 50px $layout-horizontal-padding;
+  background: #f9f9f9;
+
+  .about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .about-text {
+    flex: 1;
+    min-width: 300px;
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #1c75bc;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 15px;
+      max-width: 600px;
+    }
+
+    .btn-custom {
+      margin-top: 20px;
+      font-weight: 600;
+    }
+  }
+
+  .about-image {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+
+    img {
+    width: 100%;
+    max-width: 450px;
+    max-height: 350px; /* 👈 limits vertical size */
+    object-fit: cover; /* keeps proportions clean */
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+    &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+  @include tablet {
+    .about-content {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+
+    .about-text {
+      h2 {
+        font-size: 28px;
+      }
+    }
+  }
+
+  @include mobile {
+    padding: 60px $layout-horizontal-padding-sm;
+  }
+}
+
+
 
 /* ------------------ FEATURED DESIGN + BLOG ------------------ */
 .featured-design {
@@ -71,32 +200,35 @@
 
   .featured-design-items {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: space-between;
+    grid-template-columns: 5.5fr 2fr; /* 👈 makes design cards wider */
+    gap: 60px; /* slightly more breathing space between sections */
     align-items: start;
-    gap: 20px;
   }
 
   /* Left section – design cards */
   .design-cards {
     display: flex;
     flex-direction: column;
-    flex: 2;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 55px;
+
+    /* 👇 makes individual cards visually larger */
+    app-plan-item-card {
+      transform: scale(1.09);
+      transform-origin: left;
+    }
   }
 
   /* Right section – blog previews */
   .blog-preview {
     display: flex;
     flex-direction: column;
-    flex: 1;
     background: #f9f9f9;
     border-radius: 10px;
-    padding: 20px;
+    padding: 25px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    /* 👇 gently pushes blog section rightwards */
+    margin-left: 3px;
 
     h3 {
       font-size: 20px;
@@ -109,17 +241,16 @@
       margin-bottom: 20px;
       cursor: pointer;
       transition: transform 0.2s ease-in-out;
-      align-items: flex-end;
 
       &:hover {
         transform: translateY(-3px);
       }
 
       img {
-        width: 100%;
-        height: 150px;
+        width: 300px;
+        height: 200px;
         object-fit: cover;
-        border-radius: 8px;
+        border-radius: 16px;
         margin-bottom: 10px;
       }
 
@@ -151,15 +282,16 @@
 
   @include tablet {
     .featured-design-items {
-      flex-direction: column;
+      grid-template-columns: 1fr;
     }
 
     .blog-preview {
-      width: 100%;
+      margin-left: 0;
       margin-top: 30px;
     }
   }
 }
+
 
 /* ------------------ WHY CHOOSE US SECTION ------------------ */
 .services-cards-sec {
@@ -234,7 +366,7 @@
     flex-grow: 1;
     width: calc((100% / 4) - 25px);
     min-height: 260px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.822);
     border-radius: 16px;
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);

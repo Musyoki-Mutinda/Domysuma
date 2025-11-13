@@ -38,6 +38,7 @@ display: flex;
 .header-bottom-sec{
   border-top: 0.5px solid #DADADA;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding: 10px $layout-horizontal-padding;
@@ -45,19 +46,18 @@ display: flex;
 
    /* Keep logo on the left */
   img {
-    height: 60px;
+    height: 80px;
     flex-shrink: 0; /* creates space between logo and menu */
   }
 
   .header-menu-items{
     padding: 0;
-    margin-left: 180px;
-    margin-right: 40px;
     list-style-type: none;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 5px;
+    margin-left: auto;
 
     >li {
       padding: 10px 20px;

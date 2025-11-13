@@ -7,20 +7,50 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  /* BLOG DATA */
   featuredBlogs: any[] = [];
-  loading = true;  // ✅ Added to match your template
+  loading = true;
   error = false;
+
+  /* HERO CAROUSEL */
+  images = [
+    'assets/carousel/carousel_1.jpg',
+    'assets/carousel/carousel_2.jpg',
+    'assets/carousel/carousel_3.jpg',
+    'assets/carousel/carousel_4.jpg',
+    'assets/carousel/carousel_5.jpg',
+    'assets/carousel/carousel_6.jpg',
+    'assets/carousel/carousel_7.jpg',
+  ];
+  currentIndex = 0;
+  private carouselInterval: any;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    this.startCarousel();
     this.fetchFeaturedBlogs();
   }
 
-  /**
-   * Fetches latest blog posts (2 only)
-   * from ArchDaily feed as featured blogs
-   */
+  ngOnDestroy(): void {
+    if (this.carouselInterval) {
+      clearInterval(this.carouselInterval);
+    }
+  }
+
+   /* CAROUSEL LOGIC */
+  startCarousel(): void {
+    this.carouselInterval = setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }, 8000); // Change image every 8 seconds
+  }
+
+  selectSlide(index: number): void {
+    this.currentIndex = index;
+  }
+
+  /* BLOG FETCHING */
   fetchFeaturedBlogs(): void {
     const rssToJsonUrl =
       'https://api.rss2json.com/v1/api.json?rss_url=https://www.archdaily.com/feed.xml';
@@ -28,7 +58,6 @@ export class HomeComponent implements OnInit {
     this.http.get<any>(rssToJsonUrl).subscribe({
       next: (res) => {
         if (res.status === 'ok' && res.items?.length) {
-          // Pick only the first two posts for the homepage
           this.featuredBlogs = res.items.slice(0, 2).map((item: any) => ({
             title: item.title,
             author: item.author || 'ArchDaily',
@@ -37,9 +66,6 @@ export class HomeComponent implements OnInit {
             excerpt: item.contentSnippet || '',
             link: item.link
           }));
-        } else {
-          console.warn('⚠️ No blog data found for homepage.');
-          this.featuredBlogs = [];
         }
         this.loading = false;
       },
@@ -51,9 +77,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  /**
-   * Opens external link safely (since templates can’t use window directly)
-   */
   openPost(url: string): void {
     window.open(url, '_blank');
   }

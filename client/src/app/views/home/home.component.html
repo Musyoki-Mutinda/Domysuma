@@ -1,17 +1,64 @@
 <section>
 
   <!-- Hero Section -->
-  <section class="home-video-sec">
-    <video autoplay muted loop id="myVideo">
-      <source src="assets/videos/Hero_section_construction_vid.mp4" type="video/mp4">
-    </video>
+<section class="home-video-sec">
 
-    <div class="overlay"></div>
+  <!-- Background Image Slideshow -->
+   <div class="hero-slideshow">
+    <img
+      *ngFor="let img of images; let i = index"
+      [src]="img"
+      [class.active]="i === currentIndex"
+      alt="Hero background"
+    />
+  </div>
 
-    <div class="home-call-to-action-cont">
-      <h1>Domysuma Architects</h1>
+  <div class="overlay"></div>
+
+  <div class="home-call-to-action-cont">
+    <h1>Domysuma Architects</h1>
+
+    <!-- Navigation Dots -->
+    <div class="hero-dots">
+      <span
+        *ngFor="let img of images; let i = index"
+        [class.active]="i === currentIndex"
+        (click)="selectSlide(i)"
+      ></span>
     </div>
-  </section>
+  </div>
+
+</section>
+
+
+<!-- About Us Section -->
+<section class="about-us-sec">
+  <div class="about-content">
+    <div class="about-text">
+      <h2>About Us</h2>
+      <p>
+        At <strong>Domysuma Architects</strong>, we are passionate about creating
+        timeless architectural solutions that balance functionality, innovation,
+        and aesthetic beauty. With decades of combined experience, our team
+        delivers visionary designs that redefine spaces across residential,
+        commercial, and institutional projects.
+      </p>
+      <p>
+        From concept to completion, we collaborate closely with our clients to
+        transform ideas into enduring landmarks, each project a reflection of
+        purpose, precision, and creativity.
+      </p>
+      <button routerLink="/about" class="btn-custom btn-custom-primary-outline">
+        Learn More →
+      </button>
+    </div>
+
+    <div class="about-image">
+      <img src="assets/images/AboutUs_Placeholder.jpg" alt="About Domysuma Architects" />
+    </div>
+  </div>
+</section>
+
 
   <!-- Featured Design + Blog Preview -->
   <section class="featured-design">

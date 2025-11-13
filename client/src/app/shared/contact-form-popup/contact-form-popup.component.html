@@ -1,0 +1,22 @@
+<div class="popup-overlay" (click)="closePopup()">
+  <div class="popup-container" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closePopup()">&times;</button>
+    <h2>Talk to an Architect</h2>
+
+    <form class="contact-form" action="info@domysumaarchitects.com" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message or Booking Inquiry" rows="5" required></textarea>
+
+      <input type="text" name="project" placeholder="Project Type (optional)" />
+      <input type="text" name="location" placeholder="Location (optional)" />
+
+      <!-- Anti-spam & redirect -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://www.lixinevela.com/thankyou.html">
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</div>
+

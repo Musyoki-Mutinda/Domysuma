@@ -17,16 +17,22 @@
 
   </div>
   <div class="header-bottom-sec">
-    <img src="./assets/icons/domysuma-logo.svg" alt="Domysuma Logo">
+    <a routerLink="/home">
+      <img src="./assets/icons/domysuma-logo.svg" alt="Domysuma Logo">
+    </a>
     <ul class="header-menu-items">
       <li routerLink="/home">Home</li>
-      <li>About</li>
+      <li routerLink="/about">About</li>
       <!--<li routerLink="/plans">Design Ideas</li>-->
       <li routerLink="/services">Services</li>
       <li routerLink="/projects">Projects</li>
       <li routerLink="/blog">Blog</li>
       <!--<li>Contact</li>-->
-      <li class="btn-custom btn-custom-primary header-call-to-action">Talk To an Architect Free!</li>
+      <button class="btn-custom btn-custom-primary header-call-to-action" (click)="showContactForm = true">Talk To an Architect Free!</button>
+      <app-contact-form-popup
+        *ngIf="showContactForm"
+        (close)="showContactForm = false">
+      </app-contact-form-popup>
     </ul>
   </div>
 
@@ -37,7 +43,7 @@
     <i class="fa-solid fa-comment-dots"></i>
   </div>
 
-  <app-bread-crumb></app-bread-crumb>
+  <!--<app-bread-crumb></app-bread-crumb>-->
 
 </section>
 

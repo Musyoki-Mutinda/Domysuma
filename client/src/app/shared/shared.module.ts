@@ -4,6 +4,7 @@ import {HeaderComponent} from "./components/header/header.component";
 import {FooterComponent} from "./components/footer/footer.component";
 import { PlanItemCardComponent } from './widgets/plan-item-card/plan-item-card.component';
 import {RouterModule} from "@angular/router";
+import { ContactFormPopupComponent } from './contact-form-popup/contact-form-popup.component';
 import { PaginatorComponent } from './widgets/paginator/paginator.component';
 import { BreadCrumbComponent } from './widgets/bread-crumb/bread-crumb.component';
 import { ProjectItemCardComponent } from './widgets/project-item-card/project-item-card.component';
@@ -19,9 +20,9 @@ const components = [
   ProjectItemCardComponent,
   PaginatorComponent,
   BreadCrumbComponent,
-  GalleryComponent
-
-]
+  GalleryComponent,
+  ContactFormPopupComponent
+];
 
 const modules = [
   RouterModule,
