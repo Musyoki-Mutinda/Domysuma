@@ -1,31 +1,52 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; // ✅ REQUIRED for fetching the RSS feed
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { LayoutModule } from './views/layout/layout.module';
+
+// Shared / layout modules
 import { SharedModule } from './shared/shared.module';
+import { LayoutModule } from './views/layout/layout.module';
+
+// Gallery
 import { GalleryModule } from 'ng-gallery';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
+
+// Auth
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent   // Only AppComponent is declared here
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+
+    // Third-party
     GalleryModule,
+
+    // Routing
     AppRoutingModule,
+
+    // Feature / shared
     SharedModule,
     LayoutModule,
-    HttpClientModule // ✅ must be added here
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

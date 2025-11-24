@@ -1,0 +1,13 @@
+/* Light mode */
+:host {
+  display: block;
+  background: #ffffff;
+  color: #000;
+  min-height: 100vh;
+}
+
+/* Dark mode */
+body.dark-mode :host {
+  background: #121212 !important;
+  color: #e0e0e0 !important;
+}

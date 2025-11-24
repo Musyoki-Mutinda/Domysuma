@@ -4,22 +4,28 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { SharedModule } from '../../shared/shared.module';
 import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
+import { SharedModule } from '../../shared/shared.module';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     LayoutComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
-    CommonModule,          // ✅ Needed for *ngIf, *ngFor, and pipes like 'date'
-    HttpClientModule,      // ✅ Enables HTTP requests
+    CommonModule,
+    HttpClientModule,
     RouterModule,
     LayoutRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
+  ],
+  exports: [
+    LayoutComponent   // optionally export this if AppModule uses it
   ]
 })
-export class LayoutModule { }
+export class LayoutModule {}

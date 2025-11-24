@@ -7,77 +7,72 @@
 .services-cards-sec {
   padding: 60px $layout-horizontal-padding;
 
-  h3 {
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    margin-bottom: 40px;
-    text-align: center;
-    color: rgba(28, 117, 188, 1);
-  }
-
   .services-cont {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;      // ⬅ ensures vertical scroll-stack
+    gap: 40px;                   // ⬅ more spacing improves animation
+    position: relative;
+  }
+
+  .services-card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 40px 20px;
+    height: 200px;
     gap: 20px;
+    width: 100%;                 // ⬅ full-width for scroll stacking
 
-    .services-card {
-      cursor: pointer;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 40px 20px;
-      gap: 20px;
-      flex-grow: 0.5;
-      width: calc((100% / 2) - 20px);
+    background: linear-gradient(
+        0deg,
+        rgba(28, 117, 188, 0.05),
+        rgba(28, 117, 188, 0.05)
+      ),
+      #ffffff;
+    border-radius: 10px;
+    transition: transform 0.35s ease-out;  // ⬅ scroll animation
+    will-change: transform;
 
-      background: linear-gradient(
-          0deg,
-          rgba(28, 117, 188, 0.05),
-          rgba(28, 117, 188, 0.05)
-        ),
-        #ffffff;
-      border-radius: 10px;
+    div {
+      flex-grow: 1;
 
-      div {
-        flex-grow: 1;
-        width: calc(100% - 80px);
-        h4 {
-          font-family: "Poppins", sans-serif;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 25px;
-        }
-        p {
-          font-size: 14px;
-        }
+      h4 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        font-size: 40px;
       }
 
-      &:hover {
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        transform: scale(1.01);
-        h4 {
-          color: #1c75bc;
-        }
-        i {
-          background: #1c75bc;
-          color: #ffffff;
-        }
+      p {
+        font-size: 24px;
       }
+    }
 
-      @include tablet {
-        width: calc((100% / 2) - 20px);
+    &:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      transform: scale(1.01); // hover scale sits on top of scroll transform
+      h4 {
+        color: #1c75bc;
       }
+      i {
+        background: #1c75bc;
+        color: #ffffff;
+      }
+    }
 
-      @include mobile {
-        width: 100%;
-      }
+    @include mobile {
+      width: 100%;
+      padding: 30px 15px;
     }
   }
 
   @include mobile {
     padding: 10px $layout-horizontal-padding-sm;
   }
+}
+
+/* === Scroll-stack class === */
+.scroll-stack-item {
+  transition: transform 0.35s ease-out;
+  will-change: transform;
 }

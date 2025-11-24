@@ -6,82 +6,21 @@
 
   <section class="services-cards-sec">
     <div class="services-cont">
-      <div class="services-card" routerLink="/services/1">
-        <i class="fa-solid fa-compass-drafting icon-custom-with-bg"></i>
+      
+      <div
+        class="services-card scroll-stack-item"
+        *ngFor="let s of services; let i = index"
+        [ngStyle]="getCardStyle(i)"
+        [routerLink]="s.route ? s.route : null"
+      >
+        <i class="icon-custom-with-bg fa-solid" [ngClass]="s.icon"></i>
+
         <div>
-          <h4>Architectural Design</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
+          <h4>{{ s.title }}</h4>
+          <p>{{ s.description }}</p>
         </div>
       </div>
 
-      <div class="services-card">
-        <i class="icon-custom-with-bg fa-solid fa-briefcase"></i>
-        <div>
-          <h4>Structural Design</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
-        </div>
-      </div>
-
-      <div class="services-card">
-        <i class="icon-custom-with-bg fa-solid fa-briefcase"></i>
-        <div>
-          <h4>Project Management</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
-        </div>
-      </div>
-
-      <div class="services-card">
-        <i class="icon-custom-with-bg fa-solid fa-briefcase"></i>
-        <div>
-          <h4>Structural Design</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
-        </div>
-      </div>
-
-      <div class="services-card">
-        <i class="icon-custom-with-bg fa-solid fa-briefcase"></i>
-        <div>
-          <h4>Architectural Design</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
-        </div>
-      </div>
-
-      <div class="services-card">
-        <i class="fa-solid fa-trowel-bricks icon-custom-with-bg"></i>
-        <div>
-          <h4>Construction</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
-        </div>
-      </div>
-
-      <div class="services-card">
-        <i class="icon-custom-with-bg fa-solid fa-briefcase"></i>
-        <div>
-          <h4>Structural Design</h4>
-          <p>
-            The philosophy of architecture is a branch of philosophy of art,
-            dealing with aesthetic value of architecture
-          </p>
-        </div>
-      </div>
     </div>
   </section>
 </section>

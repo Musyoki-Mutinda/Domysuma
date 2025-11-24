@@ -3,29 +3,24 @@
 .about-page {
   position: relative;
   padding: 80px $layout-horizontal-padding;
-  background-color: #fdfdfd; /* keep soft white base */
+  background-color: #fdfdfd;
   color: #333;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
 
-  /* 🌄 Full-page blended background image */
+  /* 🌄 Full-page background logo */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/assets/about/domysuma-logo.svg'); /* ✅ global path */
-    background-size: cover; /* stretch evenly */
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.07; /* 🔆 control how visible the image is */
+    inset: 0; /* shorthand for top/right/bottom/left = 0 */
+    background: url('/assets/about/domysuma-logo.svg') center/contain no-repeat; 
+    background-size: 600px auto; 
+    height: 500px;
+    opacity: 0.15; /* subtle, but visible */
     z-index: 0;
-    mix-blend-mode: lighten; /* softly blends with background color */
   }
 
-  /* ensure all page content stays above the background image */
+  /* Keep content above background */
   > * {
     position: relative;
     z-index: 1;
@@ -40,18 +35,20 @@
     margin-bottom: 100px;
 
     &:nth-child(even) {
-      flex-direction: row-reverse; /* Alternate layout */
+      flex-direction: row-reverse;
     }
 
     .about-text {
       flex: 1;
+
       h2 {
         font-size: 32px;
         color: #1c75bc;
         margin-bottom: 20px;
       }
 
-      p, li {
+      p,
+      li {
         font-size: 16px;
         line-height: 1.7;
         color: #555;
@@ -78,8 +75,8 @@
 
       img {
         width: 100%;
-        max-width: 450px;
-        height: 320px;
+        max-width: 350px;
+        height: 200px;
         border-radius: 10px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         object-fit: cover;
@@ -90,14 +87,14 @@
   /* TEAM SECTION */
   .our-team .team-gallery {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     gap: 10px;
     margin-top: 20px;
 
     img {
-      width: 120px;
-      height: 120px;
+      width: 180px;
+      height: 180px;
       object-fit: cover;
       border-radius: 50%;
       border: 3px solid #1c75bc;
@@ -109,6 +106,7 @@
     }
   }
 
+  /* Responsive Adjustments */
   @include tablet {
     .about-section {
       flex-direction: column;
@@ -122,6 +120,7 @@
 
   @include mobile {
     padding: 40px $layout-horizontal-padding-sm;
+
     .about-section {
       gap: 20px;
       margin-bottom: 60px;

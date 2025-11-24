@@ -1,34 +1,55 @@
 <section class="header-section">
   <div class="header-top-sec">
-    <div class="header-socials">
-    
-    </div>
+
+    <div class="header-socials"></div>
+    <div></div>
 
     <div>
-      
-    </div>
-
-    <div>
-      <p><i class="fa-regular fa-user"></i> Login</p>
+      <p><i class="fa-regular fa-user"></i><button class="login-btn" (click)="openLogin()">Login</button></p>
       <p><i class="fa-regular fa-heart"></i> Saved</p>
-      <p><i class="fa-solid fa-gear"></i> Settings</p>
-    </div>
 
+      <li class="dropdown">
+        <button class="settings-btn" (click)="toggleDropdown()">
+          <i class="fa-solid fa-gear"></i> Settings
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <ul class="dropdown-menu" [class.show]="dropdownOpen">
+
+          <li (click)="openPreferences()">Preferences</li>
+
+          <li class="dark-mode-toggle">
+            <span>Dark Mode</span>
+            <label class="switch">
+              <input type="checkbox" (change)="toggleDarkMode($event)" [checked]="isDarkMode">
+              <span class="slider round"></span>
+            </label>
+          </li>
+
+          <li (click)="openHelpCenter()">Help Center</li>
+        </ul>
+      </li>
+    </div>
 
   </div>
+
   <div class="header-bottom-sec">
     <a routerLink="/home">
       <img src="./assets/icons/domysuma-logo.svg" alt="Domysuma Logo">
     </a>
+
     <ul class="header-menu-items">
       <li routerLink="/home">Home</li>
-      <li routerLink="/about">About</li>
-      <!--<li routerLink="/plans">Design Ideas</li>-->
-      <li routerLink="/services">Services</li>
       <li routerLink="/projects">Projects</li>
+      <li routerLink="/services">Services</li>
+      <li routerLink="/about">About</li>
       <li routerLink="/blog">Blog</li>
-      <!--<li>Contact</li>-->
-      <button class="btn-custom btn-custom-primary header-call-to-action" (click)="showContactForm = true">Talk To an Architect Free!</button>
+
+      <button class="btn-custom btn-custom-primary header-call-to-action"
+              (click)="showContactForm = true">
+        Talk To an Architect Free!
+      </button>
+
       <app-contact-form-popup
         *ngIf="showContactForm"
         (close)="showContactForm = false">
@@ -39,11 +60,14 @@
   <div class="header-chats header-wa">
     <i class="fa-brands fa-whatsapp"></i>
   </div>
-  <div class="header-chats header-msg ">
+
+  <div class="header-chats header-msg">
     <i class="fa-solid fa-comment-dots"></i>
   </div>
 
-  <!--<app-bread-crumb></app-bread-crumb>-->
+  <app-login-modal
+    *ngIf="showLoginModal"
+    (close)="showLoginModal = false">
+  </app-login-modal>
 
 </section>
-

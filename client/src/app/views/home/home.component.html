@@ -59,20 +59,20 @@
   </div>
 </section>
 
-
-  <!-- Featured Design + Blog Preview -->
+ 
+  <!-- Featured Design + Blog Preview 
   <section class="featured-design">
     <h2>Featured Design Ideas</h2>
 
     <div class="featured-design-items">
-      <!-- Left: Design Cards -->
+      
       <div class="design-cards">
         <app-plan-item-card></app-plan-item-card>
         <app-plan-item-card></app-plan-item-card>
         <app-plan-item-card></app-plan-item-card>
       </div>
 
-      <!-- Right: Blog Preview -->
+      
       <div class="blog-preview" *ngIf="!loading">
         <h3>From Our Blog</h3>
 
@@ -89,16 +89,19 @@
         <a routerLink="/blog" class="view-all">View all →</a>
       </div>
 
-      <!-- Optional loading message -->
+      
       <div class="loading-message" *ngIf="loading">
         <p>Loading latest blog posts...</p>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Why Choose Us -->
   <section class="services-cards-sec">
-    <h3>Why Choose Domysuma Architects</h3>
+    <h3 class="typing-title">
+      Why Choose Domysuma <span class="typing-word">{{ currentWord }}</span><span class="cursor">|</span>
+    </h3>
+
     <div class="services-cont">
       <div class="services-card">
         <i class="fa-solid fa-circle-check"></i>
@@ -134,7 +137,63 @@
     </div>
   </section>
 
-  <!-- Quick Links -->
+
+
+  <!-- Design Philosophy Section -->
+  <section class="about-us-sec design-philosophy-sec">
+    <div class="about-content reversed">
+      
+      <!-- Image on the Left -->
+      <div class="about-image">
+        <img src="assets/images/DesignPhilosophy_Placeholder.jpg" alt="Domysuma Design Philosophy" />
+      </div>
+
+      <!-- Text on the Right -->
+      <div class="about-text">
+        <h2>Our Design Philosophy</h2>
+        <p>
+          At <strong>Domysuma Architects</strong>, every design begins with
+          understanding how people live, move, and interact with their
+          environments. Our philosophy blends functionality, creativity, and
+          purpose to craft spaces that elevate everyday experiences.
+        </p>
+
+        <p>
+          We believe architecture should be timeless. Each project we undertake
+          balances aesthetic excellence, structural integrity, and sustainable
+          design principles—resulting in spaces that inspire, endure, and
+          transform the communities they serve.
+        </p>
+
+        <button routerLink="/services" class="btn-custom btn-custom-primary-outline">
+          Learn More →
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+    <section class="projects-preview">
+  <h2>Our Projects</h2>
+
+  <div class="categories-row">
+      <div 
+        class="category-card"
+        *ngFor="let c of categoriesPreview"
+        (click)="openCategory(c.slug)"
+      >
+        <img [src]="c.image" [alt]="c.name" />
+        <h3>{{ c.name }}</h3>
+      </div>
+    </div>
+
+    <button class="view-more" (click)="goToProjects()">
+      View Projects →
+    </button>
+  </section>
+
+
+  <!-- Quick Links 
   <section class="home-quick-links-sec">
   <div>
     <h3>Welcome to Domysuma Architects</h3>
@@ -147,7 +206,7 @@
       Browse from over 10,000 plans
     </button>
   </div>
-</section>
+</section> -->
 
 
 </section>

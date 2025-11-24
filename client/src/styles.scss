@@ -163,3 +163,66 @@ body {
   color: #1c75bc;
   background: #ffffff;
 }
+
+/* Existing imports + variables stay unchanged above */
+
+/* ========== GLOBAL DARK MODE THEME ========== */
+
+body.dark-mode {
+  background: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+/* Typography adjustments */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #ffffff !important;
+}
+
+body.dark-mode p {
+  color: #d0d0d0 !important;
+}
+
+/* Links */
+body.dark-mode a {
+  color: #90caf9 !important;
+}
+
+/* Buttons */
+body.dark-mode .btn-custom-primary {
+  background: #1565c0 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .btn-custom-primary-outline {
+  border-color: #90caf9 !important;
+  color: #90caf9 !important;
+}
+
+body.dark-mode .btn-custom-white {
+  background: #1e1e1e !important;
+  color: #90caf9 !important;
+}
+
+/* Sections with white backgrounds */
+body.dark-mode section,
+body.dark-mode div.section {
+  background-color: #121212 !important;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+

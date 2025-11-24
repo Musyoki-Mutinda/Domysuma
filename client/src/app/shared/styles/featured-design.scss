@@ -30,6 +30,7 @@
 
   app-plan-item-card,
   .custom-card-item {
+    display: grid;
     width: 50%;
     max-width: 450px;
     border-radius: 10px;

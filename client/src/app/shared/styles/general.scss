@@ -1,24 +1,30 @@
 @import "src/styles";
+
+/* ===========================
+   SECTION HEADER
+   =========================== */
 .section-header {
   padding: 100px $layout-horizontal-padding 60px $layout-horizontal-padding;
-  background: #ffffff;
+  background: var(--bg-color);
 
   h2 {
     font-family: "Poppins", sans-serif;
-    font-style: normal;
     font-weight: 500;
     font-size: 45px;
-    color: #1c75bc;
+    color: var(--primary-color);
   }
+
   p {
     font-family: "Poppins", sans-serif;
-    font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    color: #231f20;
+    color: var(--text-color);
   }
 }
 
+/* ===========================
+   SOCIAL ICONS
+   =========================== */
 .socials-md {
   display: flex;
   justify-content: center;
@@ -28,7 +34,7 @@
       rgba(28, 117, 188, 0.3),
       rgba(28, 117, 188, 0.3)
     ),
-    #ffffff;
+    var(--bg-color);
   border-radius: 10px;
   width: 40px;
   height: 40px;
@@ -36,32 +42,38 @@
   color: rgba(36, 36, 36, 0.5);
 
   &:hover {
-    background: #ffffff;
-    color: #1c75bc;
+    background: var(--card-bg);
+    color: var(--primary-color);
     cursor: pointer;
     transform: scale(1.1);
   }
+
   &:active {
     transform: scale(0.95);
   }
 }
 
+/* ===========================
+   WHY US SECTION
+   =========================== */
 .why-us-sec {
-  background: white;
+  background: var(--bg-color);
   padding: 60px $layout-horizontal-padding;
 
   h3 {
     font-family: "Poppins", sans-serif;
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     text-transform: capitalize;
-    color: #1c75bc;
+    color: var(--primary-color);
     text-align: center;
     margin-bottom: 50px;
   }
 }
 
+/* ===========================
+   SERVICES CARDS
+   =========================== */
 .services-cont {
   display: flex;
   justify-content: space-between;
@@ -74,42 +86,38 @@
   .services-card {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
     padding: 10px;
     gap: 10px;
     background: rgba(28, 117, 188, 0.05);
     border-radius: 10px;
-
-    //i {
-    //  background: rgba(28, 117, 188, 0.3);
-    //  padding: 20px;
-    //  border-radius: 10px;
-    //  color: rgba(36, 36, 36, 0.5);
-    //}
+    width: calc((100% / 4) - 20px);
 
     > div {
       > h4 {
         font-family: "Poppins", sans-serif;
-        font-style: normal;
         font-weight: 500;
         font-size: 20px;
+        color: var(--text-color);
       }
+
       p {
         color: #828282;
       }
     }
 
-    width: calc((100% / 4) - 20px);
-
     @include tablet {
       width: calc((100% / 2) - 20px);
     }
+
     @include mobile {
       width: 100%;
     }
   }
 }
 
+/* ===========================
+   ICON WITH BACKGROUND
+   =========================== */
 .icon-custom-with-bg {
   display: flex;
   flex-direction: column;
@@ -123,13 +131,61 @@
   color: rgba(36, 36, 36, 0.5);
 }
 
+/* ===========================
+   FORMS
+   =========================== */
 .form-control {
   width: 100%;
+
   input,
   textarea {
     padding: 15px 10px;
     width: 100%;
     border-radius: 5px;
-    border: none;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
   }
+}
+
+/* ===========================
+   GLOBAL LIGHT THEME
+   =========================== */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1e1e1e;
+  --primary-color: #1c75bc;
+  --card-bg: #f5f5f5;
+  --border-color: #e0e0e0;
+}
+
+/* ===========================
+   GLOBAL DARK THEME
+   =========================== */
+.dark-theme {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --primary-color: #8ab4f8;
+  --card-bg: #1e1e1e;
+  --border-color: #333333;
+}
+
+/* ===========================
+   GLOBAL ELEMENT STYLING
+   =========================== */
+body,
+html {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.card,
+.panel,
+.modal,
+.dropdown-menu,
+.sidebar,
+.navbar,
+.footer {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
 }

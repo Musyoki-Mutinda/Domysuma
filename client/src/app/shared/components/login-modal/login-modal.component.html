@@ -1,0 +1,118 @@
+<div class="login-modal-backdrop" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <div class="login-modal">
+
+      <button class="close-btn" (click)="closeModal()">✕</button>
+
+      <!-- ADMIN ACCESS BUTTON -->
+      <button 
+        class="admin-btn" 
+        *ngIf="showAdminButton"
+        (click)="enableAdminMode()">
+        A
+      </button>
+
+      <!-- TITLE CHANGES BASED ON MODE -->
+      <h2 class="title">
+        {{ isAdminMode ? 'Admin Login' : (isRegisterMode ? 'Create Account' : 'Login') }}
+      </h2>
+
+      <!-- ---------------- ERROR MESSAGE ---------------- -->
+      <div *ngIf="errorMsg" class="error-msg">
+        {{ errorMsg }}
+      </div>
+
+      <!-- ================= ADMIN LOGIN MODE ================ -->
+      <ng-container *ngIf="isAdminMode">
+
+        <div class="form-group">
+          <label>Admin Email</label>
+          <input type="email" [(ngModel)]="adminEmail" placeholder="Enter admin email" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="adminPassword" placeholder="Enter password" />
+        </div>
+
+        <button class="submit-btn" (click)="adminLogin()">Login as Admin</button>
+
+        <p class="toggle-text">
+          Return to User Login?
+          <span class="toggle-link" (click)="disableAdminMode()">Go Back</span>
+        </p>
+
+      </ng-container>
+
+      <!-- ================= USER LOGIN MODE ================= -->
+      <ng-container *ngIf="!isAdminMode && !isRegisterMode">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="email" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="password" placeholder="Enter your password" />
+        </div>
+
+        <button class="submit-btn" (click)="login()">Login</button>
+
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <button class="google-btn" (click)="googleLogin()">
+          <img src="assets/icons/google.svg" />
+          Continue with Google
+        </button>
+
+        <p class="toggle-text">
+          Don’t have an account?
+          <span class="toggle-link" (click)="toggleMode()">Register</span>
+        </p>
+      </ng-container>
+
+      <!-- ================= REGISTER MODE ================= -->
+      <ng-container *ngIf="!isAdminMode && isRegisterMode">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" [(ngModel)]="registerFullName" placeholder="Enter your full name" />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="registerEmail" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="registerPassword" placeholder="Enter your password" />
+        </div>
+
+        <div class="form-group">
+          <label> Confirm Password</label>
+          <input type="password" [(ngModel)]="registerPassword" placeholder="Enter your password" />
+        </div>
+
+        <button class="submit-btn" (click)="register()">Register</button>
+
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <button class="google-btn" (click)="googleLogin()">
+          <img src="assets/icons/google.svg" />
+          Continue with Google
+        </button>
+
+        <p class="toggle-text">
+          Already have an account?
+          <span class="toggle-link" (click)="toggleMode()">Login</span>
+        </p>
+      </ng-container>
+
+    </div>
+  </div>
+</div>
