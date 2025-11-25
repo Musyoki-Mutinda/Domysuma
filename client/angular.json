@@ -127,6 +127,14 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+        "builder": "angular-cli-ghpages:deploy",
+        "options": {
+          "deployDir": "dist/domysuma",
+          "branch": "gh-pages",
+          "nojekyll": true
+          }
         }
       }
     }

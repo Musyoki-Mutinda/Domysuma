@@ -12,19 +12,19 @@ export class LoginModalComponent implements OnInit {
 
   @Output() close = new EventEmitter<void>();
 
-  // ---------------- LOGIN FORM ----------------
+  // USER LOGIN
   email = '';
   password = '';
 
-  // ---------------- REGISTER FORM ----------------
+  // REGISTER
   isRegisterMode = false;
   registerFullName = '';
   registerEmail = '';
   registerPassword = '';
 
-  // ---------------- ADMIN LOGIN FORM ----------------
-  showAdminButton = false;   // Hidden until Shift + A
-  isAdminMode = false;       // Toggles admin UI
+  // ADMIN LOGIN
+  showAdminButton = false;
+  isAdminMode = false;
   adminEmail = '';
   adminPassword = '';
 
@@ -33,11 +33,12 @@ export class LoginModalComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private adminAuth: AdminAuthService,   // <-- ADDED
+    private adminAuth: AdminAuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    // Reveal hidden admin button on Shift + A
     window.addEventListener('keydown', (event) => {
       if (event.key === 'A' && event.shiftKey) {
         this.showAdminButton = true;
@@ -65,7 +66,7 @@ export class LoginModalComponent implements OnInit {
   }
 
   // ---------------------------------------------------------
-  // ADMIN LOGIN (NOW CALLS /admin/auth/login)
+  // ADMIN LOGIN -> Redirect to Admin Angular App
   // ---------------------------------------------------------
   adminLogin() {
     if (!this.adminEmail || !this.adminPassword) {
@@ -83,32 +84,35 @@ export class LoginModalComponent implements OnInit {
       next: (res: any) => {
         this.loading = false;
 
-        // Your API sends the token inside ApiResponse.data
         const token = res.data?.token;
-        const role = res.data?.role ?? 'ADMIN';
+        const role = res.data?.role;
 
-        if (!token) {
-          this.errorMsg = 'Invalid response from server.';
+        if (!token || role !== 'ADMIN') {
+          this.errorMsg = 'Unauthorized. You are not an admin.';
           return;
         }
 
-        this.auth.storeToken(token);  // <-- still using shared token storage
+        // Store the token for the ADMIN APP only
+        localStorage.setItem('admin_token', token);
 
         this.closeModal();
-        this.router.navigate(['/admin']);
+
+        // IMPORTANT: Redirect to the *Admin Angular Application*
+        window.location.href = 'http://localhost:53579';
+
       },
       error: (err) => {
         this.loading = false;
         this.errorMsg =
           err.status === 401
             ? 'Invalid admin credentials.'
-            : 'An unexpected error occurred.';
+            : 'Admin login failed.';
       }
     });
   }
 
   // ---------------------------------------------------------
-  // USER LOGIN (unchanged)
+  // USER LOGIN
   // ---------------------------------------------------------
   login() {
     if (!this.email || !this.password) {
@@ -127,7 +131,8 @@ export class LoginModalComponent implements OnInit {
         this.closeModal();
 
         if (role === 'ADMIN') {
-          this.router.navigate(['/admin']);
+          // Backend can also flag ADMIN logins
+          window.location.href = 'http://localhost:53579';
         } else {
           this.router.navigate(['/dashboard']);
         }
@@ -137,13 +142,13 @@ export class LoginModalComponent implements OnInit {
         this.errorMsg =
           err.status === 401
             ? 'Invalid email or password.'
-            : 'An unexpected error occurred.';
+            : 'Login failed.';
       }
     });
   }
 
   // ---------------------------------------------------------
-  // REGISTER (unchanged)
+  // REGISTER
   // ---------------------------------------------------------
   register() {
     if (!this.registerFullName || !this.registerEmail || !this.registerPassword) {
@@ -159,7 +164,8 @@ export class LoginModalComponent implements OnInit {
       email: this.registerEmail,
       password: this.registerPassword
     }).subscribe({
-      next: (res: any) => {
+      next: () => {
+        // Auto login after register
         this.auth.login(this.registerEmail, this.registerPassword).subscribe({
           next: (loginRes: any) => {
             this.auth.storeToken(loginRes.token);
@@ -167,8 +173,8 @@ export class LoginModalComponent implements OnInit {
             this.router.navigate(['/dashboard']);
           },
           error: () => {
-            this.errorMsg = 'Registration succeeded, but auto-login failed.';
             this.loading = false;
+            this.errorMsg = 'Registration succeeded, but auto-login failed.';
           }
         });
       },

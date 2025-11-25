@@ -20,43 +20,38 @@
 }
 
 .featured-design-items {
-  display: flex;
-  flex-direction: column; // 👈 stack vertically
-  align-items: flex-start; // push items to the left
-  gap: 40px; // space between each card
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  // 👈 three cards in a row
+  gap: 40px;
   margin: $section-text-margin 0;
-  padding-left: 0%;
-  padding-right: 0;
+  padding: 0;
+}
 
-  app-plan-item-card,
-  .custom-card-item {
-    display: grid;
-    width: 50%;
-    max-width: 450px;
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+app-plan-item-card,
+.custom-card-item {
+  max-width: 350px;          // grid controls width
+  margin: 0 auto;
+  aspect-ratio: 1;      // 👈 makes them PERFECT squares
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
 
-    &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    }
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   }
+}
 
-  @include tablet {
-    gap: 30px;
-    app-plan-item-card,
-    .custom-card-item {
-      width: 90%;
-    }
+/* Responsive rules */
+@include tablet {
+  .featured-design-items {
+    grid-template-columns: repeat(2, 1fr); // 2 per row on tablet
   }
+}
 
-  @include mobile {
-    gap: 24px;
-    app-plan-item-card,
-    .custom-card-item {
-      width: 100%;
-    }
+@include mobile {
+  .featured-design-items {
+    grid-template-columns: 1fr; // 1 per row on mobile
   }
 }
