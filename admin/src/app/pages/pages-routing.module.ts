@@ -16,6 +16,11 @@ const routes: Routes = [{
       loadChildren: () => import('./design-ideas/design-ideas.module').then(m => m.DesignIdeasModule),
     },
     {
+    path: 'projects',
+    loadChildren: () =>
+    import('./projects/projects.module').then(m => m.ProjectsModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

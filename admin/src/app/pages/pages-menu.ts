@@ -15,7 +15,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Projects',
     icon: 'list-outline',
-    link: '/app-pages/dashboard',
+    link: '/projects',
   },
 
 
