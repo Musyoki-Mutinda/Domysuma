@@ -7,7 +7,7 @@ import { HomeComponent } from './views/home/home.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: LayoutComponent,
   },
   // Route to handle Google OAuth redirect after successful login
   {
