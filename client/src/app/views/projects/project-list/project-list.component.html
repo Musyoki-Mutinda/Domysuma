@@ -9,8 +9,10 @@
     <div class="featured-design-items">
       <app-project-item-card 
         *ngFor="let project of projects"
-        class="custom-card-item">
+        class="custom-card-item"
+        [projectData]="project">
       </app-project-item-card>
+
     </div>
   </div>
 

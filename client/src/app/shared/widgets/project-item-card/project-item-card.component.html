@@ -7,7 +7,9 @@
 
   <p>{{ projectData.desc }}</p>
 
-  <div class="plan-item-card-footer" (click)="viewMore()">
-    <p>View More <i class="fa-solid fa-arrow-right-long"></i></p>
+  <div class="plan-item-card-footer">
+    <button class="btn-custom" (click)="viewMore()" routerLink="/plans/1">
+      View More
+    </button>
   </div>
 </section>

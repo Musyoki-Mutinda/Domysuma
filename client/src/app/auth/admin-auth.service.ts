@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AdminAuthService {
 
-  private api = 'https://your-api-domain.com/admin/auth';
+  private api = "http://localhost:8200/admin/auth";
 
   constructor(private http: HttpClient) {}
 

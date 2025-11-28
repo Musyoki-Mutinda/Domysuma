@@ -87,29 +87,37 @@ export class LoginModalComponent implements OnInit {
         const token = res.data?.token;
         const role = res.data?.role;
 
-        if (!token || role !== 'ADMIN') {
+        if (!token) {
+          this.errorMsg = 'No token received from server.';
+          return;
+        }
+
+        if (role !== 'ADMIN') {
           this.errorMsg = 'Unauthorized. You are not an admin.';
           return;
         }
 
-        // Store the token for the ADMIN APP only
+        // Store token locally for Admin app
         localStorage.setItem('admin_token', token);
 
         this.closeModal();
 
-        // IMPORTANT: Redirect to the *Admin Angular Application*
+        // Redirect to Admin Angular app
         window.location.href = 'http://localhost:53579';
-
       },
       error: (err) => {
         this.loading = false;
-        this.errorMsg =
-          err.status === 401
-            ? 'Invalid admin credentials.'
-            : 'Admin login failed.';
+        if (err.status === 401) {
+          this.errorMsg = 'Invalid admin credentials.';
+        } else if (err.status === 0) {
+          this.errorMsg = 'Cannot reach server. Is Spring Boot running?';
+        } else {
+          this.errorMsg = 'Admin login failed. Please try again.';
+        }
       }
     });
   }
+
 
   // ---------------------------------------------------------
   // USER LOGIN

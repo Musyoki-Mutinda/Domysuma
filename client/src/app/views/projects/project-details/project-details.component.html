@@ -1,45 +1,77 @@
-<section class="project-details">
+<section class="project-details-sec">
 
-  <!-- Hero Section -->
-  <div class="hero" [style.backgroundImage]="'url(' + project.heroImage + ')'">
-    <div class="overlay">
-      <h1>{{ project.title }}</h1>
-      <p class="category">{{ categorySlug | titlecase }}</p>
+  <!-- HEADER -->
+  <section class="section-header">
+    <h2>{{ project?.title }}</h2>
+    <p>Project ID #{{ project?.id }}</p>
+  </section>
+
+  <!-- TOP SECTION -->
+  <section class="top-sec">
+    <div>
+      <div class="slideshow">
+        <app-gallery [galleryId]="project?.gallery"></app-gallery>
+      </div>
+
+      <div class="project-actions">
+        <button class="btn-custom btn-custom-primary">Contact Team</button>
+        <button class="btn-custom btn-custom-primary-outline">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+      </div>
+
+      <div class="key-specs">
+        <h4>Key Specs</h4>
+
+        <div class="key-spec-item">
+          <i class="fa-solid fa-clock"></i>
+          <p>{{ project?.specs?.duration }}</p>
+        </div>
+
+        <div class="key-spec-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <p>{{ project?.specs?.location }}</p>
+        </div>
+
+        <div class="key-spec-item">
+          <i class="fa-solid fa-money-bill"></i>
+          <p>{{ project?.specs?.cost }}</p>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Summary -->
-  <div class="summary">
-    <p><strong>Location:</strong> {{ project.location }}</p>
-    <p><strong>Year:</strong> {{ project.year }}</p>
-    <p><strong>Status:</strong> {{ project.status }}</p>
-  </div>
+    <!-- RIGHT-SIDE DETAILS -->
+    <div>
+      <div class="dsn-detail">
+        <h4>Project Overview</h4>
 
-  <!-- Description -->
-  <div class="description">
-    <h2>About This Project</h2>
-    <p>{{ project.description }}</p>
-  </div>
+        <p>{{ project?.summary }}</p>
 
-  <!-- Gallery -->
-  <div class="gallery-section">
-    <h2>Project Gallery</h2>
-    <div class="image-grid">
-      <img *ngFor="let img of project.galleryImages" [src]="img" alt="">
+        <button class="btn-custom btn-custom-primary">
+          Talk to Project Lead
+        </button>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Floor Plans -->
-  <div class="plans-section" *ngIf="project.floorPlanImages.length > 0">
-    <h2>Floor Plans</h2>
-    <div class="image-grid">
-      <img *ngFor="let img of project.floorPlanImages" [src]="img" alt="">
+  <!-- MID SECTION -->
+  <section class="mid-sec">
+    <div class="project-desc">
+      <h4>Full Description</h4>
+      <p>{{ project?.description }}</p>
     </div>
-  </div>
+  </section>
 
-  <!-- Back Link -->
-  <a class="back-link" [routerLink]="['/projects', categorySlug]">
-    ← Back to {{ categorySlug | titlecase }}
-  </a>
+  <!-- BOTTOM SECTION -->
+  <section class="bottom-sec">
+    <h4>Browse similar projects <span routerLink="/projects">View More</span></h4>
+    <div class="similar-projects">
+      <app-project-item-card
+        *ngFor="let similar of similarProjects"
+        class="custom-card-item"
+        [projectData]="similar">
+      </app-project-item-card>
+    </div>
+  </section>
 
 </section>

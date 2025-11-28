@@ -3,22 +3,22 @@
 /* ================= SERVICES SECTION ================= */
 .services-sec {
   position: relative;
-  background: #f1f9ec;
-  padding: 60px $layout-horizontal-padding;
+  background: #f7fbf2; // slightly brighter for contrast
+  padding: 80px $layout-horizontal-padding;
 
-  /* Background image behind content */
+  /* Background image */
   &::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: url('/assets/images/services_background.jpg') no-repeat center center;
+    background: url('/assets/images/Services_Background3.jpg') no-repeat center center;
     background-size: cover;
-    opacity: 0.4;             // subtlety
-    filter: blur(0px);        // optional soft blur
+    opacity: 0.25;       // subtlety
+    // filter: blur(2px);   // soft blur to make content pop
     z-index: 0;
-    pointer-events: none;     // ensure content is clickable
+    pointer-events: none;
   }
 
   /* Layer content above background */
@@ -32,148 +32,120 @@
 /* ================= SECTION HEADER ================= */
 .section-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 
   h2 {
     color: #1c75bc;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    font-size: 40px;
-    margin-bottom: 3px; // smaller gap
+    font-size: 42px;
+    margin-bottom: 10px;
   }
 
   p {
     font-size: 18px;
-    color: #555;
-    margin: 0;
+    color: #333;
+    margin: 0 auto;
+    max-width: 700px;
   }
 }
 
-/* ================= SERVICES CARDS ================= */
+/* ================= SERVICES CARDS GRID ================= */
 .services-cards-sec {
-  .services-cont {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;                 // spacing between stacked cards
-    position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // always 3 cards per row
+  gap: 32px;                              // space between cards
+  justify-items: center;                   // center cards in grid
+  width: 100%;
+
+  @include mobile {
+    grid-template-columns: 1fr;           // stack on mobile
+    gap: 20px;
+    padding: 0 $layout-horizontal-padding-sm;
   }
 
   .services-card {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;    // stack icon above text
-    align-items: center;       // horizontal centering
-    text-align: center;
-    padding: 30px 18px;
-    min-height: 200px;
-    gap: 18px;                 // space between icon and text
     width: 100%;
-
-    background: 
+    aspect-ratio: 1 / 1;                  // makes the card a perfect square
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;               // vertically center content
+    text-align: center;
+    padding: 24px;
+    background:
       linear-gradient(
         180deg,
-        rgba(28, 117, 188, 0.08) 0%,
-        rgba(28, 117, 188, 0.02) 100%
+        rgba(28, 117, 188, 0.12) 0%,
+        rgba(28, 117, 188, 0.03) 100%
       ),
       #ffffff;
-    border-radius: 14px;
-    border: 1px solid rgba(28, 117, 188, 0.15);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-
-    transition: 
+    border-radius: 16px;
+    border: 1px solid rgba(28, 117, 188, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    transition:
       transform 0.35s ease-out,
       box-shadow 0.35s ease,
       border-color 0.35s ease,
       background 0.35s ease;
-    will-change: transform;
 
-    /* ===== ICON ===== */
     .icon-custom-with-bg {
-      font-size: 42px;
-      width: 80px;
-      height: 80px;
+      font-size: 48px;
+      width: 90px;
+      height: 90px;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 16px;
       background: rgba(28, 117, 188, 0.08);
       color: #1c75bc;
-      transition: all 0.35s;
-      transform: translateZ(0); // minor 3D pop
+      margin-bottom: 16px;
     }
 
-    /* ===== TEXT ===== */
     div {
+      width: 100%;
+
       h4 {
         font-family: "Poppins", sans-serif;
-        font-weight: 300;
-        font-size: 36px;
-        line-height: 1.2;
-        margin-bottom: 10px;
-        transition: color 0.35s;
-      }
-
-      p {
-        font-size: 20px;
-        line-height: 1.45;
-        opacity: 0.85;
-        transition: opacity 0.35s;
-        max-width: 260px;
-      }
-    }
-
-    /* ===== HOVER EFFECTS ===== */
-    &:hover {
-      transform: scale(1.015);
-      box-shadow: 0 12px 30px rgba(28, 117, 188, 0.25);
-      border-color: rgba(28, 117, 188, 0.35);
-      background: 
-        linear-gradient(
-          135deg,
-          rgba(28, 117, 188, 0.12) 0%,
-          rgba(28, 117, 188, 0.05) 100%
-        ),
-        #ffffff;
-
-      h4 {
+        font-weight: 500;
+        font-size: 28px;
+        margin-bottom: 8px;
         color: #1c75bc;
       }
 
       p {
-        opacity: 1;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #333;
+        text-align: justify;
+        margin: 0 auto;
+        max-width: 90%; // allows text to spread nicely
       }
+    }
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 14px 34px rgba(28, 117, 188, 0.3);
+      border-color: rgba(28, 117, 188, 0.35);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(28, 117, 188, 0.15) 0%,
+          rgba(28, 117, 188, 0.05) 100%
+        ),
+        #ffffff;
 
       .icon-custom-with-bg {
         background: #1c75bc;
         color: #ffffff;
-        transform: scale(1.07);
+        transform: scale(1.1);
       }
     }
 
     @include mobile {
+      width: 100%;
+      aspect-ratio: auto; // remove square on mobile
       padding: 20px;
-      gap: 14px;
-
-      .icon-custom-with-bg {
-        width: 58px;
-        height: 58px;
-        font-size: 32px;
-      }
-
-      div {
-        h4 { font-size: 28px; }
-        p { font-size: 16px; }
-      }
     }
   }
-
-  @include mobile {
-    padding: 14px $layout-horizontal-padding-sm;
-  }
-}
-
-/* ================= SCROLL STACK ANIMATION ================= */
-.scroll-stack-item {
-  transition: transform 0.35s ease-out;
-  will-change: transform;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProjectsService, Project } from '../projects.service';
 
 @Component({
   selector: 'app-project-details',
@@ -7,41 +8,26 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./project-details.component.scss']
 })
 export class ProjectDetailsComponent implements OnInit {
+  project: Project | undefined;
+  similarProjects: Project[] = [];
 
-  categorySlug: string | null = null;
-  projectId: string | null = null;
-
-  galleryId: string | null = null;
-  plansGalleryId: string | null = null;
-
-  // 🟢 Temporary dummy data (Replace with Directus later)
-  project = {
-    title: 'Luxury Residential Villa',
-    location: 'Karen, Nairobi',
-    year: 2023,
-    status: 'Completed',
-    description: `This luxury residential villa features contemporary design, 
-    open spaces and seamless integration between indoor and outdoor environments.`,
-    heroImage: 'assets/projects/sample-hero.jpg',
-    galleryImages: [
-      'assets/projects/sample1.jpg',
-      'assets/projects/sample2.jpg',
-      'assets/projects/sample3.jpg'
-    ],
-    floorPlanImages: [
-      'assets/projects/plan1.jpg',
-      'assets/projects/plan2.jpg'
-    ]
-  };
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private projectsService: ProjectsService
+  ) {}
 
   ngOnInit(): void {
-    this.categorySlug = this.route.snapshot.paramMap.get('category');
-    this.projectId = this.route.snapshot.paramMap.get('id');
+    const category = this.route.snapshot.paramMap.get('category');
+    const projectId = this.route.snapshot.paramMap.get('id');
 
-    this.galleryId = `project-${this.projectId}-main`;
-    this.plansGalleryId = `project-${this.projectId}-plans`;
+    if (projectId) {
+      this.project = this.projectsService.getProjectById(projectId);
+    }
+
+    if (category && this.project) {
+      this.similarProjects = this.projectsService
+        .getProjectsByCategory(category)
+        .filter(p => p.id !== this.project!.id); // exclude current project
+    }
   }
-
 }

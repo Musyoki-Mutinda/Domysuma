@@ -72,5 +72,13 @@ export class HeaderComponent implements OnInit {
     this.showLoginModal = false;
   }
 
+  // header.component.ts
+  openWhatsApp() {
+  const phoneNumber = '254112049044';
+  const message = encodeURIComponent('Hello, I want to inquire about your services');
+  window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+}
+
+
 }
 

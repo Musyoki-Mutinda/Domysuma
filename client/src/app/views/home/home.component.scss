@@ -400,6 +400,8 @@
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 30px 20px;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   color: #ffffff;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);

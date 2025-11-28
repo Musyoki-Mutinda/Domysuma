@@ -21,7 +21,7 @@
    DARK MODE – HEADER WRAPPER
    -------------------------- */
 body.dark-mode .header-section {
-  background: #1e1e1e !important;
+  background: #032b2b !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
@@ -246,6 +246,71 @@ body.dark-mode .header-wa {
       display: block;
       animation: fadeIn 0.2s ease;
     }
+
+    /* ----------------------------
+      DARK MODE TOGGLE SWITCH
+      ---------------------------- */
+    .dark-mode-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 20px;
+
+      span {
+        font-size: 14px;
+        color: #333;
+      }
+
+      /* Make sure dark mode text is visible */
+      body.dark-mode & span {
+        color: #eee;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+
+        input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: 0.4s;
+          border-radius: 24px;
+
+          &:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+          }
+        }
+
+        input:checked + .slider {
+          background-color: #1c75bc;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(26px);
+        }
+      }
+    }
   }
 }
 
@@ -288,7 +353,7 @@ body.dark-mode .settings-btn {
    FINAL DARK MODE OVERRIDES
    ===================================================== */
 .dark-mode {
-  background-color: #121212 !important;
+  background-color: #032b2b !important;
   color: #ffffff !important;
 }
 
