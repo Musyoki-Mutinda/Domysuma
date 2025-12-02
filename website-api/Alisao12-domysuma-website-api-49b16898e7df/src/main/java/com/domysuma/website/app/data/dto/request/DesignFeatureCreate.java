@@ -1,0 +1,10 @@
+package com.domysuma.website.app.data.dto.request;
+
+import lombok.Data;
+
+@Data
+public class DesignFeatureCreate {
+    private String title;
+    // If it is main it will appear beside the images slide on the design detail page - multiple isMain supported.
+    private Boolean isMain;
+}

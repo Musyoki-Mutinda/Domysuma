@@ -1,0 +1,15 @@
+server:
+  port: 8200
+spring:
+  datasource:
+    username: alberto
+    password: Kenya@50
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/domysuma_website?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update

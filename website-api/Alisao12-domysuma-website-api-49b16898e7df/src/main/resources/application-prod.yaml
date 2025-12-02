@@ -1,0 +1,14 @@
+server:
+  port: 8201
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    username: alberto
+    password: 753951258
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://petanns.co.ke:3306/domysuma_website_prod?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Africa/Nairobi
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
