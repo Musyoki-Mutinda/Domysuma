@@ -13,7 +13,7 @@
     content: "";
     position: absolute;
     inset: 0; /* shorthand for top/right/bottom/left = 0 */
-    background: url('/assets/about/domysuma-logo.svg') center/contain no-repeat; 
+    //background: url('/assets/about/domysuma-logo.svg') center/contain no-repeat; 
     background-size: 600px auto; 
     height: 500px;
     opacity: 0.15; /* subtle, but visible */
@@ -126,4 +126,13 @@
       margin-bottom: 60px;
     }
   }
+
+  .map-container {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 20px;
+  }
+
 }

@@ -151,29 +151,31 @@ h5 {
     }
 
     .similar-plans {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      app-plan-item-card {
-        width: calc(100% / 3 - 20px);
-      }
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; // spacing between cards
+    justify-content: space-between;
 
-      @include tablet {
-        app-plan-item-card,
-        .custom-card-item {
-          flex: 0 0 calc(50% - 20px);
-        }
-      }
-      @include mobile {
-        app-plan-item-card,
-        .custom-card-item {
-          flex: 0 0 calc(100%);
-        }
+    app-plan-item-card {
+      flex: 0 0 calc(33.333% - 10px); // three cards per row, accounting for gap
+      box-sizing: border-box;         // include padding/border in width
+    }
+
+    @include tablet {
+      app-plan-item-card,
+      .custom-card-item {
+        flex: 0 0 calc(50% - 10px);  // two cards per row on tablet
       }
     }
+
+    @include mobile {
+      app-plan-item-card,
+      .custom-card-item {
+        flex: 0 0 100%;               // single card per row on mobile
+      }
+    }
+  }
   }
 
   @include mobile {
@@ -204,10 +206,15 @@ h5 {
 
 .key-specs {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  //display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 30px;
+  width: 370px;
+  background: rgba(28, 117, 188, 0.1);
+  border-radius: 10px;
 
   h4 {
     width: 100%;
@@ -215,10 +222,10 @@ h5 {
 
   .key-spec-item {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: 20px;
 
     i {
       color: #7f7f7f;

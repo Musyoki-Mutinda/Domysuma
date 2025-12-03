@@ -28,6 +28,7 @@ export class ProjectListComponent implements OnInit {
     { name: 'Warehouses', slug: 'warehouses', image: 'assets/categories/warehouses.jpg' },
     { name: 'Smart Cities', slug: 'smart-cities', image: 'assets/categories/cities.jpg' },
     { name: 'Bible Colleges & Prayer Centers', slug: 'bible-colleges-and-prayer-centers', image: 'assets/categories/bible.jpg' },
+    { name: 'Airports', slug: 'airports', image: 'assets/categories/Airports.jpg' },
   ];
 
   // This is what is used by <app-project-item-card>

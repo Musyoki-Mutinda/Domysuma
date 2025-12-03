@@ -3,10 +3,14 @@
     <img [src]="planData.img" [alt]="planData.title">
 
 
-    <!-- Love heart Button-->
-     <button class="save-btn" title="Save this plan">
-      <i [ngClass]="isSaved? 'fa-solid fa-heart':'fa-regular fa-heart' "></i>
-     </button>
+    <!-- Heart Save Button -->
+    <button 
+      class="save-btn" 
+      title="Save this plan"
+      (click)="toggleSave($event.target)"
+    >
+      <i [ngClass]="isSaved ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+    </button>
       
     <p>Plan ID: {{planData.id}}</p>
   </div>

@@ -56,26 +56,101 @@ body.dark-mode .header-section {
   }
 
   .login-btn {
-  background-color: #1c75bc !important;
-  color: #fff !important;
-  padding: 8px 18px;
-  border-radius: 4px;
-  border: none;
-  font-weight: 600;
-  transition: 0.3s ease;
-  cursor: pointer;
+    background-color: #1c75bc !important;
+    color: #fff !important;
+    padding: 8px 18px;
+    border-radius: 4px;
+    border: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+    cursor: pointer;
+  }
+
+  .login-btn:hover {
+    background-color: darken(#1c75bc, 8%);
+  }
 }
 
-.login-btn:hover {
-  background-color: darken(#1c75bc, 8%);
-}
+/* =====================================================
+   USER DROPDOWN (LOGGED-IN USER)
+   ===================================================== */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
 
+  .user-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(28, 117, 168, 0.1);
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 8px 0;
+    min-width: 140px;
+    z-index: 150;
+    display: none;
+
+    li {
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: #f0f0f0;
+      }
+    }
+
+    &.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+  }
 }
 
 /* DARK MODE — TOP SECTION TEXT + ICONS */
 body.dark-mode .header-top-sec i,
 body.dark-mode .header-top-sec p {
   color: #ffffff !important;
+}
+
+/* DARK MODE — USER DROPDOWN */
+body.dark-mode .user-dropdown .dropdown-menu {
+  background: #2a2a2a;
+  color: #eee;
+  border: 1px solid #444;
+
+  li:hover {
+    background: #3a3a3a;
+  }
+}
+
+body.dark-mode .user-dropdown .user-btn {
+  color: #ffffff;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* =====================================================
@@ -187,7 +262,7 @@ body.dark-mode .header-wa {
 }
 
 /* =====================================================
-   DROPDOWN MENU
+   SETTINGS DROPDOWN MENU
    ===================================================== */
 .dropdown {
   position: relative;
@@ -247,9 +322,6 @@ body.dark-mode .header-wa {
       animation: fadeIn 0.2s ease;
     }
 
-    /* ----------------------------
-      DARK MODE TOGGLE SWITCH
-      ---------------------------- */
     .dark-mode-toggle {
       display: flex;
       justify-content: space-between;
@@ -261,7 +333,6 @@ body.dark-mode .header-wa {
         color: #333;
       }
 
-      /* Make sure dark mode text is visible */
       body.dark-mode & span {
         color: #eee;
       }
@@ -314,7 +385,7 @@ body.dark-mode .header-wa {
   }
 }
 
-/* DARK MODE — DROPDOWN */
+/* DARK MODE — SETTINGS DROPDOWN */
 body.dark-mode .dropdown-menu {
   background: #2a2a2a !important;
   color: #eeeeee !important;
@@ -329,7 +400,6 @@ body.dark-mode .dropdown-menu {
   }
 }
 
-/* SETTINGS BUTTON DARK MODE */
 body.dark-mode .settings-btn {
   color: #ffffff !important;
 

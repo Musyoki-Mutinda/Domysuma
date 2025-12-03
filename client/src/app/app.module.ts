@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 // Shared / layout modules
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './views/layout/layout.module';
+import { AboutModule } from './views/about/about.module'
 
 // Gallery
 import { GalleryModule } from 'ng-gallery';
@@ -37,6 +38,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     // Feature / shared
     SharedModule,
     LayoutModule,
+    AboutModule
   ],
   providers: [
     AuthService,

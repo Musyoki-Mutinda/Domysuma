@@ -1,4 +1,4 @@
-<div class="login-modal-backdrop" (click)="closeModal()">
+<div class="login-modal-backdrop" *ngIf="isOpen" (click)="closeModal()">
   <div class="modal-container" (click)="$event.stopPropagation()">
 
     <div class="login-modal">

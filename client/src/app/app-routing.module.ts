@@ -3,18 +3,24 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './views/layout/layout.component';
 import { GoogleLoginSuccessComponent } from './auth/google-login-success.component';
 import { HomeComponent } from './views/home/home.component';
+import { HelpCenterComponent } from './pages/help-center/help-center.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent,
+    component: HomeComponent
   },
-  // Route to handle Google OAuth redirect after successful login
   {
-    path: 'login-success',
-    component: GoogleLoginSuccessComponent,
+    path: 'google-login-success',
+    component: GoogleLoginSuccessComponent
   },
+  {
+    path: 'help-center',
+    component: HelpCenterComponent
+  }
 ];
+
 
 @NgModule({
   imports: [

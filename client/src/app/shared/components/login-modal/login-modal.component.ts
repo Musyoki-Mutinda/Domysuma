@@ -1,14 +1,16 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AuthService } from '../../../auth/auth.service';
 import { AdminAuthService } from '../../../auth/admin-auth.service';
 import { Router } from '@angular/router';
+import { LoginModalService } from '../../../core/services/login-modal.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss']
 })
-export class LoginModalComponent implements OnInit {
+export class LoginModalComponent implements OnInit, OnDestroy {
 
   @Output() close = new EventEmitter<void>();
 
@@ -30,31 +32,54 @@ export class LoginModalComponent implements OnInit {
 
   loading = false;
   errorMsg = '';
+  isOpen = false;
+
+  private modalSubscription!: Subscription;
+  private keyListener!: (event: KeyboardEvent) => void;
 
   constructor(
     private auth: AuthService,
     private adminAuth: AdminAuthService,
-    private router: Router
+    private router: Router,
+    private loginModalService: LoginModalService
   ) {}
 
   ngOnInit() {
-    // Reveal hidden admin button on Shift + A
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'A' && event.shiftKey) {
+    // Track modal open/close state
+    this.modalSubscription = this.loginModalService.isOpen$.subscribe(open => {
+      this.isOpen = open;
+    });
+
+    // Reveal admin login button with Shift + A
+    this.keyListener = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() === 'a' && event.shiftKey) {
         this.showAdminButton = true;
       }
-    });
+    };
+
+    window.addEventListener('keydown', this.keyListener);
   }
 
+  ngOnDestroy() {
+    if (this.modalSubscription) {
+      this.modalSubscription.unsubscribe();
+    }
+    window.removeEventListener('keydown', this.keyListener);
+  }
+
+  // Close modal
   closeModal() {
+    this.loginModalService.close();
     this.close.emit();
   }
 
+  // Register toggle
   toggleMode() {
     this.isRegisterMode = !this.isRegisterMode;
     this.errorMsg = '';
   }
 
+  // Admin mode controls
   enableAdminMode() {
     this.isAdminMode = true;
     this.errorMsg = '';
@@ -65,9 +90,7 @@ export class LoginModalComponent implements OnInit {
     this.errorMsg = '';
   }
 
-  // ---------------------------------------------------------
-  // ADMIN LOGIN -> Redirect to Admin Angular App
-  // ---------------------------------------------------------
+  // ---------------- ADMIN LOGIN ----------------
   adminLogin() {
     if (!this.adminEmail || !this.adminPassword) {
       this.errorMsg = 'Please enter both admin email and password.';
@@ -77,51 +100,20 @@ export class LoginModalComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    this.adminAuth.login({
-      email: this.adminEmail,
-      password: this.adminPassword
-    }).subscribe({
-      next: (res: any) => {
-        this.loading = false;
-
-        const token = res.data?.token;
-        const role = res.data?.role;
-
-        if (!token) {
-          this.errorMsg = 'No token received from server.';
-          return;
-        }
-
-        if (role !== 'ADMIN') {
-          this.errorMsg = 'Unauthorized. You are not an admin.';
-          return;
-        }
-
-        // Store token locally for Admin app
-        localStorage.setItem('admin_token', token);
-
-        this.closeModal();
-
-        // Redirect to Admin Angular app
-        window.location.href = 'http://localhost:53579';
-      },
-      error: (err) => {
-        this.loading = false;
-        if (err.status === 401) {
-          this.errorMsg = 'Invalid admin credentials.';
-        } else if (err.status === 0) {
-          this.errorMsg = 'Cannot reach server. Is Spring Boot running?';
-        } else {
-          this.errorMsg = 'Admin login failed. Please try again.';
-        }
-      }
-    });
+    try {
+      this.adminAuth.login({
+        email: this.adminEmail,
+        password: this.adminPassword
+      });
+      // After this call, backend handles redirect, so we don't manually set token or subscribe
+    } catch (err) {
+      this.loading = false;
+      this.errorMsg = 'Admin login failed. Please try again.';
+      console.error(err);
+    }
   }
 
-
-  // ---------------------------------------------------------
-  // USER LOGIN
-  // ---------------------------------------------------------
+  // ---------------- USER LOGIN ----------------
   login() {
     if (!this.email || !this.password) {
       this.errorMsg = 'Please enter both email and password.';
@@ -139,7 +131,6 @@ export class LoginModalComponent implements OnInit {
         this.closeModal();
 
         if (role === 'ADMIN') {
-          // Backend can also flag ADMIN logins
           window.location.href = 'http://localhost:53579';
         } else {
           this.router.navigate(['/dashboard']);
@@ -155,9 +146,7 @@ export class LoginModalComponent implements OnInit {
     });
   }
 
-  // ---------------------------------------------------------
-  // REGISTER
-  // ---------------------------------------------------------
+  // ---------------- REGISTER ----------------
   register() {
     if (!this.registerFullName || !this.registerEmail || !this.registerPassword) {
       this.errorMsg = 'Please fill in all fields.';
@@ -173,7 +162,6 @@ export class LoginModalComponent implements OnInit {
       password: this.registerPassword
     }).subscribe({
       next: () => {
-        // Auto login after register
         this.auth.login(this.registerEmail, this.registerPassword).subscribe({
           next: (loginRes: any) => {
             this.auth.storeToken(loginRes.token);

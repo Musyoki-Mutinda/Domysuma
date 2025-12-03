@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { HomeComponent } from '../home/home.component';
-import { AboutComponent } from '../about/about.component';
+//import { AboutComponent } from '../about/about.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     LayoutComponent,
     HomeComponent,
-    AboutComponent,
+    //AboutComponent,
   ],
   imports: [
     CommonModule,

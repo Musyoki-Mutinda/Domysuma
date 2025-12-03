@@ -12,7 +12,7 @@ export class ServiceListComponent {
   services = [
     {
       icon: 'fa-compass-drafting',
-      title: 'Architectural Design',
+      title: 'Structural Design',
       description:
         'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture',
       route: '/services/1'
@@ -25,7 +25,7 @@ export class ServiceListComponent {
     },
     {
       icon: 'fa-briefcase',
-      title: 'Project Management',
+      title: 'Structural Design',
       description:
         'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
     },
@@ -37,13 +37,13 @@ export class ServiceListComponent {
     },
     {
       icon: 'fa-briefcase',
-      title: 'Architectural Design',
+      title: 'Structural Design',
       description:
         'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
     },
     {
       icon: 'fa-trowel-bricks',
-      title: 'Construction',
+      title: 'Structural Design',
       description:
         'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
     }

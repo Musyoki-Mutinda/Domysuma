@@ -1,26 +1,26 @@
 <section class="services-sec">
+
   <section class="section-header">
     <h2>Services we offer</h2>
     <p>We Provide a Wide Range of Services</p>
   </section>
 
   <section class="services-cards-sec">
-    <div class="services-cont">
-      
-      <div
-        class="services-card scroll-stack-item"
-        *ngFor="let s of services; let i = index"
-        [ngStyle]="getCardStyle(i)"
-        [routerLink]="s.route ? s.route : null"
-      >
-        <i class="icon-custom-with-bg fa-solid" [ngClass]="s.icon"></i>
 
-        <div>
-          <h4>{{ s.title }}</h4>
-          <p>{{ s.description }}</p>
-        </div>
+    <div
+      class="services-card scroll-stack-item"
+      *ngFor="let s of services; let i = index"
+      [ngStyle]="getCardStyle(i)"
+      [routerLink]="s.route ? s.route : null"
+    >
+      <i class="icon-custom-with-bg fa-solid" [ngClass]="s.icon"></i>
+
+      <div>
+        <h4>{{ s.title }}</h4>
+        <p>{{ s.description }}</p>
       </div>
-
     </div>
+
   </section>
+
 </section>

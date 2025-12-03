@@ -5,9 +5,31 @@
       <p><i class="fa-regular fa-envelope"></i> info&#64;domysumaarchitects.com</p>
     </div>
 
-    <div>
-      <p><i class="fa-regular fa-user"></i><button class="login-btn" (click)="openLogin()">Login</button></p>
-      <p><i class="fa-regular fa-heart"></i> Saved</p>
+    <div class="header-actions">
+      <!-- Show login button if user is not logged in -->
+      <ng-container *ngIf="!userName; else loggedInTemplate">
+        <p>
+          <i class="fa-regular fa-user"></i>
+          <button class="login-btn" (click)="openLogin()">Login</button>
+        </p>
+      </ng-container>
+
+      <!-- Template for logged-in user -->
+      <ng-template #loggedInTemplate>
+        <li class="user-dropdown">
+          <button class="user-btn" (click)="toggleDropdown()">
+            <i class="fa-regular fa-user"></i> {{ userName }}
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <ul class="dropdown-menu" [class.show]="dropdownOpen">
+            <li (click)="logout()">Logout</li>
+          </ul>
+        </li>
+      </ng-template>
+
+      <li class="saved-btn" (click)="openSavedPlans()">
+        <i class="fa-regular fa-heart"></i> Saved
+      </li>
 
       <li class="dropdown">
         <button class="settings-btn" (click)="toggleDropdown()">
@@ -16,9 +38,7 @@
         </button>
 
         <ul class="dropdown-menu" [class.show]="dropdownOpen">
-
           <li (click)="openPreferences()">Preferences</li>
-
           <li class="dark-mode-toggle">
             <span>Dark Mode</span>
             <label class="switch">
@@ -26,8 +46,7 @@
               <span class="slider round"></span>
             </label>
           </li>
-
-          <li (click)="openHelpCenter()">Help Center</li>
+          <li (click)="goToHelpCenter()">Help Center</li>
         </ul>
       </li>
     </div>
@@ -66,9 +85,5 @@
     <i class="fa-solid fa-comment-dots"></i>
   </div>
 
-  <app-login-modal
-    *ngIf="showLoginModal"
-    (close)="showLoginModal = false">
-  </app-login-modal>
-
+  <app-login-modal></app-login-modal>
 </section>

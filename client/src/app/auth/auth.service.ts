@@ -15,7 +15,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // -------------------- LOGIN --------------------
   login(email: string, password: string) {
     return this.http.post<any>(`${this.baseUrl}/login`, { email, password }).pipe(
       tap((response) => {
@@ -26,18 +25,14 @@ export class AuthService {
     );
   }
 
-  // -------------------- REGISTER --------------------
   register(data: { fullName: string; email: string; password: string }) {
     return this.http.post<any>(`${this.baseUrl}/register`, data);
   }
 
-  // -------------------- GOOGLE LOGIN --------------------
   googleLoginRedirect() {
-    // The actual Spring Boot OAuth2 redirect
     window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 
-  // -------------------- TOKEN STORAGE --------------------
   storeToken(token: string) {
     localStorage.setItem(this.tokenKey, token);
   }
@@ -60,7 +55,24 @@ export class AuthService {
     this.isLoggedIn$.next(false);
   }
 
-  private hasToken(): boolean {
+  public hasToken(): boolean {
     return !!localStorage.getItem(this.tokenKey);
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  // 🔥 New: extract user ID from JWT token
+  getCurrentUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub || payload.userId || null;
+    } catch (e) {
+      return null;
+    }
   }
 }

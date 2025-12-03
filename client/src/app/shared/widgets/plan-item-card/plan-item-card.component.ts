@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {IPlanData} from "../../../core/interfaces/i-plan-data";
+import { IPlanData } from '../../../core/interfaces/i-plan-data';
 
 @Component({
   selector: 'app-plan-item-card',
@@ -17,21 +17,24 @@ export class PlanItemCardComponent implements OnInit {
     storeys: 1,
     width: 200,
     length: 130,
-    area: 30000
-  }
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+    area: 30000,
+    description: `This spacious four-bedroom bungalow design features 
+    modern finishes, an open-plan living area, and functional room layouts 
+    ideal for families looking for comfort and practicality.` 
+  };
 
   isSaved = false;
 
-  toggleSave(btn: HTMLElement) {
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  toggleSave(target: EventTarget | null) {
+  if (target instanceof HTMLElement) {
     this.isSaved = !this.isSaved;
-    btn.classList.add('clicked');
-    setTimeout(() => btn.classList.remove('clicked'), 300);
+
+    target.classList.add('clicked');
+    setTimeout(() => target.classList.remove('clicked'), 300);
   }
-
-
+}
 }
