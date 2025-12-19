@@ -11,7 +11,7 @@ export class ProjectItemCardComponent implements OnInit {
   @Input() projectData: any = {
     id: null,
     category: '',
-    img: 'assets/images/4bd.png',
+    img: 'assets/images/residential.jpg',
     title: '4 Bedroom Bungalow',
     desc: 'Short description of the project...',
   };
@@ -21,7 +21,7 @@ export class ProjectItemCardComponent implements OnInit {
   ngOnInit(): void {
     // ✅ Enforce fallback for missing images
     if (!this.projectData?.img || this.projectData.img.trim() === '') {
-      this.projectData.img = 'assets/images/4bd.png';
+      this.projectData.img = 'assets/images/residential.jpg';
     }
   }
 

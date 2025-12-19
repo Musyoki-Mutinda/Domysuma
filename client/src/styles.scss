@@ -169,7 +169,7 @@ body {
 /* ========== GLOBAL DARK MODE THEME ========== */
 
 body.dark-mode {
-  background: #121212 !important;
+  background: #032b2b !important;
   color: #e0e0e0 !important;
 }
 
@@ -180,11 +180,11 @@ body.dark-mode h3,
 body.dark-mode h4,
 body.dark-mode h5,
 body.dark-mode h6 {
-  color: #ffffff !important;
+  color: #1565c0 !important;
 }
 
 body.dark-mode p {
-  color: #d0d0d0 !important;
+  color: #000 !important;
 }
 
 /* Links */
@@ -204,14 +204,14 @@ body.dark-mode .btn-custom-primary-outline {
 }
 
 body.dark-mode .btn-custom-white {
-  background: #1e1e1e !important;
+  background: #032b2b !important;
   color: #90caf9 !important;
 }
 
 /* Sections with white backgrounds */
 body.dark-mode section,
 body.dark-mode div.section {
-  background-color: #121212 !important;
+  background-color: #032b2b !important;
 }
 
 /* Smooth transitions */

@@ -11,42 +11,43 @@ export class ServiceListComponent {
 
   services = [
     {
-      icon: 'fa-compass-drafting',
-      title: 'Structural Design',
-      description:
-        'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture',
-      route: '/services/1'
-    },
-    {
-      icon: 'fa-briefcase',
-      title: 'Structural Design',
-      description:
-        'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
-    },
-    {
-      icon: 'fa-briefcase',
-      title: 'Structural Design',
-      description:
-        'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
-    },
-    {
-      icon: 'fa-briefcase',
-      title: 'Structural Design',
-      description:
-        'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
-    },
-    {
-      icon: 'fa-briefcase',
-      title: 'Structural Design',
-      description:
-        'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
-    },
-    {
-      icon: 'fa-trowel-bricks',
-      title: 'Structural Design',
-      description:
-        'The philosophy of architecture is a branch of philosophy of art, dealing with aesthetic value of architecture'
-    }
+  icon: 'fa-compass-drafting',
+  title: 'Architectural Design',
+  description:
+    'We create functional, aesthetic and fully compliant architectural designs tailored to your vision and project needs.',
+  route: '/services/1'
+},
+{
+  icon: 'fa-building-columns',
+  title: 'Structural Design',
+  description:
+    'We develop safe, efficient structural systems to ensure stability, durability and cost-effective construction.'
+},
+{
+  icon: 'fa-briefcase',
+  title: 'Project Management',
+  description:
+    'We oversee planning, budgeting, coordination and site operations to ensure your project is delivered on time and to standard.'
+},
+{
+  icon: 'fa-calculator',
+  title: 'Project Costing',
+  description:
+    'We provide accurate cost estimates, bills of quantities and budgeting guidance for smooth financial planning.'
+},
+{
+  icon: 'fa-couch',
+  title: 'Interior Design',
+  description:
+    'We design beautiful, functional interior spaces with cohesive aesthetics, materials, lighting and furniture layouts.'
+},
+{
+  icon: 'fa-trowel-bricks',
+  title: 'Construction',
+  description:
+    'We offer end-to-end construction solutions including site works, supervision and execution to bring your project to life.'
+}
+
   ];
 
   @HostListener('window:scroll')

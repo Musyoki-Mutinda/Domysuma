@@ -4,7 +4,6 @@ import { AuthService } from '../../../auth/auth.service';
 import { LoginModalService } from '../../../core/services/login-modal.service';
 import { SavedPlansService } from '../../../core/services/saved-plans.service';
 
-
 @Component({
   selector: 'app-plan-details',
   templateUrl: './plan-details.component.html',
@@ -27,10 +26,13 @@ export class PlanDetailsComponent implements OnInit {
 
   images = [
     'https://images.unsplash.com/photo-1451976426598-a7593bd6d0b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=2670&q=80',
-    'https://admin.domysumacontractors.com/uploads/small_Modern_3_Bedroom_Bungalow_2_8ea083df7a.png',
+    //'https://admin.domysumacontractors.com/uploads/small_Modern_3_Bedroom_Bungalow_2_8ea083df7a.png',
     'https://images.unsplash.com/photo-1448890372448-691670059ce8?ixlib=rb-1.2.1&auto=format&fit=crop&w=2670&q=80',
     'https://images.unsplash.com/photo-1522190136917-1322500b0485?ixlib=rb-1.2.1&auto=format&fit=crop&w=2670&q=80',
   ];
+
+  /** Share popup state */
+  showSharePopup = false;
 
   constructor(
     private gallery: Gallery,
@@ -74,7 +76,7 @@ export class PlanDetailsComponent implements OnInit {
 
   /** Triggered when heart icon is clicked */
   onHeartClick(): void {
-    if (!this.auth.getToken()) {  // Use getToken() instead of private hasToken()
+    if (!this.auth.getToken()) {
       this.openLoginModal();
     } else {
       this.savePlan();
@@ -83,12 +85,46 @@ export class PlanDetailsComponent implements OnInit {
 
   /** Open the login modal via service */
   openLoginModal(): void {
-    this.loginModalService.open(); // Triggers LoginModalComponent
+    this.loginModalService.open();
   }
 
   /** Save plan action */
   savePlan(): void {
-  this.savedPlansService.addPlan(this.project);
-  console.log('Plan saved for user:', this.project?.id);
-}
+    this.savedPlansService.addPlan(this.project);
+    console.log('Plan saved for user:', this.project?.id);
+  }
+
+  /** Share popup methods */
+  toggleSharePopup(): void {
+    this.showSharePopup = !this.showSharePopup;
+  }
+
+  shareTo(platform: string): void {
+    const url = encodeURIComponent(window.location.href);
+    let shareUrl = '';
+
+    switch(platform) {
+      case 'whatsapp':
+        shareUrl = `https://wa.me/?text=${url}`;
+        break;
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
+    }
+
+    window.open(shareUrl, '_blank');
+  }
+
+  copyLink(): void {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link copied to clipboard!');
+    });
+  }
+
 }

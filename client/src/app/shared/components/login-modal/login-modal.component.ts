@@ -91,7 +91,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   }
 
   // ---------------- ADMIN LOGIN ----------------
-  adminLogin() {
+    adminLogin() {
     if (!this.adminEmail || !this.adminPassword) {
       this.errorMsg = 'Please enter both admin email and password.';
       return;
@@ -100,17 +100,31 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.errorMsg = '';
 
-    try {
-      this.adminAuth.login({
-        email: this.adminEmail,
-        password: this.adminPassword
-      });
-      // After this call, backend handles redirect, so we don't manually set token or subscribe
-    } catch (err) {
-      this.loading = false;
-      this.errorMsg = 'Admin login failed. Please try again.';
-      console.error(err);
-    }
+    this.adminAuth.login({
+      email: this.adminEmail,
+      password: this.adminPassword
+    }).subscribe({
+      next: (response: any) => {
+        // Success - redirect to admin dashboard
+        this.closeModal();
+        window.location.href = 'http://localhost:4300/dashboard';
+      },
+      error: (err) => {
+        // Check if this is the CORS error (which means auth succeeded but redirect was blocked)
+        if (err.status === 0 && err.statusText === 'Unknown Error') {
+          // The login actually succeeded! The backend tried to redirect but CORS blocked it.
+          // So we manually redirect here
+          console.log('Login successful - redirecting to admin dashboard');
+          this.closeModal();
+          window.location.href = 'http://localhost:4300/dashboard';
+        } else {
+          // Actual login failure
+          this.loading = false;
+          this.errorMsg = 'Admin login failed. Please try again.';
+          console.error('Admin login error:', err);
+        }
+      }
+    });
   }
 
   // ---------------- USER LOGIN ----------------
@@ -131,7 +145,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
         this.closeModal();
 
         if (role === 'ADMIN') {
-          window.location.href = 'http://localhost:53579';
+          window.location.href = 'http://localhost:4300';
         } else {
           this.router.navigate(['/dashboard']);
         }

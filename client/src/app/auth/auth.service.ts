@@ -16,7 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
-    return this.http.post<any>(`${this.baseUrl}/login`, { email, password }).pipe(
+    return this.http.post<any>(`${this.baseUrl}/login`, { email, password },{withCredentials: true}).pipe(
       tap((response) => {
         this.storeToken(response.token);
         this.storeRole(response.role);

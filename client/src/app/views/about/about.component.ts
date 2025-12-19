@@ -19,7 +19,7 @@ export class AboutComponent implements AfterViewInit {
     this.loadGoogleMaps();
   }
 
-  /** Load Google Maps dynamically (NO callback param!) */
+  /** Load Google Maps dynamically */
   private loadGoogleMaps(): void {
     if ((window as any).google && (window as any).google.maps) {
       this.initMap();
@@ -28,7 +28,7 @@ export class AboutComponent implements AfterViewInit {
 
     const script = document.createElement('script');
     script.src =
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyBKSRofRSMWWGOfSVeO6JfAKj1_KfATndk&libraries=marker';
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyBKSRofRSMWWGOfSVeO6JfAKj1_KfATndk';
     script.async = true;
     script.defer = true;
 
@@ -39,7 +39,7 @@ export class AboutComponent implements AfterViewInit {
     document.head.appendChild(script);
   }
 
-  /** Initialize the map and markers */
+  /** Initialize the map and markers with standard red pins */
   private initMap(): void {
     const mapElement = document.getElementById('map') as HTMLElement;
 
@@ -55,14 +55,14 @@ export class AboutComponent implements AfterViewInit {
       zoom: 6
     });
 
-    // Add markers
+    // Add standard red markers
     this.branches.forEach(branch => {
-      const marker = new google.maps.marker.AdvancedMarkerElement({
-        map,
+      const marker = new google.maps.Marker({
         position: { lat: branch.lat, lng: branch.lng },
+        map,
         title: branch.name
       });
-      
+
       const infoWindow = new google.maps.InfoWindow({
         content: `<strong>${branch.name}</strong>`
       });

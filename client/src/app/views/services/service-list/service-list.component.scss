@@ -4,8 +4,6 @@
   display: grid;
   position: relative;
   background: #f7fbf2;
-
-  
   padding: 40px $layout-horizontal-padding;
 
   &::before {
@@ -29,10 +27,9 @@
   }
 }
 
-
 .section-header {
   text-align: center;
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
 
   h2 {
     color: #1c75bc;
@@ -46,10 +43,9 @@
     font-size: 18px;
     color: #333;
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 100%;
   }
 }
-
 
 .services-cards-sec {
   display: grid;
@@ -154,5 +150,44 @@
       height: auto;
       padding: 20px;
     }
+  }
+}
+
+/* ===========================================================
+   DARK MODE OVERRIDES
+   Add "dark" to <html> or <body> → <body class="dark">
+   =========================================================== */
+.dark .services-sec {
+  background: transparent;
+}
+
+.dark .section-header h2,
+.dark .section-header p {
+  color: #ffffff;
+}
+
+.dark .services-card {
+  background: #1c75bc !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+
+  .icon-custom-with-bg {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+  }
+
+  h4,
+  p {
+    color: #ffffff !important;
+  }
+}
+
+.dark .services-card:hover {
+  background: #1666a4 !important; // slightly darker blue on hover
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+
+  .icon-custom-with-bg {
+    background: #ffffff !important;
+    color: #1c75bc !important;
   }
 }

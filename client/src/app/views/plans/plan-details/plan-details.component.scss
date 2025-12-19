@@ -6,13 +6,18 @@ h4,
 h5 {
   font-weight: 500;
   font-size: 24px;
+  color: #1c75bc;
 }
+
 h5 {
   font-size: 18px;
+  color: #333;
 }
 
 .plan-details-sec {
   padding: 0 0 60px 0;
+  font-family: "Inter", sans-serif;
+  color: #333;
 
   .top-sec {
     padding: 50px $layout-horizontal-padding;
@@ -27,24 +32,38 @@ h5 {
         flex-direction: column;
         flex-wrap: wrap;
         align-items: flex-start;
-        gap: $section-horizontal-margin-20;
+        gap: 30px;
         width: calc(100% - 400px);
       }
     }
 
     .slideshow {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 15px;
       overflow: hidden;
       position: relative;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 
       button {
         position: absolute;
         z-index: 10;
-        right: 10px;
-        top: 10px;
-        color: #ffffff;
-        background: rgba(28, 117, 188, 0.7);
+        right: 15px;
+        top: 15px;
+        color: #fff;
+        background: rgba(28, 117, 188, 0.85);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        transition: transform 0.2s ease, background 0.2s ease;
+
+        &:hover {
+          background: #1c75bc;
+          transform: scale(1.1);
+        }
       }
     }
 
@@ -67,58 +86,63 @@ h5 {
       &:nth-child(1) {
         width: calc(100% - 400px);
       }
+
       > div {
         background: #ffffff;
-        border-radius: 10px;
-        padding: $padding-default;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
 
         p {
           margin: 10px 0;
-        }
-
-        &.plan-desc {
+          line-height: 1.6;
         }
 
         &.floor-plans {
           background: none;
-          padding-left: 0;
-          padding-right: 0;
+          padding: 0;
+
           h4 {
             margin-bottom: 20px;
           }
+
           > div {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-          }
-        }
-
-        &.additional-details {
-          h4 {
-            padding: 0 0 $section-horizontal-padding-20 0;
-          }
-          ul {
-            list-style-type: disc;
-            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
           }
         }
 
         &.estimates {
-          background: rgba(0, 0, 0, 0.1);
+          background: rgba(28, 117, 188, 0.1);
           width: 370px;
 
           button {
             width: 100%;
+            font-weight: 600;
+            color: #1c75bc;
+            border: 2px solid #1c75bc;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: #1c75bc;
+              color: #fff;
+            }
           }
         }
       }
+
       &:nth-child(1) {
         display: flex;
         flex-direction: column;
-        gap: $section-horizontal-padding-20;
-      }
-
-      &:nth-child(2) {
+        gap: 30px;
       }
     }
 
@@ -131,9 +155,13 @@ h5 {
 
   .bottom-sec {
     padding: 50px $layout-horizontal-padding;
+
     h4 {
       display: flex;
       justify-content: space-between;
+      font-weight: 600;
+      font-size: 22px;
+      color: #1c75bc;
 
       span {
         font-weight: 400;
@@ -141,9 +169,12 @@ h5 {
         text-transform: capitalize;
         color: #1c75bc;
         cursor: pointer;
+        transition: transform 0.2s ease;
+
         &:hover {
           transform: scale(1.1);
         }
+
         &:active {
           transform: scale(1);
         }
@@ -151,31 +182,134 @@ h5 {
     }
 
     .similar-plans {
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; // spacing between cards
-    justify-content: space-between;
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
 
-    app-plan-item-card {
-      flex: 0 0 calc(33.333% - 10px); // three cards per row, accounting for gap
-      box-sizing: border-box;         // include padding/border in width
-    }
+      app-plan-item-card {
+        flex: 0 0 calc(33.333% - 20px);
+        box-sizing: border-box;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-    @include tablet {
-      app-plan-item-card,
-      .custom-card-item {
-        flex: 0 0 calc(50% - 10px);  // two cards per row on tablet
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
       }
-    }
 
-    @include mobile {
-      app-plan-item-card,
-      .custom-card-item {
-        flex: 0 0 100%;               // single card per row on mobile
+      @include tablet {
+        app-plan-item-card,
+        .custom-card-item {
+          flex: 0 0 calc(50% - 15px);
+        }
+      }
+
+      @include mobile {
+        app-plan-item-card,
+        .custom-card-item {
+          flex: 0 0 100%;
+        }
       }
     }
   }
+
+  /** Share Popup Styles */
+  .share-btn {
+    background: none;
+    color: #1c75bc;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      background: #4587bd;
+      transform: scale(1.1);
+    }
+  }
+
+  .share-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 998;
+  }
+
+  .share-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 40px;
+    width: 320px;
+    max-width: 90%;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    h3 {
+      font-size: 20px;
+      color: #1c75bc;
+      margin-bottom: 10px;
+    }
+
+    .share-options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+
+      button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #1c75bc;
+          color: #fff;
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .close-btn {
+      background: #e0e0e0;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #1c75bc;
+        color: #fff;
+      }
+    }
   }
 
   @include mobile {
@@ -199,25 +333,39 @@ h5 {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
+
+    button {
+      border-radius: 10px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+    }
   }
 }
 
 .key-specs {
-  width: 100%;
-  //display: flex;
-  justify-content: flex-start;
+  width: 670px;
+  display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   padding: 30px;
-  width: 370px;
   background: rgba(28, 117, 188, 0.1);
-  border-radius: 10px;
+  border-radius: 15px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
 
   h4 {
     width: 100%;
+    color: #1c75bc;
   }
 
   .key-spec-item {
@@ -231,16 +379,20 @@ h5 {
       color: #7f7f7f;
       font-size: 30px;
     }
+
     p {
       text-align: center;
+      font-weight: 500;
     }
+
     @include tablet {
       width: calc(100% / 3 - 20px);
     }
+
     @include mobile {
       width: calc(100% / 2 - 10px);
       background: rgba(28, 117, 188, 0.1);
-      padding: 10px;
+      padding: 12px;
       border-radius: 10px;
     }
   }
@@ -250,13 +402,27 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: $layout-horizontal-margin;
+  gap: 25px;
   padding: 30px;
   width: 370px;
   background: rgba(28, 117, 188, 0.1);
-  border-radius: 10px;
+  border-radius: 15px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
 
   button {
     width: 100%;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
   }
 }
