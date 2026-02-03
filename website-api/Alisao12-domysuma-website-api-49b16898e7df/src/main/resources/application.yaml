@@ -1,0 +1,105 @@
+server:
+  port: 8200
+
+spring:
+  application:
+    name: domysuma-website-api
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    hikari:
+      max-lifetime: 300000
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  jackson:
+    parser:
+      allow-unquoted-control-chars: true
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      fail-on-empty-beans: false
+      write-dates-as-timestamps: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            required: true
+            enable: true
+
+  security:
+    user:
+      name: domysuma-api
+      password: ${SECURITY_PASSWORD}
+
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+            redirect-uri: "https://api.domysumaarchitects.co.ke/login/oauth2/code/google"
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            client-name: Google
+
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub
+
+      resourceserver:
+        jwt:
+          public-key-location: classpath:rsa.public.key
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+jwt:
+  key:
+    private: classpath:rsa.private.key
+    public: classpath:rsa.public.key
+  expiration-in-hours:
+    access: 8760
+    refresh: 8760
+
+app:
+  frontend:
+    url: https://domysumaarchitects.co.ke
+  admin:
+    frontend:
+      url: https://domysumaarchitects.co.ke/admin/dashboard
+
+spaces:
+  key: ${SPACES_KEY}
+  secret: ${SPACES_SECRET}
+  endpoint: ${SPACES_ENDPOINT}
+  region: ${SPACES_REGION}
+  bucket: ${SPACES_BUCKET}

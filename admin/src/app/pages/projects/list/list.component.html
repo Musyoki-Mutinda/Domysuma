@@ -1,0 +1,88 @@
+
+<div class="row">
+  <div class="d-flex justify-content-end">
+    <button nbButton status="primary" routerLink="../create">
+      <nb-icon icon="plus-outline"></nb-icon>
+      Add Project
+    </button>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>Projects</nb-card-header>
+      <nb-card-body>
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-4">
+          <nb-icon icon="loader-outline"></nb-icon>
+          <p>Loading projects...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error && !isLoading" class="alert alert-danger">
+          {{ error }}
+          <button nbButton status="primary" size="small" (click)="loadProjects()" style="margin-left: 10px;">
+            Retry
+          </button>
+        </div>
+
+        <!-- Projects Table -->
+        <div *ngIf="!isLoading && !error">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Location</th>
+                <th>Year</th>
+                <th>Client Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let project of projects">
+                <td>{{ project.id }}</td>
+                <td>{{ project.title }}</td>
+                <td>{{ project.category }}</td>
+                <td>
+                  <span [ngClass]="project.published ? 'badge badge-success' : 'badge badge-warning'">
+                    {{ project.published ? 'Published' : 'Hidden' }}
+                  </span>
+                </td>
+                <td>{{ project.location }}</td>
+                <td>{{ project.year }}</td>
+                <td>{{ project.clientType }}</td>
+                <td>
+                  <!-- Edit Button -->
+                  <button nbButton status="info" size="small" (click)="editProject(project)">
+                    Edit
+                  </button>
+
+                  <!-- Toggle Visibility Button -->
+                  <button
+                    nbButton
+                    [status]="project.published ? 'warning' : 'success'"
+                    size="small"
+                    (click)="toggleVisibility(project.id, project.published)">
+                    {{ project.published ? 'Hide' : 'Publish' }}
+                  </button>
+
+                  <!-- Delete Button (disabled for now) -->
+                  <button nbButton status="danger" size="small" [disabled]="true" title="Temporarily disabled">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p *ngIf="projects.length === 0">No projects found.</p>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+@import "src/styles";
+.bread-crumb-sec{
+  display: flex;
+  position: absolute;
+  gap: 10px;
+  z-index: -1;
+  width: 100%;
+  padding: 0 $layout-horizontal-padding;
+  background: #FFFFFF;
+  box-shadow: inset 0 20px 30px rgba(0, 0, 0, 0.1);
+
+  p{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 0;
+    &:hover{
+      transform: scale(1.1);
+      color: #1C75BC;
+    }
+    i{
+      font-size: 10px;
+    }
+  }
+
+  p:last-child{
+    i{
+      display: none;
+    }
+  }
+}

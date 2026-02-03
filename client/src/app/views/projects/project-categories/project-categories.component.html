@@ -1,0 +1,20 @@
+<section class="project-categories">
+
+  <section class="section-header">
+    <h2>Our Project Portfolio</h2>
+    <p>Select a category to explore our completed works.</p>
+  </section>
+
+  <div class="category-grid">
+    <div 
+      class="category-card" 
+      *ngFor="let cat of categories" 
+      [routerLink]="['/projects', cat.slug]"
+    >
+    
+      <img [src]="cat.image" alt="{{ cat.name }}">
+      <h3>{{ cat.name }}</h3>
+    </div>
+  </div>
+
+</section>

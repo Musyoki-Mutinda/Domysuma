@@ -1,0 +1,19 @@
+<section class="project-sec">
+
+  <section class="section-header">
+    <h2>{{ selectedCategory?.name }}</h2>
+    <p>Completed works in this category.</p>
+  </section>
+
+  <div class="projects-cont">
+    <div class="featured-design-items">
+      <app-project-item-card 
+        *ngFor="let project of projects"
+        class="custom-card-item"
+        [projectData]="project">
+      </app-project-item-card>
+
+    </div>
+  </div>
+
+</section>

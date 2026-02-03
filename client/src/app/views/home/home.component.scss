@@ -1,0 +1,665 @@
+@import "src/styles";
+@import "src/app/shared/styles/featured-design";
+@import "src/app/shared/styles/general";
+
+/* ------------------ HERO SECTION ------------------ */
+.home-video-sec {
+  position: relative;
+  min-height: 80vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 $layout-horizontal-padding;
+
+  /* Each slide image */
+  .hero-slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-slideshow img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 0; // base
+
+  &.active {
+    opacity: 1;
+    z-index: 0; // keep it below overlay
+  }
+}
+
+  /* Overlay tint */
+  .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1; // overlay above slides
+}
+
+  /* Text + dots container */
+  .home-call-to-action-cont {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    margin-top: 15vh;
+    color: #fff;
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 64px;
+      margin-bottom: 40px;
+
+      @include mobile {
+        font-size: 40px;
+      }
+    }
+
+    /* Dots */
+    .hero-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+
+      span {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+
+        &.active {
+          background: #ffffff;
+          transform: scale(1.2);
+        }
+
+        &:hover {
+          background: #ffffff;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    padding: 10px $layout-horizontal-padding-sm;
+  }
+}
+
+
+/* ------------------ ABOUT US SECTION ------------------ */
+.about-us-sec {
+  padding: 50px $layout-horizontal-padding;
+  background: #f9f9f9;
+
+  .about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .about-text {
+    flex: 1;
+    min-width: 300px;
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #1c75bc;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 15px;
+      max-width: 600px;
+    }
+
+    .btn-custom {
+      margin-top: 20px;
+      font-weight: 600;
+    }
+  }
+
+  .about-image {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+
+    img {
+    width: 100%;
+    max-width: 450px;
+    max-height: 350px; /* 👈 limits vertical size */
+    object-fit: cover; /* keeps proportions clean */
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+    &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+  @include tablet {
+    .about-content {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+
+    .about-text {
+      h2 {
+        font-size: 28px;
+      }
+    }
+  }
+
+  @include mobile {
+    padding: 60px $layout-horizontal-padding-sm;
+  }
+}
+
+
+
+/* ------------------ FEATURED DESIGN + BLOG ------------------ */
+.featured-design {
+  padding: 60px $layout-horizontal-padding;
+
+  h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #1c75bc;
+    text-align: left;
+  }
+
+  .featured-design-items {
+    display: grid;
+    grid-template-columns: 5.5fr 2fr; /* 👈 makes design cards wider */
+    gap: 60px; /* slightly more breathing space between sections */
+    align-items: start;
+  }
+
+  /* Left section – design cards */
+  .design-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+
+    /* 👇 makes individual cards visually larger */
+    app-plan-item-card {
+      transform: scale(1.09);
+      transform-origin: left;
+    }
+  }
+
+  /* Right section – blog previews */
+  .blog-preview {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    /* 👇 gently pushes blog section rightwards */
+    margin-left: 3px;
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #1c75bc;
+      text-align: center;
+    }
+
+    .blog-card {
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+
+      img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 16px;
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      p {
+        font-size: 13px;
+        color: #777;
+      }
+    }
+
+    .view-all {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: #1c75bc;
+      font-weight: 500;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @include tablet {
+    .featured-design-items {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-preview {
+      margin-left: 0;
+      margin-top: 30px;
+    }
+  }
+}
+
+
+/* ------------------ WHY CHOOSE US SECTION ------------------ */
+.services-cards-sec {
+  position: relative;
+  padding: 50px $layout-horizontal-padding;
+  background: linear-gradient(135deg, #4da6ff 0%, #1c75bc 50%, #0d47a1 100%);
+  color: #fff;
+  border-radius: 40px;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.25;
+    z-index: 0;
+  }
+
+  &::before {
+    top: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #ffffff30 0%, transparent 70%);
+  }
+
+  &::after {
+    bottom: -120px;
+    right: -120px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #00bfff30 0%, transparent 70%);
+  }
+
+  h3 {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 40px;
+    z-index: 2;
+    letter-spacing: 1px;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: #ffffff;
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+  }
+
+  /* Typing Effect Title */
+  .typing-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+
+    .typing-word {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.2em;
+      background-color: #ffffff;
+      margin-left: 4px;
+      animation: blink 0.8s steps(2, start) infinite;
+    }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Cards Container */
+  .services-cont {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: stretch;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Individual Card */
+  /* Individual Card */
+.services-card {
+  flex: 0 0 220px;       // standard fixed width for all cards
+  height: 220px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px 20px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-10px) scale(1.03);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+  }
+
+  /* ICON */
+  i {
+    font-size: 50px;
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(240, 240, 240, 0.7)
+    );
+    color: #1c75bc;
+
+    /* FIX: remove grid, use flex instead */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-inline: auto; // spacing between icon and title
+    box-shadow: 0 4px 15px rgba(226, 98, 98, 0.3);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  /* TITLE */
+  h4 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  /* DESCRIPTION */
+  p {
+    font-size: 15px;
+    color: #ffffff;
+    line-height: 1.5;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+
+    .services-cards-sec {
+  .services-card {
+    p {
+      color: #ffffff !important;
+    }
+  }
+}
+}
+
+  /* Responsive Design */
+  @include tablet {
+    .services-card {
+      flex: 1 1 calc(50% - 20px);
+    }
+  }
+
+  @include mobile {
+    padding: 60px $layout-horizontal-padding-sm;
+    .services-card {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+
+/* ------------------ PROJECTS PREVIEW SECTION ------------------ */
+.projects-preview {
+  margin: 60px 0;
+  text-align: center;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: #1c75bc;
+  }
+
+  .categories-row {
+    display: flex;
+    gap: 3px;               // space between cards
+    justify-content: space-around; // align cards to the left
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: 15px;
+
+    .category-card {
+      flex: 0 0 280px;       // standard fixed width for all cards
+      height: 220px;         // optional: fixed height
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+
+      img {
+        width: 100%;
+        height: 150px;      // image height inside card
+        object-fit: cover;
+      }
+
+      h3 {
+        padding: 5px 10px;  // reduce padding for smaller spacing
+        font-size: 16px;
+        text-align: center;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+  }
+
+  /* Mobile Categories Slideshow */
+  .categories-slideshow {
+    position: relative;
+
+    .category-card {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+
+      &.active {
+        display: block;
+      }
+
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      h3 {
+        padding: 15px 10px;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+
+    .category-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+
+      span {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(28, 117, 188, 0.5);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+
+        &.active {
+          background: #1c75bc;
+          transform: scale(1.2);
+        }
+
+        &:hover {
+          background: #1c75bc;
+        }
+      }
+    }
+  }
+
+  .view-more {
+    margin-top: 20px;
+    padding: 10px 26px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    background: #1c75bc;
+    color: #fff;
+  }
+}
+
+
+
+/* ------------------ QUICK LINKS SECTION ------------------ */
+.home-quick-links-sec {
+  padding: 60px $layout-horizontal-padding;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 60px;
+  row-gap: 20px;
+
+  > div {
+    border: 0.5px solid #bdbdbd;
+    border-radius: 5px;
+    padding: 50px 40px;
+    text-align: center;
+    flex-grow: 2;
+
+    > h3 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 30px;
+    }
+
+    > p {
+      margin: 30px 0;
+    }
+  }
+
+  @include mobile {
+    padding: 10px $layout-horizontal-padding-sm;
+
+    > div {
+      padding: 20px 5px;
+    }
+  }
+}
+
+/* Responsive for Projects Section */
+.desktop-only {
+ display: block;
+}
+
+.mobile-only {
+ display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+}

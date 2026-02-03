@@ -1,0 +1,101 @@
+<section class="plan-details-sec">
+  <section class="section-header">
+    <h2>Modify Plan</h2>
+    <h3>4 Bedroom bungalow</h3>
+    <p>Plan No# 2390</p>
+  </section>
+
+  <section class="top-sec">
+    <div>
+      <div class="slideshow">
+        <button class="btn-custom btn-custom-primary-outline">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+        <app-gallery [galleryId]="galleryId"></app-gallery>
+      </div>
+      <div class="blog-detail-socials">
+        <div class="blog-detail-socials-buttons">
+          <button class="btn-custom btn-custom-primary-outline">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+        <div class="blog-detail-socials-share">
+          <p>Share</p>
+          <i class="fa-brands fa-facebook-f socials-md"></i>
+          <i class="fa-brands fa-pinterest-p socials-md"></i>
+          <i class="fa-brands fa-linkedin-in socials-md"></i>
+        </div>
+      </div>
+      <div class="plan-desc">
+        <h4>Plan Description</h4>
+        <p>
+          Indoor-outdoor living at its best. This 3000 square metres design
+          makes it easy to move from inside to outside. The family room opens to
+          the back lanal with french doors, and so does the master suite. The
+          study opens to porch.
+        </p>
+        <button class="btn-custom btn-custom-primary-outline">
+          Talk to an architect for free
+        </button>
+      </div>
+
+      <div class="floor-plans">
+        <h4>Floor Plans</h4>
+        <div>
+          <app-gallery [galleryId]="plansGalleryId"></app-gallery>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="dsn-detail">
+        <h4>Modification Form</h4>
+        <form class="modification-form">
+          <div class="form-control">
+            <label>Name</label>
+            <input type="text" placeholder="Name" />
+          </div>
+          <div class="form-control">
+            <label>Email</label>
+            <input type="email" placeholder="Email" />
+          </div>
+          <div class="form-control">
+            <label>Phone</label>
+            <input type="text" placeholder="Phone" />
+          </div>
+          <div class="form-control">
+            <label>Building State</label>
+            <input
+              type="email"
+              placeholder="Describe the state of your building"
+            />
+          </div>
+          <div class="form-control">
+            <label>Reasons for modifying</label>
+            <textarea></textarea>
+          </div>
+
+          <h5>Changes</h5>
+          <div class="form-control">
+            <label>Change 1</label>
+            <input type="text" placeholder="Change 1" />
+          </div>
+          <div class="form-control">
+            <label>Change 2</label>
+            <input type="text" placeholder="Change 2" />
+          </div>
+        </form>
+
+        <button class="btn-custom btn-custom-primary">Submit Changes</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-sec">
+    <h4>Browse similar plans <span routerLink="/plans">View More</span></h4>
+    <div class="similar-plans">
+      <app-plan-item-card></app-plan-item-card>
+      <app-plan-item-card></app-plan-item-card>
+      <app-plan-item-card></app-plan-item-card>
+    </div>
+  </section>
+</section>

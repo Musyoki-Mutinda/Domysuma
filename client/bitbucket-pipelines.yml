@@ -1,0 +1,87 @@
+image: node:16.7.0
+definitions:
+  services:
+    docker:
+      memory: 3072
+
+pipelines:
+  branches:
+#    main-prod:
+#      - step:
+#          name: Install Dependencies
+#          caches:
+#            - node
+#          script:
+#            - npm install
+#            - npm install -g @angular/cli
+#
+#      - step:
+#          size: 2x
+#          name: Build & Deploy Production
+#          caches:
+#            - node
+#          script:
+#            - npm install -g firebase-tools
+#            - npm run build:prod
+#            - firebase deploy --only hosting -P prod --token "$FIREBASE_TOKEN_CI" --public dist/grobox2
+#
+#    main-dev:
+#      - step:
+#          name: Install DEV dependencies
+#          caches:
+#            - node
+#          script:
+#            - npm install
+#            - npm install -g @angular/cli
+#
+#      - step:
+#          size: 2x
+#          name: Build & Deploy Development
+#          caches:
+#            - node
+#          script:
+#            - npm install -g firebase-tools
+#            - npm run build:dev
+#            - firebase deploy --only hosting -P dev --token "$FIREBASE_TOKEN_CI" --public dist/grobox2
+
+    staging:
+      - step:
+          name: Install Dependencies
+          caches:
+            - node
+          script:
+            - npm install
+            - npm install -g @angular/cli
+
+      - step:
+          size: 2x
+          name: Build & Deploy Staging
+          caches:
+            - node
+          script:
+            - npm install -g firebase-tools
+            - npm run build:staging
+            - firebase deploy --only hosting -P staging --token "$FIREBASE_TOKEN_CI" --public dist/domysuma
+
+
+    qa:
+      - step:
+          name: Build & Deploy QA
+          caches:
+            - node
+          script:
+            - npm install
+            - npm install -g @angular/cli
+
+      - step:
+          size: 2x
+          name: Build & Deploy QA
+          caches:
+            - node
+          script:
+            - npm install -g firebase-tools
+            - npm run build:qa
+            - firebase hosting:channel:deploy qa --expires 30d --token "$FIREBASE_TOKEN_CI"
+          artifacts:
+            - build/**
+            - dist/**

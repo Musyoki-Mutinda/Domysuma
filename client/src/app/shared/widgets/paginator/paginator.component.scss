@@ -1,0 +1,37 @@
+@import "src/styles";
+.paginator-sec{
+display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+i,p{
+  //display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px;
+  margin: 0;
+}
+  >p{
+    background: linear-gradient(0deg, rgba(28, 117, 188, 0.2), rgba(28, 117, 188, 0.2)), #FFFFFF;
+    border-radius: 5px;
+    color: #231F20;
+
+  }
+
+  i{
+    background: linear-gradient(0deg, rgba(28, 117, 188, 0.5), rgba(28, 117, 188, 0.5)), #FFFFFF;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+      transform: $scale-1-1;
+    }
+    &:active{
+      transform: $scale-0-9;
+    }
+
+    &.active{
+      background: rgba(28, 117, 188, 1);
+      color: #FFFFFF;
+    }
+  }
+}

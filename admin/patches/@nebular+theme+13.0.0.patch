@@ -1,0 +1,41 @@
+diff --git a/node_modules/@nebular/theme/components/cdk/table/cell.d.ts b/node_modules/@nebular/theme/components/cdk/table/cell.d.ts
+index eb183bc..307dba4 100644
+--- a/node_modules/@nebular/theme/components/cdk/table/cell.d.ts
++++ b/node_modules/@nebular/theme/components/cdk/table/cell.d.ts
+@@ -35,7 +35,9 @@ export declare class NbColumnDefDirective extends CdkColumnDef {
+     get name(): string;
+     set name(value: string);
+     /** Whether this column should be sticky positioned at the start of the row */
+-    sticky: boolean;
++    get sticky(): boolean;
++    set sticky(value: boolean);
++
+     /** Whether this column should be sticky positioned on the end of the row */
+     get stickyEnd(): boolean;
+     set stickyEnd(value: boolean);
+diff --git a/node_modules/@nebular/theme/components/cdk/table/row.d.ts b/node_modules/@nebular/theme/components/cdk/table/row.d.ts
+index 61e03dd..8cb071e 100644
+--- a/node_modules/@nebular/theme/components/cdk/table/row.d.ts
++++ b/node_modules/@nebular/theme/components/cdk/table/row.d.ts
+@@ -26,7 +26,9 @@ export declare class NbCellOutletDirective extends CdkCellOutlet {
+  */
+ export declare class NbHeaderRowDefDirective extends CdkHeaderRowDef {
+     columns: Iterable<string>;
+-    sticky: boolean;
++    get sticky(): boolean;
++    set sticky(value: boolean);
++
+     static ɵfac: i0.ɵɵFactoryDeclaration<NbHeaderRowDefDirective, never>;
+     static ɵdir: i0.ɵɵDirectiveDeclaration<NbHeaderRowDefDirective, "[nbHeaderRowDef]", never, { "columns": { "alias": "nbHeaderRowDef"; "required": false; }; "sticky": { "alias": "nbHeaderRowDefSticky"; "required": false; }; }, {}, never, never, false, never>;
+ }
+@@ -36,7 +38,9 @@ export declare class NbHeaderRowDefDirective extends CdkHeaderRowDef {
+  */
+ export declare class NbFooterRowDefDirective extends CdkFooterRowDef {
+     columns: Iterable<string>;
+-    sticky: boolean;
++    get sticky(): boolean;
++    set sticky(value: boolean);
++
+     static ɵfac: i0.ɵɵFactoryDeclaration<NbFooterRowDefDirective, never>;
+     static ɵdir: i0.ɵɵDirectiveDeclaration<NbFooterRowDefDirective, "[nbFooterRowDef]", never, { "columns": { "alias": "nbFooterRowDef"; "required": false; }; "sticky": { "alias": "nbFooterRowDefSticky"; "required": false; }; }, {}, never, never, false, never>;
+ }

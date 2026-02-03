@@ -1,0 +1,57 @@
+@import "src/styles";
+
+.saved-projects-sec {
+  padding: 50px 0;
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h2 {
+      font-family: "Poppins", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 36px;
+      color: #1c75bc;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-family: "Poppins", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      color: #726658;
+    }
+  }
+
+  .loading, .error, .no-projects {
+    text-align: center;
+    padding: 50px 20px;
+
+    p {
+      font-family: "Poppins", sans-serif;
+      font-size: 18px;
+      color: #726658;
+      margin-bottom: 20px;
+    }
+
+    button {
+      margin: 0 auto;
+    }
+  }
+
+  .projects-cont {
+    .featured-design-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      justify-items: center;
+
+      .custom-card-item {
+        width: 100%;
+        max-width: 350px;
+      }
+    }
+  }
+}

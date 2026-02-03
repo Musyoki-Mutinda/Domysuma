@@ -1,0 +1,104 @@
+<div class="row">
+   <div class="col-lg-8">
+     <nb-card>
+       <nb-card-header>{{ isEditing ? 'Edit Project' : 'Create Project' }}</nb-card-header>
+
+       <nb-card-body>
+         <form [formGroup]="projectForm" (ngSubmit)="submit()">
+
+           <!-- Project Title -->
+           <input type="text" nbInput fullWidth shape="semi-round" placeholder="Project Title" formControlName="projectTitle" style="margin-bottom: 16px;">
+
+           <!-- Category -->
+           <nb-select nbInput fullWidth shape="semi-round" placeholder="Select Category" formControlName="category" style="margin-bottom: 16px;">
+             <nb-option *ngFor="let category of categories" [value]="category.slug">{{ category.name }}</nb-option>
+           </nb-select>
+
+           <!-- Location -->
+           <input type="text" nbInput fullWidth shape="semi-round" placeholder="Location" formControlName="location" style="margin-bottom: 16px;">
+
+           <!-- Year Completed -->
+           <input type="text" nbInput fullWidth shape="semi-round" placeholder="Completion Year" formControlName="yearCompleted" style="margin-bottom: 16px;">
+
+           <!-- Client Type -->
+           <input type="text" nbInput fullWidth shape="semi-round" placeholder="Client Type (e.g., Private)" formControlName="clientType" style="margin-bottom: 16px;">
+
+           <!-- Description -->
+           <textarea nbInput rows="4" fullWidth shape="round" placeholder="Project Description" formControlName="briefDescription" style="margin-bottom: 16px;"></textarea>
+
+           <!-- Scope of Work -->
+           <label class="label" style="margin-bottom: 8px;">Scope of Work (one per line)</label>
+           <textarea nbInput rows="4" fullWidth shape="round" placeholder="Architectural Design&#10;Structural Design&#10;Interior Design&#10;Landscape Design" formControlName="scope" style="margin-bottom: 16px;"></textarea>
+
+           <!-- Additional Fields (Optional) -->
+           <nb-accordion>
+             <nb-accordion-item>
+               <nb-accordion-item-header>Additional Details</nb-accordion-item-header>
+               <nb-accordion-item-body>
+                 <input type="text" nbInput fullWidth shape="semi-round" placeholder="County/Town" formControlName="countyTown" style="margin-bottom: 16px;">
+                 <input type="text" nbInput fullWidth shape="semi-round" placeholder="Total Floor Area" formControlName="floorArea" style="margin-bottom: 16px;">
+                 <input type="text" nbInput fullWidth shape="semi-round" placeholder="Structural System" formControlName="structuralSystem" style="margin-bottom: 16px;">
+                 <input type="text" nbInput fullWidth shape="semi-round" placeholder="Interior Features" formControlName="interiorFeatures" style="margin-bottom: 16px;">
+                 <textarea nbInput rows="3" fullWidth shape="round" placeholder="Additional Notes" formControlName="additionalNotes" style="margin-bottom: 16px;"></textarea>
+                 <input type="text" nbInput fullWidth shape="semi-round" placeholder="Architect/Designer Name" formControlName="architectName" style="margin-bottom: 16px;">
+
+                 <!-- Gallery Images Upload -->
+                 <label class="label" style="margin-bottom: 8px;">Gallery Images (3–4 recommended)</label>
+                 <input
+                   type="file"
+                   accept="image/*"
+                   multiple
+                   (change)="onGallerySelected($event)"
+                   nbInput fullWidth shape="semi-round"
+                   style="margin-bottom: 16px;"
+                 />
+
+                 <!-- Architectural Drawings Upload -->
+                 <label class="label" style="margin-bottom: 8px;">Architectural Drawings</label>
+                 <input
+                   type="file"
+                   accept="image/*,application/pdf"
+                   (change)="onDrawingsSelected($event)"
+                   nbInput fullWidth shape="semi-round"
+                   style="margin-bottom: 16px;"
+                 />
+
+                 <!-- Existing Gallery Images -->
+                 <div *ngIf="isEditing && existingGalleryImages.length > 0" style="margin-top: 16px;">
+                   <label class="label" style="margin-bottom: 8px;">Existing Gallery Images</label>
+                   <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                     <img *ngFor="let img of existingGalleryImages" [src]="img.path" alt="Gallery image" style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc;">
+                   </div>
+                 </div>
+
+                 <!-- Existing Architectural Drawings -->
+                 <div *ngIf="isEditing && existingArchitecturalDrawings.length > 0" style="margin-top: 16px;">
+                   <label class="label" style="margin-bottom: 8px;">Existing Architectural Drawings</label>
+                   <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                     <img *ngFor="let drawing of existingArchitecturalDrawings" [src]="drawing.path" alt="Architectural drawing" style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc;">
+                   </div>
+                 </div>
+               </nb-accordion-item-body>
+             </nb-accordion-item>
+           </nb-accordion>
+
+         </form>
+       </nb-card-body>
+
+     </nb-card>
+   </div>
+
+   <!-- Error Message -->
+   <div *ngIf="submitError" class="alert alert-danger" style="margin-top: 16px;">
+     {{ submitError }}
+   </div>
+
+   <div class="submit-actions" style="margin-top: 24px;">
+     <button nbButton status="primary" (click)="submit()" [disabled]="isSubmitting" style="margin-right: 12px;">
+       <span *ngIf="isSubmitting">{{ isEditing ? 'Updating...' : 'Creating...' }}</span>
+       <span *ngIf="!isSubmitting">{{ isEditing ? 'Update' : 'Save' }}</span>
+     </button>
+     <button nbButton status="danger" type="reset" (click)="projectForm.reset()" [disabled]="isSubmitting">Clear</button>
+   </div>
+
+ </div>

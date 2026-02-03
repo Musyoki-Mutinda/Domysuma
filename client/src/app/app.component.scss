@@ -1,0 +1,25 @@
+/* Light mode */
+:host {
+  display: block;
+  background: #ffffff;
+  color: #000;
+  min-height: 100vh;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Dark mode */
+body.dark-mode :host {
+  background: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

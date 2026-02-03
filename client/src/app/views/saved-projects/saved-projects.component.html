@@ -1,0 +1,33 @@
+<section class="saved-projects-sec">
+
+  <section class="section-header">
+    <h2>My Saved Projects</h2>
+    <p>Projects you've saved for later reference.</p>
+  </section>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading your saved projects...</p>
+  </div>
+
+  <div class="error" *ngIf="error && !loading">
+    <p>{{ error }}</p>
+    <button class="btn-custom btn-custom-primary" (click)="loadSavedProjects()">Try Again</button>
+  </div>
+
+  <div class="no-projects" *ngIf="!loading && !error && savedProjects.length === 0">
+    <p>You haven't saved any projects yet.</p>
+    <p>Click the heart icon on projects to save them here.</p>
+  </div>
+
+  <div class="projects-cont" *ngIf="!loading && !error && savedProjects.length > 0">
+    <div class="featured-design-items">
+      <app-project-item-card
+        *ngFor="let project of savedProjects"
+        class="custom-card-item"
+        [projectData]="project"
+        (unsave)="onUnsaveProject($event)">
+      </app-project-item-card>
+    </div>
+  </div>
+
+</section>

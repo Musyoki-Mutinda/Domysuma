@@ -1,0 +1,18 @@
+<section class="plan-item-card-cont">
+  <div class="plan-item-card-top">
+    <img [src]="projectData.img" [alt]="projectData.title">
+    <button class="heart-btn" (click)="toggleSave($event)" [class.saved]="isSaved">
+      <i class="fa-solid fa-heart"></i>
+    </button>
+  </div>
+
+  <h4>{{ projectData.title }}</h4>
+
+  <p>{{ projectData.desc }}</p>
+
+  <div class="plan-item-card-footer">
+    <button class="btn-custom" (click)="viewMore()">
+      View More
+    </button>
+  </div>
+</section>

@@ -1,0 +1,149 @@
+<section class="header-section">
+  <div class="header-top-sec">
+
+    <div class="header-socials">
+      <p><i class="fa-regular fa-envelope"></i> info&#64;domysumaarchitects.com</p>
+    </div>
+
+    <div class="header-actions">
+      <!-- Show login button if user is not logged in -->
+      <ng-container *ngIf="!userName; else loggedInTemplate">
+        <p>
+          <i class="fa-regular fa-user"></i>
+          <button class="login-btn" (click)="openLogin()">Login</button>
+        </p>
+      </ng-container>
+
+      <!-- Template for logged-in user -->
+      <ng-template #loggedInTemplate>
+        <li class="user-dropdown">
+          <button class="user-btn" (click)="toggleUserDropdown()">
+            <ng-container *ngIf="avatarUrl; else initialsTemplate">
+              <img [src]="avatarUrl" alt="Profile" class="profile-avatar" (error)="onAvatarError()" />
+            </ng-container>
+            <ng-template #initialsTemplate>
+              <div class="user-initials">{{ getUserInitials() }}</div>
+            </ng-template>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <ul class="dropdown-menu" [class.show]="userDropdownOpen">
+            <li (click)="logout()">Logout</li>
+          </ul>
+        </li>
+      </ng-template>
+
+      <li class="saved-dropdown" *ngIf="userName">
+        <button class="saved-btn" (click)="toggleSavedDropdown()">
+          <i class="fa-regular fa-heart"></i> Saved
+          <span *ngIf="savedProjectsCount > 0">({{ savedProjectsCount }})</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <ul class="saved-menu" [class.show]="savedDropdownOpen">
+          <li *ngFor="let project of savedProjects" (click)="closeSavedDropdown()">
+            <a [routerLink]="['/projects', project.id]">{{ project.title }}</a>
+          </li>
+          <li class="view-all" (click)="openSavedPlans(); closeSavedDropdown()">
+            <a>View All Saved Projects</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <button class="settings-btn" (click)="toggleSettingsDropdown()">
+          <i class="fa-solid fa-gear"></i> Settings
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <ul class="dropdown-menu" [class.show]="settingsDropdownOpen">
+          <li (click)="openPreferences()">Preferences</li>
+          <li class="dark-mode-toggle">
+            <span>Dark Mode</span>
+            <label class="switch">
+              <input type="checkbox" (change)="toggleDarkMode($event)" [checked]="isDarkMode">
+              <span class="slider round"></span>
+            </label>
+          </li>
+          <li (click)="goToHelpCenter()">Help Center</li>
+        </ul>
+      </li>
+    </div>
+
+  </div>
+
+  <div class="header-bottom-sec">
+    <a routerLink="/home">
+      <img src="./assets/icons/domysuma-logo.svg" alt="Domysuma Logo">
+    </a>
+
+    <!-- Desktop Menu -->
+    <ul class="header-menu-items desktop-menu">
+      <li routerLink="/home">Home</li>
+      <li routerLink="/projects">Projects</li>
+      <li routerLink="/services">Services</li>
+      <li routerLink="/about">About</li>
+      <li routerLink="/blog">Blog</li>
+
+      <button class="btn-custom btn-custom-primary header-call-to-action"
+              (click)="showContactForm = true">
+        Talk To an Architect Free!
+      </button>
+
+      <app-contact-form-popup
+        *ngIf="showContactForm"
+        (close)="showContactForm = false">
+      </app-contact-form-popup>
+    </ul>
+
+    <!-- Hamburger Menu Button (Mobile/Tablet only) -->
+    <button class="hamburger-menu mobile-only" 
+            (click)="toggleMobileMenu()" 
+            [class.active]="mobileMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- FIXED: Single Full-Screen Overlay with Nav Items Inside -->
+    <div class="mobile-menu-overlay" 
+         *ngIf="mobileMenuOpen" 
+         [class.show]="mobileMenuOpen">
+      
+      <div class="mobile-menu-content">
+        <ul class="mobile-menu-items">
+          <li>
+            <a routerLink="/home" (click)="closeMobileMenu()">Home</a>
+          </li>
+          <li>
+            <a routerLink="/projects" (click)="closeMobileMenu()">Projects</a>
+          </li>
+          <li>
+            <a routerLink="/services" (click)="closeMobileMenu()">Services</a>
+          </li>
+          <li>
+            <a routerLink="/about" (click)="closeMobileMenu()">About</a>
+          </li>
+          <li>
+            <a routerLink="/blog" (click)="closeMobileMenu()">Blog</a>
+          </li>
+        </ul>
+
+        <div class="mobile-menu-footer">
+          <button class="btn-custom btn-custom-primary header-call-to-action mobile-cta-btn"
+                  (click)="showContactForm = true; closeMobileMenu()">
+            Talk To an Architect Free!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-chats header-wa" (click)="openWhatsApp()">
+    <i class="fa-brands fa-whatsapp"></i>
+  </div>
+
+  <div class="header-chats header-msg">
+    <i class="fa-solid fa-comment-dots"></i>
+  </div>
+
+  <app-login-modal></app-login-modal>
+</section>

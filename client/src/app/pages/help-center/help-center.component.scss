@@ -1,0 +1,60 @@
+.help-center-sec {
+  position: relative;
+  min-height: 100vh; // ensures the section covers the full viewport height
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; // or center if you want vertical centering
+  text-align: center;
+  z-index: 1;
+
+  // Create background without affecting text
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/images/Services_Background3.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.25;        // subtlety
+    z-index: -1;           // behind content
+    pointer-events: none;  // allows clicks on content
+  }
+
+  h2 {
+    color: #1c75bc;
+    margin-bottom: 24px;
+    z-index: 1;             // above background
+  }
+
+  p {
+    margin-bottom: 40px;
+    z-index: 1;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 900px; // limit FAQ width for readability
+
+    .faq-item {
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(244, 248, 253, 0.9); // semi-transparent background for readability
+      border: 1px solid rgba(28,117,188,0.3);
+
+      h4 {
+        color: #1c75bc;
+        margin-bottom: 8px;
+      }
+
+      p {
+        color: #333;
+      }
+    }
+  }
+}

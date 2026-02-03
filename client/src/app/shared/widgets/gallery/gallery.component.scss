@@ -1,0 +1,14 @@
+app-gallery {
+  display: block;
+  width: 100%;
+
+  ::ng-deep gallery {
+    .g-items-container {
+      min-height: 400px;
+    }
+
+    .g-item {
+      cursor: pointer;
+    }
+  }
+}
