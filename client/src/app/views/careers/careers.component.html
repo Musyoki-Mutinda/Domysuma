@@ -1,0 +1,104 @@
+<div class="careers-container">
+  <!-- Hero Section -->
+  <div class="careers-hero">
+    <div class="hero-content">
+      <h1>Career Opportunities</h1>
+      <p>Join our team and help shape the future of architectural design</p>
+    </div>
+  </div>
+
+  <!-- Careers Content -->
+  <div class="careers-content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading available positions...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-container">
+      <div class="error-icon">
+        <i class="fa-solid fa-exclamation-triangle"></i>
+      </div>
+      <p>{{ error }}</p>
+      <button class="btn-retry" (click)="loadCareers()">Try Again</button>
+    </div>
+
+    <!-- No Careers Found -->
+    <div *ngIf="!loading && !error && careers.length === 0" class="no-careers-container">
+      <div class="no-careers-icon">
+        <i class="fa-solid fa-briefcase"></i>
+      </div>
+      <h2>No Current Openings</h2>
+      <p>We are not currently hiring, but please check back soon for new opportunities.</p>
+    </div>
+
+    <!-- Careers List -->
+    <div *ngIf="!loading && !error && careers.length > 0" class="careers-list">
+      <div *ngFor="let career of careers" class="career-card">
+        <!-- Job Title -->
+        <h2 class="job-title">{{ career.title || 'Job Title' }}</h2>
+        
+        <!-- Job Details -->
+        <div class="job-details">
+          <div class="detail-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>{{ career.location || 'Location not specified' }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-clock"></i>
+            <span>{{ career.employmentType || 'Full-time' }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-calendar"></i>
+            <span>{{ career.postedDate || 'Posted recently' }}</span>
+          </div>
+        </div>
+
+        <!-- Job Description -->
+        <div class="job-description">
+          <h3>Job Description</h3>
+          <p>{{ career.description || 'No description available' }}</p>
+        </div>
+
+        <!-- Requirements -->
+        <div class="job-requirements" *ngIf="career.requirements || career.qualifications">
+          <h3>Requirements</h3>
+          <ul>
+            <li *ngFor="let requirement of (career.requirements || career.qualifications || [])">
+              {{ requirement }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Responsibilities -->
+        <div class="job-responsibilities" *ngIf="career.responsibilities">
+          <h3>Responsibilities</h3>
+          <ul>
+            <li *ngFor="let responsibility of career.responsibilities">
+              {{ responsibility }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Benefits -->
+        <div class="job-benefits" *ngIf="career.benefits">
+          <h3>Benefits</h3>
+          <ul>
+            <li *ngFor="let benefit of career.benefits">
+              {{ benefit }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Apply Button -->
+        <div class="apply-button-container">
+          <button class="btn-apply" (click)="apply(career)">
+            <i class="fa-solid fa-paper-plane"></i>
+            Apply Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

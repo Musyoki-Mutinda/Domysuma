@@ -7,8 +7,8 @@ export interface Project {
   id: string;
   category: string;
   title: string;
-  img: string;           // Thumbnail image for cards
-  desc: string;          // Short description for cards
+  img: string;
+  desc: string;
   gallery: string[];
   summary: string;
   description: string;
@@ -55,17 +55,27 @@ export class ProjectsService {
     );
   }
 
-  private mapApiProjectToClient(apiProject: any): Project {
-    // Handle both camelCase and snake_case field names
+  public mapApiProjectToClient(apiProject: any): Project {
     const description = apiProject.description || apiProject.long_description || apiProject.longDescription || '';
+
+    // Handle both formats: array of objects with .path, or flat array of URL strings
+    const mediaUrls: string[] = apiProject.media?.map((m: any) =>
+      typeof m === 'string' ? m : m.path
+    ) || apiProject.gallery || [];
+
+    // Resolve thumbnail: prefer defaultImage, then first media item, then fallback
+    const thumbnail =
+      apiProject.defaultImage?.path ||
+      mediaUrls[0] ||
+      'assets/images/prj.png';
 
     return {
       id: apiProject.id.toString(),
       category: apiProject.category || 'Residential',
       title: apiProject.title,
-      img: apiProject.defaultImage?.path || 'assets/images/prj.png', // Default thumbnail
+      img: thumbnail,
       desc: description?.substring(0, 100) + (description?.length > 100 ? '...' : '') || apiProject.title,
-      gallery: apiProject.media?.map((m: any) => m.path) || [],
+      gallery: mediaUrls,
       summary: description || apiProject.title,
       description: description,
       year: apiProject.year || '',
@@ -80,7 +90,7 @@ export class ProjectsService {
       specs: {
         duration: apiProject.durationInMonths ? `${apiProject.durationInMonths} months` : 'N/A',
         location: apiProject.location || 'N/A',
-        cost: 'Contact for pricing' // No cost field in current API
+        cost: 'Contact for pricing'
       }
     };
   }

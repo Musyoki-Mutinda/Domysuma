@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { ProjectsService } from '../../views/projects/projects.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class SavedProjectsService {
 
   private apiUrl = `${environment.apiBaseUrl}/api/project`;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private projectsService: ProjectsService
+  ) { }
 
   saveProject(projectId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/${projectId}/save`, {});
@@ -24,7 +28,6 @@ export class SavedProjectsService {
   isProjectSaved(projectId: number): Observable<{isSaved: boolean}> {
     return this.http.get<any>(`${this.apiUrl}/${projectId}/is-saved`).pipe(
       map(response => {
-        // Handle ApiResponse format: {data: {isSaved: boolean}} or direct {isSaved: boolean}
         const data = response.data || response;
         return { isSaved: !!data.isSaved };
       })
@@ -34,9 +37,14 @@ export class SavedProjectsService {
   getSavedProjects(): Observable<any[]> {
     return this.http.get<any>(`${this.apiUrl}/saved`).pipe(
       map(response => {
-        // Handle ApiResponse format: {data: [...]} or direct array
         const projects = response.data || response || [];
-        return Array.isArray(projects) ? projects : [];
+        const projectArray = Array.isArray(projects) ? projects : [];
+
+        // Pass each project through the same mapper so thumbnails
+        // resolve correctly from gallery images, just like the main projects pages
+        return projectArray.map((p: any) =>
+          this.projectsService.mapApiProjectToClient(p)
+        );
       })
     );
   }

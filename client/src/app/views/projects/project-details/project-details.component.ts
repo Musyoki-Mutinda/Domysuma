@@ -268,7 +268,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   /** Load similar projects from the same category */
-  loadSimilarProjects(): void {
+   loadSimilarProjects(): void {
     if (!this.project?.category) return;
 
     this.projectService.getProjects().subscribe(
@@ -277,13 +277,32 @@ export class ProjectDetailsComponent implements OnInit {
         console.log('All projects for similar:', allProjects);
 
         // Filter by same category, exclude current project, limit to 3
-        this.similarPlans = allProjects
-          .filter((p: any) => p.category === this.project.category && p.id !== this.project.id)
+         this.similarPlans = allProjects
+          .filter((p: any) => {
+            // Debug category comparison
+            const sameCategory = p.category === this.project.category;
+            const notCurrentProject = Number(p.id) !== Number(this.project.id);
+            console.log(`Project ${p.id} (${p.title}): same category=${sameCategory}, not current=${notCurrentProject}`);
+            return sameCategory && notCurrentProject;
+          })
           .slice(0, 3)
-          .map((p: any) => ({
-            ...p,
-            categorySlug: this.categoryMap[p.category] || p.category.toLowerCase().replace(/\s+/g, '-')
-          }));
+          .map((p: any) => {
+            // Set thumbnail to first gallery image if available
+            let img = 'assets/images/prj.png';
+            const galleryImages = p.galleryImages || p.gallery_images || p.media || [];
+            if (galleryImages && galleryImages.length > 0) {
+              const firstImage = galleryImages[0];
+              img = typeof firstImage === 'string' ? firstImage : firstImage.path || firstImage.url || 'assets/images/prj.png';
+            }
+
+            const processedProject = {
+              ...p,
+              categorySlug: this.categoryMap[p.category] || p.category.toLowerCase().replace(/\s+/g, '-'),
+              img: img
+            };
+            console.log('Processed similar project:', processedProject);
+            return processedProject;
+          });
 
         console.log('Similar projects loaded:', this.similarPlans);
       },

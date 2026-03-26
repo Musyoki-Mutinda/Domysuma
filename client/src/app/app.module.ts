@@ -20,11 +20,13 @@ import { GalleryModule } from 'ng-gallery';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { GoogleLoginSuccessComponent } from './auth/google-login-success.component';  // ⬅️ ADD THIS
 
 @NgModule({
   declarations: [
-    AppComponent,   // Only AppComponent is declared here
-    HomeComponent
+    AppComponent,
+    HomeComponent,
+    GoogleLoginSuccessComponent  // ⬅️ ADD THIS
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ export class BlogListComponent implements OnInit {
   allPosts: any[] = []; // store all posts before filtering
   loading = true;
   error = false;
+  useCustomBlogs = false;
 
   // ✅ Category filters
   categories = ['All', 'Residential', 'Commercial', 'Interior', 'Urban', 'Sustainability'];
@@ -51,7 +52,64 @@ export class BlogListComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchArchDailyFeed();
+    this.loadBlogSettings();
+  }
+
+  /**
+   * Load blog settings from API to determine which source to use
+   */
+  loadBlogSettings(): void {
+    const apiUrl = 'https://api.domysuma.com/blogs/settings'; // Replace with your actual API endpoint
+    
+    this.http.get<any>(apiUrl).subscribe({
+      next: (settings) => {
+        this.useCustomBlogs = settings.useCustomBlogs;
+        
+        if (this.useCustomBlogs) {
+          this.fetchCustomBlogs();
+        } else {
+          this.fetchArchDailyFeed();
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error loading blog settings:', err);
+        this.useCustomBlogs = false;
+        this.fetchArchDailyFeed();
+      }
+    });
+  }
+
+  /**
+   * Fetches custom blog posts from API
+   */
+  fetchCustomBlogs(): void {
+    const apiUrl = 'https://api.domysuma.com/blogs'; // Replace with your actual API endpoint
+    
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (blogs) => {
+        if (blogs && blogs.length > 0) {
+          this.allPosts = blogs.map(blog => ({
+            ...blog,
+            date: new Date(blog.date),
+            link: blog.link || `/blog/${blog.slug}`,
+            image: blog.image || '/assets/images/AboutUs_Placeholder.jpg'
+          }));
+        } else {
+          console.warn('⚠️ No custom blog posts found — using fallback posts.');
+          this.allPosts = this.localPosts;
+        }
+
+        this.blogPosts = this.allPosts;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('❌ Error fetching custom blogs:', err);
+        this.error = true;
+        this.allPosts = this.localPosts;
+        this.blogPosts = this.localPosts; // ✅ fallback
+        this.loading = false;
+      }
+    });
   }
 
   /**
@@ -69,7 +127,7 @@ export class BlogListComponent implements OnInit {
             title: item.title,
             author: item.author || 'ArchDaily',
             date: new Date(item.pubDate),
-            image: item.enclosure?.link || '/assets/images/placeholder.jpg',
+            image: item.enclosure?.link || '/assets/images/AboutUs_Placeholder.jpg',
             excerpt: item.contentSnippet || '',
             link: item.link,
             category: this.detectCategory(item.title)
@@ -103,6 +161,13 @@ export class BlogListComponent implements OnInit {
     if (lower.includes('urban')) return 'Urban';
     if (lower.includes('sustain') || lower.includes('green')) return 'Sustainability';
     return 'All';
+  }
+
+  /**
+   * Handles image load errors by setting a fallback image
+   */
+  onImageError(event: any): void {
+    event.target.src = '/assets/images/AboutUs_Placeholder.jpg';
   }
 
   /**

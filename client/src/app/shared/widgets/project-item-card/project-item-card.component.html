@@ -1,6 +1,9 @@
 <section class="plan-item-card-cont">
   <div class="plan-item-card-top">
-    <img [src]="projectData.img" [alt]="projectData.title">
+    <img 
+      [src]="projectData.img" 
+      [alt]="projectData.title"
+      (error)="onImageError()">
     <button class="heart-btn" (click)="toggleSave($event)" [class.saved]="isSaved">
       <i class="fa-solid fa-heart"></i>
     </button>

@@ -1,0 +1,23 @@
+{
+  "job_id": 1,
+  "job_title": "Senior Architect",
+  "applicant": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "+254 712 345 678"
+  },
+  "documents": {
+    "cv": {
+      "filename": "john_doe_cv.pdf",
+      "size": 2048576,
+      "type": "application/pdf"
+    },
+    "cover_letter": {
+      "filename": "john_doe_cover_letter.docx",
+      "size": 1048576,
+      "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    }
+  },
+  "submitted_at": "2026-03-09T12:00:00.000Z",
+  "status": "pending"
+}

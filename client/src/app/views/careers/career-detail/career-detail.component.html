@@ -1,0 +1,196 @@
+<div class="career-detail-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading job details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-icon">
+      <i class="fa-solid fa-exclamation-triangle"></i>
+    </div>
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="goBack()">Back to Careers</button>
+  </div>
+
+  <!-- Job Details -->
+  <div *ngIf="!loading && !error && job" class="job-details-container">
+    <!-- Header -->
+    <div class="job-header">
+      <button class="back-button" (click)="goBack()">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Careers
+      </button>
+      <h1 class="job-title">{{ job.title || job.position || 'Job Title' }}</h1>
+      
+      <div class="job-meta">
+        <div class="meta-item">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>{{ job.position || 'Position' }}</span>
+        </div>
+        <div class="meta-item" *ngIf="job.is_active !== undefined">
+          <i class="fa-solid fa-circle-check"></i>
+          <span [ngClass]="{'active': job.is_active, 'inactive': !job.is_active}">
+            {{ job.is_active ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="applicationSuccess" class="success-message">
+      <i class="fa-solid fa-check-circle"></i>
+      <h3>Application Submitted Successfully!</h3>
+      <p>Thank you for your interest. We'll review your application and get back to you soon.</p>
+    </div>
+
+    <!-- Job Content -->
+    <div class="job-content">
+      <!-- Job Description -->
+      <div class="job-section">
+        <h2>Job Description</h2>
+        <p>{{ job.description || 'No description available' }}</p>
+      </div>
+
+      <!-- Attachment -->
+      <div class="job-section" *ngIf="job.attachment">
+        <h2>Job Details</h2>
+        <a [href]="job.attachment" target="_blank" class="attachment-link">
+          <i class="fa-solid fa-download"></i>
+          Download Detailed Job Description
+        </a>
+      </div>
+
+      <!-- Requirements -->
+      <div class="job-section" *ngIf="job.requirements || job.qualifications">
+        <h2>Requirements</h2>
+        <ul>
+          <li *ngFor="let requirement of (job.requirements || job.qualifications || [])">
+            {{ requirement }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Responsibilities -->
+      <div class="job-section" *ngIf="job.responsibilities">
+        <h2>Responsibilities</h2>
+        <ul>
+          <li *ngFor="let responsibility of job.responsibilities">
+            {{ responsibility }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Benefits -->
+      <div class="job-section" *ngIf="job.benefits">
+        <h2>Benefits</h2>
+        <ul>
+          <li *ngFor="let benefit of job.benefits">
+            {{ benefit }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Application Form -->
+    <div class="application-form-container">
+      <h2>Apply for This Position</h2>
+      
+      <form class="application-form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="name" 
+              [(ngModel)]="application.name" 
+              name="name" 
+              required 
+              placeholder="Enter your full name"
+              [disabled]="submitting"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email <span class="required">*</span></label>
+            <input 
+              type="email" 
+              id="email" 
+              [(ngModel)]="application.email" 
+              name="email" 
+              required 
+              placeholder="Enter your email address"
+              [disabled]="submitting"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number <span class="required">*</span></label>
+          <input 
+            type="tel" 
+            id="phone" 
+            [(ngModel)]="application.phone" 
+            name="phone" 
+            required 
+            placeholder="Enter your phone number"
+            [disabled]="submitting"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cv">Upload CV <span class="required">*</span></label>
+          <div class="file-upload">
+            <input 
+              type="file" 
+              id="cv" 
+              (change)="onCvChange($event)" 
+              accept=".pdf,.doc,.docx"
+              required
+              [disabled]="submitting"
+            >
+            <label for="cv" class="file-label">
+              <i class="fa-solid fa-upload"></i>
+              {{ application.cv ? application.cv.name : 'Choose file' }}
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="coverLetter">Cover Letter <span class="required">*</span></label>
+          <div class="file-upload">
+            <input 
+              type="file" 
+              id="coverLetter" 
+              (change)="onCoverLetterChange($event)" 
+              accept=".pdf,.doc,.docx"
+              required
+              [disabled]="submitting"
+            >
+            <label for="coverLetter" class="file-label">
+              <i class="fa-solid fa-upload"></i>
+              {{ application.coverLetter ? application.coverLetter.name : 'Choose file' }}
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="goBack()" [disabled]="submitting">
+            Cancel
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="submitting">
+            <span *ngIf="!submitting">
+              <i class="fa-solid fa-paper-plane"></i>
+              Submit Application
+            </span>
+            <span *ngIf="submitting">
+              <i class="fa-solid fa-spinner fa-spin"></i>
+              Submitting...
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

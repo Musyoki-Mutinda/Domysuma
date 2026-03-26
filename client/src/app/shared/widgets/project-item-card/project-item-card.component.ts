@@ -14,8 +14,8 @@ export class ProjectItemCardComponent implements OnInit {
   @Input() projectData: any = {
     id: null,
     category: '',
-    img: 'assets/images/residential.jpg',
-    title: '4 Bedroom Bungalow',
+    img: 'assets/images/prj.png',
+    title: 'Untitled Project',
     desc: 'Short description of the project...',
   };
 
@@ -23,6 +23,8 @@ export class ProjectItemCardComponent implements OnInit {
 
   isSaved = false;
   isLoggedIn = false;
+
+  readonly FALLBACK_IMG = 'assets/images/prj.png';
 
   constructor(
     private router: Router,
@@ -32,9 +34,6 @@ export class ProjectItemCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('Project card data:', this.projectData); // DEBUG
-
-    // Check if user is logged in
     this.userService.userName$.subscribe(name => {
       this.isLoggedIn = !!name;
       if (this.isLoggedIn && this.projectData.id) {
@@ -42,67 +41,83 @@ export class ProjectItemCardComponent implements OnInit {
       }
     });
 
-    // ✅ Map description/longDescription to desc if desc is missing
-    if (!this.projectData.desc) {
-      const description = this.projectData.description || this.projectData.longDescription || this.projectData.long_description || '';
-      if (description) {
-        this.projectData.desc = description.length > 100 ? description.substring(0, 100) + '...' : description;
-      } else {
-        this.projectData.desc = this.projectData.title || 'No description available';
+    // Safety net: if img is missing after service mapping, try gallery array
+    if (!this.projectData.img || this.projectData.img === this.FALLBACK_IMG) {
+      const firstGalleryImage = this.projectData.gallery?.[0] || null;
+      if (firstGalleryImage) {
+        this.projectData.img = firstGalleryImage;
       }
     }
 
-    // ✅ Map thumbnail/gallery images to img if img is missing
-    if (!this.projectData.img || this.projectData.img.trim() === '') {
-      // Try to get first gallery image
-      const galleryImages = this.projectData.galleryImages ||
-                           this.projectData.gallery_images ||
-                           this.projectData.media || [];
-
-      if (galleryImages && galleryImages.length > 0) {
-        const firstImage = galleryImages[0];
-        this.projectData.img = firstImage.url ||
-                              firstImage.path ||
-                              firstImage.mediaUrl ||
-                              firstImage.media_url ||
-                              'assets/images/residential.jpg';
-      } else {
-        this.projectData.img = 'assets/images/residential.jpg';
-      }
+    // Safety net: ensure desc is always populated
+    if (!this.projectData.desc) {
+      const description =
+        this.projectData.description ||
+        this.projectData.longDescription ||
+        this.projectData.long_description || '';
+      this.projectData.desc = description
+        ? description.length > 100 ? description.substring(0, 100) + '...' : description
+        : this.projectData.title || 'No description available';
     }
   }
 
-  viewMore() {
-    console.log('View More clicked:', this.projectData);
+  onImageError(): void {
+    this.projectData.img = this.FALLBACK_IMG;
+  }
+
+  viewMore(): void {
+    console.log('=== Project Item Card - View More clicked ===');
+    console.log('Project Data:', this.projectData);
+    
     if (!this.projectData?.id) {
       console.warn('projectData.id is missing in project-item-card.');
       return;
     }
-
-    const categorySlug = this.projectData.categorySlug || this.projectData.category;
+    
+    let categorySlug = this.projectData.categorySlug;
+    
     if (!categorySlug) {
-      console.warn('projectData.categorySlug or projectData.category is missing in project-item-card.');
+      console.log('categorySlug not provided, generating from category:', this.projectData.category);
+      // Create a slug from category if categorySlug is not provided
+      categorySlug = this.projectData.category?.toLowerCase().replace(/\s+/g, '-') || 'other';
+    }
+    
+    // Ensure we're passing a numeric ID (since some services might convert to string)
+    const numericId = parseInt(this.projectData.id, 10);
+    if (isNaN(numericId)) {
+      console.warn('Invalid project ID:', this.projectData.id);
       return;
     }
-
-    this.router.navigate(['/projects', categorySlug, this.projectData.id]);
+    
+    const navigateUrl = `/projects/${categorySlug}/${numericId}`;
+    console.log('Navigating to URL:', navigateUrl);
+    
+    try {
+      this.router.navigateByUrl(navigateUrl).then(success => {
+        if (success) {
+          console.log('Navigation successful');
+        } else {
+          console.error('Navigation failed');
+        }
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    } catch (error) {
+      console.error('Navigation exception:', error);
+    }
   }
 
   checkIfSaved(): void {
     if (this.projectData.id) {
       this.savedProjectsService.isProjectSaved(this.projectData.id).subscribe({
-        next: (response) => {
-          this.isSaved = response.isSaved;
-        },
-        error: (err) => {
-          console.error('Error checking if project is saved:', err);
-        }
+        next: (response) => { this.isSaved = response.isSaved; },
+        error: (err) => { console.error('Error checking if project is saved:', err); }
       });
     }
   }
 
   toggleSave(event: Event): void {
-    event.stopPropagation(); // Prevent triggering viewMore
+    event.stopPropagation();
 
     if (!this.isLoggedIn) {
       this.loginModalService.open();
@@ -115,18 +130,12 @@ export class ProjectItemCardComponent implements OnInit {
           this.isSaved = false;
           this.unsave.emit(this.projectData.id);
         },
-        error: (err) => {
-          console.error('Error unsaving project:', err);
-        }
+        error: (err) => { console.error('Error unsaving project:', err); }
       });
     } else {
       this.savedProjectsService.saveProject(this.projectData.id).subscribe({
-        next: () => {
-          this.isSaved = true;
-        },
-        error: (err) => {
-          console.error('Error saving project:', err);
-        }
+        next: () => { this.isSaved = true; },
+        error: (err) => { console.error('Error saving project:', err); }
       });
     }
   }

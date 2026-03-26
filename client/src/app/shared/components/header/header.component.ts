@@ -65,6 +65,10 @@ export class HeaderComponent implements OnInit {
     this.savedDropdownOpen = false; // Close saved dropdown
   }
 
+  goToSystem() {
+    this.router.navigate(['/careers']);
+  }
+
   toggleSettingsDropdown(): void {
     this.settingsDropdownOpen = !this.settingsDropdownOpen;
     this.userDropdownOpen = false; // Close user dropdown
@@ -159,7 +163,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openWhatsApp(): void {
-    const phoneNumber = '254112049044';
+    const phoneNumber = '254701150425';
     const message = encodeURIComponent('Hello, I want to inquire about your services');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   }

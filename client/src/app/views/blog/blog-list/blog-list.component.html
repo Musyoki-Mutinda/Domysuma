@@ -32,7 +32,7 @@
   <div class="blog-grid" *ngIf="!loading && blogPosts.length > 0">
     <div class="blog-card" *ngFor="let post of blogPosts">
       <div class="image-container">
-        <img [src]="post.image" [alt]="post.title" />
+        <img [src]="post.image || '/assets/images/AboutUs_Placeholder.jpg'" [alt]="post.title" (error)="onImageError($event)" />
       </div>
 
       <div class="blog-card-content">

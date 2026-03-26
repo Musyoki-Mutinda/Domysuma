@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  copyrightYear= 2022;
+  copyrightYear= 2026;
 
   constructor() { }
 

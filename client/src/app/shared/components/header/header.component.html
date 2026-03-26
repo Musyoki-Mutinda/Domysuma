@@ -83,6 +83,10 @@
       <li routerLink="/about">About</li>
       <li routerLink="/blog">Blog</li>
 
+      <button class="btn-custom btn-custom-primary header-call-to-action" (click)="goToSystem()">
+        Careers
+      </button>
+
       <button class="btn-custom btn-custom-primary header-call-to-action"
               (click)="showContactForm = true">
         Talk To an Architect Free!
@@ -124,6 +128,9 @@
           </li>
           <li>
             <a routerLink="/blog" (click)="closeMobileMenu()">Blog</a>
+          </li>
+          <li>
+            <a routerLink="/careers" (click)="closeMobileMenu()">Careers</a>
           </li>
         </ul>
 
