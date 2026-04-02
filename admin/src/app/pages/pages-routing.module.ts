@@ -21,6 +21,14 @@ const routes: Routes = [{
     import('./projects/projects.module').then(m => m.ProjectsModule),
     },
     {
+      path: 'blogs',
+      loadChildren: () => import('./blog/blogs.module').then(m => m.BlogsModule),
+    },
+    {
+      path: 'careers',
+      loadChildren: () => import('./careers/careers.module').then(m => m.CareersModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

@@ -1,0 +1,71 @@
+<div class="careers-container">
+  <div class="header">
+    <h1>Careers Management</h1>
+    <button nbButton status="primary" (click)="createJob()">
+      <nb-icon icon="plus-outline"></nb-icon>
+      Add New Job
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <nb-spinner></nb-spinner>
+    <p>Loading careers...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <nb-alert status="danger">{{ error }}</nb-alert>
+    <button nbButton status="primary" (click)="loadJobs()">Retry</button>
+  </div>
+
+  <!-- Jobs List -->
+  <div *ngIf="!loading && !error" class="jobs-grid">
+    <nb-card *ngFor="let job of jobs" class="job-card">
+      <nb-card-header>
+        <div class="job-header">
+          <h3 class="job-title">{{ job.title }}</h3>
+          <nb-toggle
+            [checked]="job.is_active"
+            (checkedChange)="toggleJobStatus(job)"
+            status="success">
+          </nb-toggle>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <div class="job-content">
+          <p class="description">{{ job.description | slice:0:150 }}...</p>
+
+          <div class="job-meta">
+            <div class="meta-item" *ngIf="job.responsibilities?.length">
+              <strong>Responsibilities:</strong> {{ job.responsibilities.length }} items
+            </div>
+            <div class="meta-item" *ngIf="job.requirements?.length">
+              <strong>Requirements:</strong> {{ job.requirements.length }} items
+            </div>
+          </div>
+        </div>
+
+        <div class="job-actions">
+          <button nbButton status="info" size="small" (click)="editJob(job)">
+            <nb-icon icon="edit-outline"></nb-icon>
+            Edit
+          </button>
+          <button nbButton status="danger" size="small" (click)="deleteJob(job)">
+            <nb-icon icon="trash-2-outline"></nb-icon>
+            Delete
+          </button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && jobs.length === 0" class="empty-state">
+    <nb-icon icon="briefcase-outline" pack="eva" style="font-size: 4rem; color: #ccc;"></nb-icon>
+    <h3>No Jobs Found</h3>
+    <p>Get started by creating your first job posting.</p>
+    <button nbButton status="primary" (click)="createJob()">Create First Job</button>
+  </div>
+</div>

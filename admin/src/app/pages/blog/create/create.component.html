@@ -1,0 +1,275 @@
+<nb-card class="blog-create-card">
+  <nb-card-header class="blog-card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="blog-title">{{ isEditing ? 'Edit Blog Post' : 'Create Blog Post' }}</h3>
+      <button nbButton outline status="danger" class="cancel-button" (click)="onCancel()">
+        <i class="nb-close"></i> Cancel
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="blog-card-body">
+    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" class="blog-form">
+      <!-- Article Information Section -->
+      <div class="form-section">
+        <h4 class="section-title">Article Information</h4>
+        
+        <!-- Title -->
+        <div class="form-group">
+          <label for="title" class="form-label">Blog Title</label>
+          <input
+            nbInput
+            fullWidth
+            id="title"
+            formControlName="title"
+            placeholder="Enter a compelling blog title"
+            class="form-input"
+          >
+          <div *ngIf="blogForm.get('title')?.invalid && blogForm.get('title')?.touched" class="text-danger error-message">
+            Blog title is required
+          </div>
+        </div>
+
+        <!-- Author -->
+        <div class="form-group">
+          <label for="author" class="form-label">Author</label>
+          <input
+            nbInput
+            fullWidth
+            id="author"
+            formControlName="author"
+            placeholder="Enter author name"
+            class="form-input"
+          >
+          <div *ngIf="blogForm.get('author')?.invalid && blogForm.get('author')?.touched" class="text-danger error-message">
+            Author name is required
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="category" class="form-label">Category</label>
+          <nb-select
+            fullWidth
+            id="category"
+            formControlName="category"
+            placeholder="Select a category"
+            class="form-select"
+          >
+            <nb-option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </nb-option>
+          </nb-select>
+          <div *ngIf="blogForm.get('category')?.invalid && blogForm.get('category')?.touched" class="text-danger error-message">
+            Category is required
+          </div>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+          <label for="date" class="form-label">Publication Date</label>
+          <input
+            nbInput
+            fullWidth
+            id="date"
+            formControlName="date"
+            type="date"
+            class="form-input"
+          >
+          <div *ngIf="blogForm.get('date')?.invalid && blogForm.get('date')?.touched" class="text-danger error-message">
+            Publication date is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Content Section -->
+      <div class="form-section">
+        <h4 class="section-title">Visual Content</h4>
+        
+        <!-- Image -->
+        <div class="form-group">
+          <label for="image" class="form-label">Featured Image URL</label>
+          <input
+            nbInput
+            fullWidth
+            id="image"
+            formControlName="image"
+            placeholder="Enter image URL (1200x800 recommended)"
+            class="form-input"
+          >
+          <div *ngIf="blogForm.get('image')?.invalid && blogForm.get('image')?.touched" class="text-danger error-message">
+            Featured image URL is required
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Section -->
+      <div class="form-section">
+        <h4 class="section-title">SEO Information</h4>
+        
+        <!-- Slug -->
+        <div class="form-group">
+          <label for="slug" class="form-label">Slug</label>
+          <input
+            nbInput
+            fullWidth
+            id="slug"
+            formControlName="slug"
+            placeholder="Enter SEO-friendly slug"
+            class="form-input"
+          >
+          <div *ngIf="blogForm.get('slug')?.invalid && blogForm.get('slug')?.touched" class="text-danger error-message">
+            Slug is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="form-section">
+        <h4 class="section-title">Article Content</h4>
+        
+        <!-- Excerpt -->
+        <div class="form-group">
+          <label for="excerpt" class="form-label">Excerpt</label>
+          <textarea
+            nbInput
+            fullWidth
+            id="excerpt"
+            formControlName="excerpt"
+            rows="3"
+            placeholder="Enter a short excerpt (150-200 characters)"
+            class="form-textarea"
+          ></textarea>
+          <div *ngIf="blogForm.get('excerpt')?.invalid && blogForm.get('excerpt')?.touched" class="text-danger error-message">
+            Excerpt is required
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="form-group">
+          <label for="content" class="form-label">Blog Content</label>
+          <textarea
+            nbInput
+            fullWidth
+            id="content"
+            formControlName="content"
+            rows="10"
+            placeholder="Enter blog content (use markdown or HTML for formatting)"
+            class="form-textarea"
+          ></textarea>
+          <div *ngIf="blogForm.get('content')?.invalid && blogForm.get('content')?.touched" class="text-danger error-message">
+            Blog content is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Options Section -->
+      <div class="form-section">
+        <h4 class="section-title">Additional Options</h4>
+        
+        <!-- Tags -->
+        <div class="form-group">
+          <label for="tags" class="form-label">Tags (Comma Separated)</label>
+          <input
+            nbInput
+            fullWidth
+            id="tags"
+            formControlName="tags"
+            placeholder="Enter tags (e.g., architecture, design, kenya)"
+            class="form-input"
+          >
+        </div>
+
+        <!-- Read Time -->
+        <div class="form-group">
+          <label for="readTime" class="form-label">Read Time</label>
+          <input
+            nbInput
+            fullWidth
+            id="readTime"
+            formControlName="readTime"
+            placeholder="Auto-calculated based on content"
+            class="form-input"
+            readonly
+          >
+        </div>
+
+        <!-- Featured -->
+        <div class="form-group">
+          <label for="featured" class="form-label">Featured Article</label>
+          <nb-toggle
+            fullWidth
+            id="featured"
+            formControlName="featured"
+            status="success"
+          ></nb-toggle>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <label for="location" class="form-label">Location</label>
+          <input
+            nbInput
+            fullWidth
+            id="location"
+            formControlName="location"
+            placeholder="Enter project location"
+            class="form-input"
+          >
+        </div>
+
+        <!-- Project Type -->
+        <div class="form-group">
+          <label for="projectType" class="form-label">Project Type</label>
+          <input
+            nbInput
+            fullWidth
+            id="projectType"
+            formControlName="projectType"
+            placeholder="Enter project type"
+            class="form-input"
+          >
+        </div>
+
+        <!-- Floor Area -->
+        <div class="form-group">
+          <label for="floorArea" class="form-label">Floor Area (m²)</label>
+          <input
+            nbInput
+            fullWidth
+            id="floorArea"
+            formControlName="floorArea"
+            placeholder="Enter floor area in square meters"
+            class="form-input"
+            type="number"
+          >
+        </div>
+
+        <!-- Link (Optional) -->
+        <div class="form-group">
+          <label for="link" class="form-label">External Link (Optional)</label>
+          <input
+            nbInput
+            fullWidth
+            id="link"
+            formControlName="link"
+            placeholder="Enter external link (if applicable)"
+            class="form-input"
+          >
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        nbButton
+        fullWidth
+        status="success"
+        type="submit"
+        [disabled]="blogForm.invalid"
+        class="submit-button"
+      >
+        <i class="nb-checkmark"></i> {{ isEditing ? 'Update Blog Post' : 'Create Blog Post' }}
+      </button>
+    </form>
+  </nb-card-body>
+</nb-card>

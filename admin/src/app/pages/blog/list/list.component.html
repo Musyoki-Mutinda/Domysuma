@@ -1,0 +1,66 @@
+<nb-card>
+  <nb-card-header>
+    <div class="d-flex justify-content-between align-items-center">
+      <h3>Blog Management</h3>
+      <button nbButton status="primary" routerLink="/blogs/create">
+        <i class="nb-plus"></i> Create Blog Post
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <!-- Blog Source Toggle -->
+    <div class="blog-source-toggle mb-4">
+      <div class="toggle-container">
+        <label class="toggle-label">
+          <nb-toggle 
+            [checked]="blogSettings.useCustomBlogs"
+            (checkedChange)="toggleBlogSource($event)"
+            status="success"
+          >
+            Use Custom Blog Posts
+          </nb-toggle>
+          <span class="toggle-description">
+            {{ blogSettings.useCustomBlogs 
+              ? 'Showing custom blog posts on the client side' 
+              : 'Showing ArchDaily posts on the client side' }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Blog Posts Table -->
+    <div class="blog-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let blog of blogs">
+            <td>{{ blog.title }}</td>
+            <td>{{ blog.author }}</td>
+            <td>{{ blog.category }}</td>
+            <td>{{ blog.date | date: 'shortDate' }}</td>
+            <td>
+              <button nbButton size="small" status="primary" (click)="editBlog(blog)">
+                <i class="nb-edit"></i> Edit
+              </button>
+              <button nbButton size="small" status="danger" (click)="deleteBlog(blog)">
+                <i class="nb-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="blogs.length === 0" class="no-results">
+        <p>No blog posts found. Create your first blog post!</p>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

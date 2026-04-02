@@ -23,6 +23,7 @@
     "@nebular/eva-icons": "^13.0.0",
     "@nebular/theme": "^13.0.0",
     "bootstrap": "^5.2.0",
+    "browser-image-compression": "^2.0.2",
     "eva-icons": "^1.1.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

@@ -17,6 +17,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'list-outline',
     link: '/projects',
   },
+  {
+    title: 'Careers',
+    icon: 'briefcase-outline',
+    link: '/careers',
+  },
 
 
   {
@@ -49,7 +54,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Blog',
-        link: '/app-pages/dashboard',
+        link: '/blogs',
       },
       {
         title: 'Contact',

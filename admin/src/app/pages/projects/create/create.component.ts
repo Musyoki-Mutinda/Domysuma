@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../project.service';
+import imageCompression from 'browser-image-compression';
 
 @Component({
   selector: 'app-design-create',
@@ -41,6 +42,10 @@ export class CreateComponent implements OnInit {
   existingGalleryImages: any[] = [];
   existingArchitecturalDrawings: any[] = [];
 
+  // File size limits (in bytes)
+  private readonly MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per file
+  private readonly MAX_TOTAL_SIZE = 40 * 1024 * 1024; // 40MB total request
+
   constructor(private fb: FormBuilder, private projectService: ProjectService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -52,7 +57,6 @@ export class CreateComponent implements OnInit {
       yearCompleted: [''],
       clientType: [''],
       scope: [''],
-      // Keep additional fields for future use
       countyTown: [''],
       floorArea: [''],
       structuralSystem: [''],
@@ -61,7 +65,6 @@ export class CreateComponent implements OnInit {
       architectName: [''],
     });
 
-    // Check if editing by route parameter
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditing = true;
@@ -87,7 +90,6 @@ export class CreateComponent implements OnInit {
 
   private populateForm(project: any): void {
     console.log('Populating form with project:', project);
-    // Parse scope if it's a JSON string
     let scopeText = '';
     if (project.scope) {
       try {
@@ -116,18 +118,141 @@ export class CreateComponent implements OnInit {
     console.log('Form populated');
   }
 
-  // ----------- FILE HANDLERS ------------------
+  // ----------- FILE HANDLERS WITH COMPRESSION ------------------
 
-  onGallerySelected(event: any) {
+  async onGallerySelected(event: any) {
     const files: FileList = event.target.files;
-    this.galleryImages = Array.from(files);
-    console.log('Gallery files:', this.galleryImages);
+    const validFiles: File[] = [];
+    let totalSize = 0;
+    const errors: string[] = [];
+
+    // Compression options - maintains quality while reducing size
+    const compressionOptions = {
+      maxSizeMB: 0.8,          // Max 800KB per image
+      maxWidthOrHeight: 2000,  // Max dimension 2000px (more than enough for web)
+      useWebWorker: true,
+      initialQuality: 0.85     // 85% quality - visually lossless
+    };
+
+    console.log('Processing', files.length, 'images...');
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      
+      // Check if it's an image
+      if (!file.type.startsWith('image/')) {
+        errors.push(`${file.name} is not a valid image file.`);
+        continue;
+      }
+
+      try {
+        // Compress the image
+        const compressedFile = await imageCompression(file, compressionOptions);
+        
+        console.log(`${file.name}: ${this.formatFileSize(file.size)} → ${this.formatFileSize(compressedFile.size)}`);
+
+        // Check individual file size after compression
+        if (compressedFile.size > this.MAX_FILE_SIZE) {
+          errors.push(`${file.name} is still too large after compression (${this.formatFileSize(compressedFile.size)}). Please use a smaller image.`);
+          continue;
+        }
+
+        totalSize += compressedFile.size;
+        validFiles.push(compressedFile);
+      } catch (error) {
+        console.error('Error compressing', file.name, error);
+        errors.push(`Failed to process ${file.name}. Please try a different image.`);
+      }
+    }
+
+    // Check total size (including architectural drawings already selected)
+    const drawingsSize = this.architecturalDrawings.reduce((sum, f) => sum + f.size, 0);
+    if (totalSize + drawingsSize > this.MAX_TOTAL_SIZE) {
+      errors.push(`Total upload size (${this.formatFileSize(totalSize + drawingsSize)}) exceeds 40MB. Please select fewer images.`);
+      event.target.value = '';
+      this.galleryImages = [];
+    } else {
+      this.galleryImages = validFiles;
+      console.log(`✅ ${validFiles.length} images ready. Total: ${this.formatFileSize(totalSize)}`);
+    }
+
+    if (errors.length > 0) {
+      this.submitError = errors.join('\n');
+      setTimeout(() => this.submitError = null, 8000);
+    }
   }
 
-  onDrawingsSelected(event: any) {
+  async onDrawingsSelected(event: any) {
     const files: FileList = event.target.files;
-    this.architecturalDrawings = Array.from(files);
-    console.log('Architectural drawings:', this.architecturalDrawings);
+    const validFiles: File[] = [];
+    let totalSize = 0;
+    const errors: string[] = [];
+
+    // Compression options for architectural drawings (higher quality)
+    const compressionOptions = {
+      maxSizeMB: 1.5,
+      maxWidthOrHeight: 3000,  // Higher res for architectural drawings
+      useWebWorker: true,
+      initialQuality: 0.9      // Higher quality for technical drawings
+    };
+
+    console.log('Processing', files.length, 'drawings...');
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      
+      // PDFs don't get compressed, only images
+      if (file.type === 'application/pdf') {
+        if (file.size > this.MAX_FILE_SIZE) {
+          errors.push(`${file.name} is too large (${this.formatFileSize(file.size)}). Max 10MB per file.`);
+          continue;
+        }
+        console.log(`${file.name}: ${this.formatFileSize(file.size)} (PDF - no compression)`);
+        totalSize += file.size;
+        validFiles.push(file);
+      } else if (file.type.startsWith('image/')) {
+        try {
+          const compressedFile = await imageCompression(file, compressionOptions);
+          console.log(`${file.name}: ${this.formatFileSize(file.size)} → ${this.formatFileSize(compressedFile.size)}`);
+          
+          if (compressedFile.size > this.MAX_FILE_SIZE) {
+            errors.push(`${file.name} is still too large after compression. Please use a smaller file.`);
+            continue;
+          }
+          
+          totalSize += compressedFile.size;
+          validFiles.push(compressedFile);
+        } catch (error) {
+          console.error('Error compressing', file.name, error);
+          errors.push(`Failed to process ${file.name}.`);
+        }
+      } else {
+        errors.push(`${file.name} must be an image or PDF.`);
+      }
+    }
+
+    // Check total size (including gallery images already selected)
+    const gallerySize = this.galleryImages.reduce((sum, f) => sum + f.size, 0);
+    if (totalSize + gallerySize > this.MAX_TOTAL_SIZE) {
+      errors.push(`Total upload size (${this.formatFileSize(totalSize + gallerySize)}) exceeds 40MB limit.`);
+      event.target.value = '';
+      this.architecturalDrawings = [];
+    } else {
+      this.architecturalDrawings = validFiles;
+      console.log(`✅ ${validFiles.length} drawings ready. Total: ${this.formatFileSize(totalSize)}`);
+    }
+
+    if (errors.length > 0) {
+      this.submitError = errors.join('\n');
+      setTimeout(() => this.submitError = null, 8000);
+    }
+  }
+
+  // Helper to format file size for display
+  private formatFileSize(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   }
 
   // ----------- SUBMIT FORM ------------------
@@ -138,6 +263,15 @@ export class CreateComponent implements OnInit {
       return;
     }
 
+    // Final size check before submission
+    const totalUploadSize = [...this.galleryImages, ...this.architecturalDrawings]
+      .reduce((sum, file) => sum + file.size, 0);
+    
+    if (totalUploadSize > this.MAX_TOTAL_SIZE) {
+      this.submitError = `Total upload size (${this.formatFileSize(totalUploadSize)}) exceeds 40MB. Please reduce file sizes or quantity.`;
+      return;
+    }
+
     this.isSubmitting = true;
     this.submitError = null;
 
@@ -145,7 +279,7 @@ export class CreateComponent implements OnInit {
     const scope = scopeText.split('\n').map((item: string) => item.trim()).filter((item: string) => item);
 
     if (this.isEditing && this.editingProjectId) {
-      // Update existing project - first update text fields
+      // Update existing project
       this.projectService.updateProject(this.editingProjectId, {
         title: this.projectForm.get('projectTitle')?.value,
         description: this.projectForm.get('briefDescription')?.value,
@@ -164,7 +298,6 @@ export class CreateComponent implements OnInit {
         (res) => {
           console.log("Project text updated!", res);
 
-          // Now add new media if any
           if (this.galleryImages.length > 0 || this.architecturalDrawings.length > 0) {
             this.addNewMediaToProject(this.editingProjectId!);
           } else {
@@ -183,7 +316,6 @@ export class CreateComponent implements OnInit {
       // Create new project - use FormData
       const formData = new FormData();
 
-      // Append text fields
       formData.append('title', this.projectForm.get('projectTitle')?.value || '');
       formData.append('description', this.projectForm.get('briefDescription')?.value || '');
       formData.append('location', this.projectForm.get('location')?.value || '');
@@ -196,31 +328,21 @@ export class CreateComponent implements OnInit {
       formData.append('interiorFeatures', this.projectForm.get('interiorFeatures')?.value || '');
       formData.append('longDescription', this.projectForm.get('additionalNotes')?.value || '');
       formData.append('designer', this.projectForm.get('architectName')?.value || '');
-
-      // Store scope as JSON string (backend can parse it)
       formData.append('scope', JSON.stringify(scope));
 
-      // Append gallery images
-      this.galleryImages.forEach((file, index) => {
+      this.galleryImages.forEach((file) => {
         formData.append('galleryImages', file, file.name);
       });
 
-      // Append architectural drawings
-      this.architecturalDrawings.forEach((file, index) => {
+      this.architecturalDrawings.forEach((file) => {
         formData.append('architecturalDrawings', file, file.name);
       });
 
-      // Debug FormData contents
       console.log('FormData created with:');
       console.log('- Title:', this.projectForm.get('projectTitle')?.value);
-      console.log('- Description:', this.projectForm.get('briefDescription')?.value);
-      console.log('- Location:', this.projectForm.get('location')?.value);
-      console.log('- Category:', this.projectForm.get('category')?.value);
-      console.log('- Year:', this.projectForm.get('yearCompleted')?.value);
-      console.log('- Client Type:', this.projectForm.get('clientType')?.value);
-      console.log('- Scope items:', scope.length);
-      console.log('- Gallery images:', this.galleryImages.length);
-      console.log('- Architectural drawings:', this.architecturalDrawings.length);
+      console.log('- Gallery images:', this.galleryImages.length, `(${this.formatFileSize(this.galleryImages.reduce((s, f) => s + f.size, 0))})`);
+      console.log('- Architectural drawings:', this.architecturalDrawings.length, `(${this.formatFileSize(this.architecturalDrawings.reduce((s, f) => s + f.size, 0))})`);
+      console.log('- Total size:', this.formatFileSize(totalUploadSize));
 
       this.projectService.createProject(formData).subscribe(
         (res) => {
@@ -243,7 +365,6 @@ export class CreateComponent implements OnInit {
   private async addNewMediaToProject(projectId: number) {
     const mediaCreates: any[] = [];
 
-    // Process gallery images
     for (const file of this.galleryImages) {
       try {
         const base64 = await this.fileToBase64(file);
@@ -253,14 +374,13 @@ export class CreateComponent implements OnInit {
           mediaGroup: 'IMAGES',
           title: file.name,
           alt: file.name,
-          isDefault: mediaCreates.length === 0 // First image is default
+          isDefault: mediaCreates.length === 0
         });
       } catch (e) {
         console.error('Error processing gallery image:', file.name, e);
       }
     }
 
-    // Process architectural drawings
     for (const file of this.architecturalDrawings) {
       try {
         const base64 = await this.fileToBase64(file);
@@ -304,7 +424,6 @@ export class CreateComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = () => {
         const base64 = reader.result as string;
-        // Remove the data URL prefix (e.g., "data:image/jpeg;base64,")
         const base64Data = base64.split(',')[1];
         resolve(base64Data);
       };

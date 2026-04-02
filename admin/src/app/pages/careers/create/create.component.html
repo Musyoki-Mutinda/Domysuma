@@ -1,0 +1,196 @@
+<div class="careers-create-container">
+  <div class="header">
+    <h1>{{ isEditMode ? 'Edit Job' : 'Create New Job' }}</h1>
+    <div class="header-actions">
+      <button nbButton status="basic" (click)="viewAllJobs()">
+        <nb-icon icon="list-outline"></nb-icon>
+        View All Jobs
+      </button>
+      <button nbButton status="basic" (click)="cancel()">
+        <nb-icon icon="arrow-back-outline"></nb-icon>
+        Back
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <nb-spinner></nb-spinner>
+    <p>Loading job details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <nb-alert status="danger">{{ error }}</nb-alert>
+  </div>
+
+  <!-- Form -->
+  <form *ngIf="!loading && !error" [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="job-form">
+
+    <!-- Job Title -->
+    <div class="form-section">
+      <nb-card>
+        <nb-card-header>
+          <h3>Job Title</h3>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="title">Job Title *</label>
+            <input
+              nbInput
+              fullWidth
+              id="title"
+              formControlName="title"
+              placeholder="e.g. Senior Architect"
+              [status]="isFieldInvalid('title') ? 'danger' : 'basic'"
+            >
+            <div *ngIf="isFieldInvalid('title')" class="error-message">
+              {{ getFieldError('title') }}
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <!-- Job Description -->
+    <div class="form-section">
+      <nb-card>
+        <nb-card-header>
+          <h3>Job Description</h3>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="description">Job Description *</label>
+            <textarea
+              nbInput
+              fullWidth
+              id="description"
+              formControlName="description"
+              placeholder="Describe the job role, responsibilities, and what the candidate will be doing..."
+              rows="6"
+              [status]="isFieldInvalid('description') ? 'danger' : 'basic'"
+            ></textarea>
+            <div *ngIf="isFieldInvalid('description')" class="error-message">
+              {{ getFieldError('description') }}
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <!-- Responsibilities -->
+    <div class="form-section">
+      <nb-card>
+        <nb-card-header>
+          <div class="section-header">
+            <h3>Responsibilities</h3>
+            <button nbButton status="primary" size="small" type="button" (click)="addResponsibility()">
+              <nb-icon icon="plus-outline"></nb-icon>
+              Add Responsibility
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div formArrayName="responsibilities" class="dynamic-list">
+            <div
+              *ngFor="let responsibility of responsibilities.controls; let i = index"
+              [formGroupName]="i"
+              class="list-item"
+            >
+              <div class="item-input">
+                <input
+                  nbInput
+                  fullWidth
+                  [formControl]="$any(responsibility)"
+                  [placeholder]="'Responsibility ' + (i + 1)"
+                  [status]="responsibility.invalid && responsibility.touched ? 'danger' : 'basic'"
+                >
+              </div>
+              <button
+                nbButton
+                status="danger"
+                size="small"
+                type="button"
+                (click)="removeResponsibility(i)"
+                [disabled]="responsibilities.length <= 1"
+              >
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <!-- Requirements -->
+    <div class="form-section">
+      <nb-card>
+        <nb-card-header>
+          <div class="section-header">
+            <h3>Requirements</h3>
+            <button nbButton status="primary" size="small" type="button" (click)="addRequirement()">
+              <nb-icon icon="plus-outline"></nb-icon>
+              Add Requirement
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div formArrayName="requirements" class="dynamic-list">
+            <div
+              *ngFor="let requirement of requirements.controls; let i = index"
+              [formGroupName]="i"
+              class="list-item"
+            >
+              <div class="item-input">
+                <input
+                  nbInput
+                  fullWidth
+                  [formControl]="$any(requirement)"
+                  [placeholder]="'Requirement ' + (i + 1)"
+                  [status]="requirement.invalid && requirement.touched ? 'danger' : 'basic'"
+                >
+              </div>
+              <button
+                nbButton
+                status="danger"
+                size="small"
+                type="button"
+                (click)="removeRequirement(i)"
+                [disabled]="requirements.length <= 1"
+              >
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <!-- Settings -->
+    <div class="form-section">
+      <nb-card>
+        <nb-card-header>
+          <h3>Settings</h3>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <nb-checkbox formControlName="is_active">
+              Active (visible on website)
+            </nb-checkbox>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button nbButton status="basic" type="button" (click)="cancel()" [disabled]="saving">
+        Cancel
+      </button>
+      <button nbButton status="primary" type="submit" [disabled]="saving">
+        <nb-icon *ngIf="saving" icon="loader-outline" class="spin"></nb-icon>
+        {{ saving ? 'Saving...' : (isEditMode ? 'Update Job' : 'Create Job') }}
+      </button>
+    </div>
+  </form>
+</div>

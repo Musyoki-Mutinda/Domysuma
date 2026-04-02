@@ -1,0 +1,134 @@
+.careers-create-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    h1 {
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+  .loading-container, .error-container {
+    text-align: center;
+    padding: 50px 20px;
+  }
+
+  .job-form {
+    .form-section {
+      margin-bottom: 30px;
+
+      nb-card {
+        nb-card-header {
+          .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            h3 {
+              margin: 0;
+            }
+          }
+        }
+
+        nb-card-body {
+          .form-group {
+            margin-bottom: 20px;
+
+            label {
+              display: block;
+              margin-bottom: 8px;
+              font-weight: 500;
+              color: #2c3e50;
+            }
+
+            .error-message {
+              color: #dc3545;
+              font-size: 0.875rem;
+              margin-top: 5px;
+            }
+          }
+
+          .dynamic-list {
+            .list-item {
+              display: flex;
+              gap: 15px;
+              align-items: center;
+              margin-bottom: 15px;
+
+              .item-input {
+                flex: 1;
+              }
+
+              button {
+                flex-shrink: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .careers-create-container {
+    padding: 15px;
+
+    .header {
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .job-form {
+      .form-section {
+        nb-card {
+          nb-card-body {
+            .dynamic-list {
+              .list-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+
+                button {
+                  align-self: flex-end;
+                  width: auto;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .form-actions {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
