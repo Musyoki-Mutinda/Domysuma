@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CareersRoutingModule } from './careers-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 import { CareersComponent } from './careers.component';
 import { CareerDetailComponent } from './career-detail/career-detail.component';
 
@@ -13,7 +14,8 @@ import { CareerDetailComponent } from './career-detail/career-detail.component';
   imports: [
     CommonModule,
     FormsModule,
-    CareersRoutingModule
+    CareersRoutingModule,
+    SharedModule
   ]
 })
 export class CareersModule { }

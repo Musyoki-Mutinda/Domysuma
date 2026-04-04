@@ -1,0 +1,45 @@
+<div class="job-details-modal-backdrop" *ngIf="isOpen" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <div class="job-details-modal">
+
+      <!-- Download Button (Top Right) -->
+      <button class="download-btn" (click)="downloadPDF()" title="Download PDF">
+        <i class="fa-solid fa-download"></i>
+      </button>
+
+      <!-- Close Button -->
+      <button class="close-btn" (click)="closeModal()">✕</button>
+
+      <!-- Job Title -->
+      <h2 class="job-title">{{ job?.title || 'Job Title' }}</h2>
+
+      <!-- Job Description -->
+      <div class="job-section">
+        <h3>Job Description</h3>
+        <p>{{ job?.description || 'No description available' }}</p>
+      </div>
+
+      <!-- Responsibilities -->
+      <div class="job-section" *ngIf="job?.responsibilities">
+        <h3>Responsibilities</h3>
+        <ul>
+          <li *ngFor="let responsibility of job.responsibilities">
+            {{ responsibility }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Requirements -->
+      <div class="job-section" *ngIf="job?.requirements || job?.qualifications">
+        <h3>Requirements</h3>
+        <ul>
+          <li *ngFor="let requirement of (job.requirements || job.qualifications || [])">
+            {{ requirement }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

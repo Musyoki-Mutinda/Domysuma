@@ -11,20 +11,24 @@ export class CareersComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
 
+  // Pagination properties
+  currentPage: number = 1;
+  hasNext: boolean = false;
+  hasPrevious: boolean = false;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.loadCareers();
+    this.loadCareers(1);
   }
 
-  loadCareers(): void {
+  loadCareers(page: number = 1): void {
     this.loading = true;
     this.error = null;
 
     console.log('Attempting to fetch careers from API...');
 
-    // Fetch careers from the API endpoint
-    fetch('https://staff.domysumaarchitects.co.ke/api/recruitments')
+    fetch(`https://staff.domysumaarchitects.co.ke/api/recruitments?page=${page}&per_page=8`)
       .then(response => {
         console.log('API Response:', response);
         if (!response.ok) {
@@ -34,9 +38,11 @@ export class CareersComponent implements OnInit {
       })
       .then(data => {
         console.log('API Data:', data);
-        // Check if data is an array or needs to be extracted from an object
-        this.careers = Array.isArray(data) ? data : (data.data || data.recruitments || []);
+        this.careers = data.data || [];
         console.log('Careers to display:', this.careers);
+        this.hasNext = !!data.next_page_url;
+        this.hasPrevious = !!data.prev_page_url;
+        this.currentPage = data.current_page;
         this.loading = false;
       })
       .catch(error => {
@@ -47,12 +53,24 @@ export class CareersComponent implements OnInit {
   }
 
   apply(job: any): void {
-    // Navigate to the job detail page
     if (job.id) {
       this.router.navigate(['/careers', job.id]);
     } else {
       console.error('Job has no id:', job);
       alert('Error: No job ID available');
+    }
+  }
+
+  // Pagination methods
+  nextPage(): void {
+    if (this.hasNext) {
+      this.loadCareers(this.currentPage + 1);
+    }
+  }
+
+  previousPage(): void {
+    if (this.hasPrevious) {
+      this.loadCareers(this.currentPage - 1);
     }
   }
 }

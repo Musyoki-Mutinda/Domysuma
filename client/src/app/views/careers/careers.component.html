@@ -33,72 +33,89 @@
       <p>We are not currently hiring, but please check back soon for new opportunities.</p>
     </div>
 
-    <!-- Careers List -->
-    <div *ngIf="!loading && !error && careers.length > 0" class="careers-list">
-      <div *ngFor="let career of careers" class="career-card">
-        <!-- Job Title -->
-        <h2 class="job-title">{{ career.title || 'Job Title' }}</h2>
-        
-        <!-- Job Details -->
-        <div class="job-details">
-          <div class="detail-item">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>{{ career.location || 'Location not specified' }}</span>
+    <!-- Careers List + Pagination Wrapper -->
+    <div *ngIf="!loading && !error && careers.length > 0">
+
+      <!-- Careers List -->
+      <div class="careers-list">
+        <div *ngFor="let career of careers" class="career-card">
+          <!-- Job Title -->
+          <h2 class="job-title">{{ career.title || 'Job Title' }}</h2>
+
+          <!-- Job Details -->
+          <div class="job-details">
+            <div class="detail-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>{{ career.location || 'Location not specified' }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>{{ career.employmentType || 'Full-time' }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fa-solid fa-calendar"></i>
+              <span>{{ career.postedDate || 'Posted recently' }}</span>
+            </div>
           </div>
-          <div class="detail-item">
-            <i class="fa-solid fa-clock"></i>
-            <span>{{ career.employmentType || 'Full-time' }}</span>
+
+          <!-- Job Description -->
+          <div class="job-description">
+            <h3>Job Description</h3>
+            <p>{{ career.description || 'No description available' }}</p>
           </div>
-          <div class="detail-item">
-            <i class="fa-solid fa-calendar"></i>
-            <span>{{ career.postedDate || 'Posted recently' }}</span>
+
+          <!-- Requirements -->
+          <div class="job-requirements" *ngIf="career.requirements || career.qualifications">
+            <h3>Requirements</h3>
+            <ul>
+              <li *ngFor="let requirement of (career.requirements || career.qualifications || [])">
+                {{ requirement }}
+              </li>
+            </ul>
           </div>
-        </div>
 
-        <!-- Job Description -->
-        <div class="job-description">
-          <h3>Job Description</h3>
-          <p>{{ career.description || 'No description available' }}</p>
-        </div>
+          <!-- Responsibilities -->
+          <div class="job-responsibilities" *ngIf="career.responsibilities">
+            <h3>Responsibilities</h3>
+            <ul>
+              <li *ngFor="let responsibility of career.responsibilities">
+                {{ responsibility }}
+              </li>
+            </ul>
+          </div>
 
-        <!-- Requirements -->
-        <div class="job-requirements" *ngIf="career.requirements || career.qualifications">
-          <h3>Requirements</h3>
-          <ul>
-            <li *ngFor="let requirement of (career.requirements || career.qualifications || [])">
-              {{ requirement }}
-            </li>
-          </ul>
-        </div>
+          <!-- Benefits -->
+          <div class="job-benefits" *ngIf="career.benefits">
+            <h3>Benefits</h3>
+            <ul>
+              <li *ngFor="let benefit of career.benefits">
+                {{ benefit }}
+              </li>
+            </ul>
+          </div>
 
-        <!-- Responsibilities -->
-        <div class="job-responsibilities" *ngIf="career.responsibilities">
-          <h3>Responsibilities</h3>
-          <ul>
-            <li *ngFor="let responsibility of career.responsibilities">
-              {{ responsibility }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Benefits -->
-        <div class="job-benefits" *ngIf="career.benefits">
-          <h3>Benefits</h3>
-          <ul>
-            <li *ngFor="let benefit of career.benefits">
-              {{ benefit }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Apply Button -->
-        <div class="apply-button-container">
-          <button class="btn-apply" (click)="apply(career)">
-            <i class="fa-solid fa-paper-plane"></i>
-            Apply Now
-          </button>
+          <!-- Apply Button -->
+          <div class="apply-button-container">
+            <button class="btn-apply" (click)="apply(career)">
+              <i class="fa-solid fa-paper-plane"></i>
+              Apply Now
+            </button>
+          </div>
         </div>
       </div>
+
+      <!-- Pagination Controls -->
+      <div *ngIf="(currentPage === 1 && hasNext) || currentPage > 1" class="pagination-container">
+        <button *ngIf="currentPage === 1 && hasNext" class="btn-pagination" (click)="nextPage()">
+          Next
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <button *ngIf="currentPage > 1" class="btn-pagination" (click)="previousPage()">
+          <i class="fa-solid fa-chevron-left"></i>
+          Previous
+        </button>
+      </div>
+
     </div>
   </div>
 </div>

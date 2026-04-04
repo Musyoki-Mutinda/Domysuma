@@ -13,6 +13,9 @@ export class CareerDetailComponent implements OnInit {
   submitting: boolean = false;
   applicationSuccess: boolean = false;
 
+  // Modal properties
+  isJobModalOpen: boolean = false;
+
   // Application form data
   application = {
     name: '',
@@ -53,6 +56,9 @@ export class CareerDetailComponent implements OnInit {
           throw new Error('Job not found');
         }
 
+        // Set role-based responsibilities and requirements as placeholders
+        this.setRoleBasedData();
+
         this.loading = false;
       })
       .catch(error => {
@@ -60,6 +66,81 @@ export class CareerDetailComponent implements OnInit {
         this.error = error.message;
         this.loading = false;
       });
+  }
+
+  setRoleBasedData(): void {
+    if (!this.job) return;
+    this.job.responsibilities = this.getResponsibilities(this.job.title || '');
+    this.job.requirements = this.getRequirements(this.job.title || '');
+  }
+
+  getResponsibilities(title: string): string[] {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes('architect')) {
+      return [
+        "Develop conceptual, schematic, and detailed architectural designs for residential, commercial, and institutional projects in Kenya",
+        "Conduct site analysis, feasibility studies, and environmental impact assessments in compliance with Kenyan regulations",
+        "Collaborate with clients, engineers, landscape architects, and interior designers to ensure cohesive project outcomes",
+        "Ensure all designs comply with Kenyan building codes, zoning laws, and sustainable development standards",
+        "Prepare and review construction drawings, specifications, and cost estimates using local standards",
+        "Oversee construction phases, conduct site inspections, and manage project timelines within the Kenyan context",
+        "Utilize CAD software (AutoCAD, Revit) and BIM technology for design and documentation",
+        "Participate in client presentations and obtain necessary approvals from Kenyan regulatory bodies such as NCA and local authorities"
+      ];
+    } else if (lowerTitle.includes('interior designer') || lowerTitle.includes('interior')) {
+      return [
+        "Create functional and aesthetically pleasing interior spaces for residential and commercial projects in Kenya",
+        "Develop design concepts, mood boards, and presentation materials for client approval, incorporating local cultural elements",
+        "Select appropriate materials, furniture, lighting, and color schemes suitable for the Kenyan market",
+        "Collaborate with architects, contractors, and suppliers to ensure design implementation",
+        "Prepare detailed drawings, specifications, and procurement lists",
+        "Oversee installation and ensure quality control throughout the project",
+        "Stay updated with current design trends and sustainable materials available in Kenya",
+        "Conduct space planning and ergonomic assessments tailored to local needs"
+      ];
+    } else {
+      return [
+        "Perform duties related to the specific role as outlined in the job description within the Kenyan architectural and construction industry",
+        "Collaborate with team members to achieve project goals and maintain professional standards",
+        "Maintain compliance with company policies and local regulations",
+        "Contribute to continuous improvement and innovation in the workplace"
+      ];
+    }
+  }
+
+  getRequirements(title: string): string[] {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes('architect')) {
+      return [
+        "Bachelor's degree in Architecture from a recognized institution in Kenya or internationally accredited",
+        "Registration with the Architectural Association of Kenya (AAK) and Board of Registration of Architects and Quantity Surveyors (BORAQS)",
+        "Proficiency in AutoCAD, Revit, SketchUp, and other relevant design software",
+        "Minimum 3-5 years of experience in architectural design and project management",
+        "Strong understanding of Kenyan building codes, standards, and local construction practices",
+        "Excellent communication, presentation, and project management skills",
+        "Knowledge of sustainable design principles and green building standards",
+        "Valid practicing license and membership in relevant professional bodies"
+      ];
+    } else if (lowerTitle.includes('interior designer') || lowerTitle.includes('interior')) {
+      return [
+        "Diploma or Bachelor's degree in Interior Design or related field from a recognized institution",
+        "Certification from relevant professional bodies such as International Interior Design Association (IIDA) preferred",
+        "Proficiency in design software including AutoCAD, SketchUp, 3ds Max, or similar tools",
+        "Portfolio demonstrating experience in interior design projects",
+        "Knowledge of materials, furniture, and finishes available in the Kenyan market",
+        "Understanding of space planning, lighting design, and ergonomics",
+        "Minimum 2-3 years of experience in interior design",
+        "Strong creative vision and attention to detail"
+      ];
+    } else {
+      return [
+        "Relevant qualification in the field from a recognized institution",
+        "Experience in the architectural or construction industry preferred",
+        "Knowledge of local regulations and industry standards",
+        "Strong work ethic and willingness to learn",
+        "Good communication and teamwork skills"
+      ];
+    }
   }
 
   onCvChange(event: any): void {
@@ -186,5 +267,14 @@ export class CareerDetailComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/careers']);
+  }
+
+  // Modal methods
+  openJobModal(): void {
+    this.isJobModalOpen = true;
+  }
+
+  closeJobModal(): void {
+    this.isJobModalOpen = false;
   }
 }

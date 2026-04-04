@@ -53,6 +53,14 @@
         <p>{{ job.description || 'No description available' }}</p>
       </div>
 
+      <!-- View Job Details Button -->
+      <div class="job-section">
+        <button class="btn-view-details" (click)="openJobModal()">
+          <i class="fa-solid fa-file-pdf"></i>
+          View Job Details
+        </button>
+      </div>
+
       <!-- Attachment -->
       <div class="job-section" *ngIf="job.attachment">
         <h2>Job Details</h2>
@@ -63,17 +71,17 @@
       </div>
 
       <!-- Requirements -->
-      <div class="job-section" *ngIf="job.requirements || job.qualifications">
+      <div class="job-section">
         <h2>Requirements</h2>
         <ul>
-          <li *ngFor="let requirement of (job.requirements || job.qualifications || [])">
+          <li *ngFor="let requirement of job.requirements">
             {{ requirement }}
           </li>
         </ul>
       </div>
 
       <!-- Responsibilities -->
-      <div class="job-section" *ngIf="job.responsibilities">
+      <div class="job-section">
         <h2>Responsibilities</h2>
         <ul>
           <li *ngFor="let responsibility of job.responsibilities">
@@ -193,4 +201,11 @@
       </form>
     </div>
   </div>
+
+  <!-- Job Details Modal -->
+  <app-job-details-modal
+    [isOpen]="isJobModalOpen"
+    [job]="job"
+    (close)="closeJobModal()">
+  </app-job-details-modal>
 </div>

@@ -11,6 +11,7 @@ import { BreadCrumbComponent } from './widgets/bread-crumb/bread-crumb.component
 import { ProjectItemCardComponent } from './widgets/project-item-card/project-item-card.component';
 import { GalleryComponent } from './widgets/gallery/gallery.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { JobDetailsModalComponent } from './components/job-details-modal/job-details-modal.component';
 import { GalleryModule } from "ng-gallery";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -24,7 +25,8 @@ const components = [
   GalleryComponent,
   ContactFormPopupComponent,
   LoginModalComponent,
-  
+  JobDetailsModalComponent,
+
 ];
 
 const modules = [
