@@ -26,20 +26,15 @@ export class CareersComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    console.log('Attempting to fetch careers from API...');
-
     fetch(`https://staff.domysumaarchitects.co.ke/api/recruitments?page=${page}&per_page=8`)
       .then(response => {
-        console.log('API Response:', response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
       .then(data => {
-        console.log('API Data:', data);
         this.careers = data.data || [];
-        console.log('Careers to display:', this.careers);
         this.hasNext = !!data.next_page_url;
         this.hasPrevious = !!data.prev_page_url;
         this.currentPage = data.current_page;

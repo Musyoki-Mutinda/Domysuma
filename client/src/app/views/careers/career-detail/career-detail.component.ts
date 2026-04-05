@@ -41,24 +41,23 @@ export class CareerDetailComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    fetch('https://staff.domysumaarchitects.co.ke/api/recruitments')
+    // Fetch the individual job directly by ID instead of fetching all jobs and filtering
+    fetch(`https://staff.domysumaarchitects.co.ke/api/recruitments/${id}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to load jobs');
+          throw new Error('Job not found');
         }
         return response.json();
       })
       .then(data => {
-        const jobs = Array.isArray(data) ? data : (data.data || data.recruitments || []);
-        this.job = jobs.find((job: any) => job.id == id);
+        // API may return the job directly or nested under a key
+        this.job = data.data || data.recruitment || data;
 
-        if (!this.job) {
+        if (!this.job || !this.job.id) {
           throw new Error('Job not found');
         }
 
-        // Set role-based responsibilities and requirements as placeholders
         this.setRoleBasedData();
-
         this.loading = false;
       })
       .catch(error => {
@@ -164,11 +163,6 @@ export class CareerDetailComponent implements OnInit {
 
     const payload = this.prepareApplicationData();
 
-    console.log(`\n===== APPLICATION SUBMITTED =====`);
-    console.log(`Job ID: ${this.job.id} | Position: ${this.job.title}`);
-    console.log(`Payload:`, JSON.stringify(payload, null, 2));
-    console.log(`=================================\n`);
-
     fetch('https://staff.domysumaarchitects.co.ke/api/submitthis', {
       method: 'POST',
       headers: {
@@ -191,7 +185,6 @@ export class CareerDetailComponent implements OnInit {
       this.submitting = false;
       this.applicationSuccess = true;
 
-      // Reset the form
       this.application = {
         name: '',
         email: '',

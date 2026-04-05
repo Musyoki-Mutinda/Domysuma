@@ -25,10 +25,6 @@
       <h1 class="job-title">{{ job.title || job.position || 'Job Title' }}</h1>
       
       <div class="job-meta">
-        <div class="meta-item">
-          <i class="fa-solid fa-briefcase"></i>
-          <span>{{ job.position || 'Position' }}</span>
-        </div>
         <div class="meta-item" *ngIf="job.is_active !== undefined">
           <i class="fa-solid fa-circle-check"></i>
           <span [ngClass]="{'active': job.is_active, 'inactive': !job.is_active}">
@@ -61,14 +57,6 @@
         </button>
       </div>
 
-      <!-- Attachment -->
-      <div class="job-section" *ngIf="job.attachment">
-        <h2>Job Details</h2>
-        <a [href]="job.attachment" target="_blank" class="attachment-link">
-          <i class="fa-solid fa-download"></i>
-          Download Detailed Job Description
-        </a>
-      </div>
 
       <!-- Requirements -->
       <div class="job-section">
